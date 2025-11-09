@@ -1,0 +1,8 @@
+.app {
+    position: absolute;
+    height: 99vh;
+    width: 99.8vw;
+    top: 0;
+    left: 0;
+    margin: auto;
+}

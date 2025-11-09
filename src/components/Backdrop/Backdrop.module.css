@@ -1,0 +1,35 @@
+.wrapperBackdrop {
+    position: relative;
+    height: 99.6vh;
+    width: 100vw;
+    z-index: 999;
+}
+
+.backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 99.6vh;
+    width: inherit;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 500;
+}
+
+.wrapperLoader {
+    position: relative;
+    display: flex;
+    height: 99.6vh;
+    width: 100vw;
+    z-index: 999;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.5);
+    height: 99.6vh;
+    width: 100vw;
+    z-index: 500;
+}
+

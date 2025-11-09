@@ -1,0 +1,208 @@
+.card {
+    display: flex;
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    border: 1px solid rgba(0,0,0,0.1);
+    background-color: rgba(0,0,0,0);
+    overflow: none;
+    z-index: 100;
+}
+
+.bodyColumns {
+    display: flex;
+    height: inherit;
+    width: 90%;
+    align-items: center;
+    border: 1px solid blue;
+    margin-top: 2px;
+    margin-left: 2px;
+    padding: 0px 2px 2px 2px;
+    background-color: rgba(0,0,0,0);
+    border: none;
+    border-radius: 20px;
+    height: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 10px;
+}
+
+.columnTitle {
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.bodyRows {
+    display: flex;
+    flex-direction: row;
+    height: inherit;
+    width: inherit;
+    border-radius: 5px;
+    margin-bottom: 2px;
+    align-items: center;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 0px;
+    background-color: rgba(0,0,0,0);
+    z-index: 100;
+}
+
+.rowTitle {
+    align-content: center;
+    padding: 2px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.data {
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+    font-size: 10px;
+    width: inherit;
+}
+
+.right {
+    display: flex;
+    width: inherit;
+}
+
+.mainBody {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0);
+}
+
+.mainBody > button {
+    border: none;
+    border-radius: 100px;
+    justify-content: center;
+    width: 100%;
+    background-color: rgba(0,0,0,0);
+    cursor: pointer;
+    margin-right: 5px;
+    outline: none;
+    border: none;
+}
+
+.mainBodyAlt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: -2px;
+    padding-left: 15px;
+    width: inherit;
+    border-radius: 2px;
+    background-color: rgba(0,0,0,0);
+    outline: none;
+    border: none;
+    cursor: pointer;
+    z-index: 20;
+}
+
+.mainBodyAlt > button {
+    border: none;
+    justify-content: center;
+    width: 100%;
+    background-color: rgba(0,0,0,0);
+    cursor: pointer;
+    padding-right: 10px;
+    font-size: 14px;
+}
+
+.mainBodyAlt > img {
+    height: 15px;
+}
+
+.mainBodyAlt > .rightOperation {
+    position: absolute;
+    margin-left: 215px;
+    height: 20px;
+    border: none;
+    width: 20px;
+    align-items: center;
+    background-color: rgba(0,0,0,0);
+    cursor: pointer;
+    z-index: 100px;
+}
+
+.mainBodyAlt > .leftOperationActive {
+    position: absolute;
+    left: 0;
+    margin-left: 10px;
+    height: 20px;
+    width: 25px;
+    align-items: center;
+    background-color: rgba(0,0,0,0);
+    cursor: pointer;
+    border: none;
+    z-index: 100px;
+}
+
+.rightOperation > img,
+.leftOperationActive > img {
+    height: 15px;
+    background-color: rgba(0,0,0,0);
+    border: none;
+    cursor: default;
+}
+
+.mainBodyAlt > .leftOperationInactive {
+    display: flex;
+    width: 25px;
+    align-items: center;
+    background-color: rgba(0,0,0,0);
+    cursor: default;
+}
+
+.mainBodyAlt > .leftOperationInactive > img {
+    height: 15px;
+    cursor: default;
+}
+
+.rightOperationImage,
+.leftOperationImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5px;
+    width: 15px;
+    padding: 3px 7px 3px 3px;
+    cursor: default;
+}
+
+.mainBodyAlt:hover {
+    margin-left: 1px;
+    background-color: rgba(0,0,0,0.15);
+}
+
+.static {
+    background-color: rgba(0,0,0,0);
+    cursor: arrow;
+    border: none;
+}
+
+.static:hover {
+    cursor: arrow;
+}
+
+.events {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0);
+    border: none;
+    border-radius: 20px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 100;
+    font-weight: bold;
+    font-size: 10px;
+    border: 1px solid green;
+}
+
+.hide {
+    display: none;
+}

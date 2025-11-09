@@ -1,0 +1,14 @@
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 22px;
+    outline: 0;
+    border: 0;
+    background-color: rgba(217,215,205,1);
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 14px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px, rgba(0, 0, 0, 0.3) 0px -1px 0px 0px inset;
+    cursor: pointer;
+}
