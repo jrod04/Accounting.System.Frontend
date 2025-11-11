@@ -22,8 +22,8 @@ interface iGallery {
     subtitle: boolean;
     select: string;
     enableSelect: boolean;
-    bodyStyle: 'columns' | 'rows';
     events: boolean;
+    bodyStyle: 'columns' | 'rows';
     galleryItems: iGalleryItem[];
     verticalGallery: boolean;
     mainBodyAlt?: boolean;

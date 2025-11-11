@@ -7,7 +7,7 @@ import { type iGalleryItem } from './../Gallery.tsx';
 describe('Gallery component', () => {
     let items: iGalleryItem[] = [{id: '1', title: 'Title', subtitle: 'Subtitle'}];
 
-    test('Gallery presence, title shown, subtitle shown', () => {
+    test('Gallery, title, subtitle shown', () => {
         render(<Gallery galleryItems={items}
                         title={true}
                         subtitle={true}
@@ -24,10 +24,7 @@ describe('Gallery component', () => {
         expect(btn.textContent).toBe('TitleSubtitle');
     });
 
-    test('Gallery functions shown, activated and clicked', async () => {
-        const handlerLeftClick = vi.fn();
-        const handlerRightClick = vi.fn();
-
+    test('Gallery functions shown, activated, clicked and return correct values', async () => {
         items = [{id: '1',
                   title: 'Title',
                   subtitle: 'Subtitle',
@@ -37,6 +34,14 @@ describe('Gallery component', () => {
                   activateRightOperation: true
         }];
 
+        const cb_handlerLeftOperation = vi.fn((data) => {
+            return data;
+        });
+
+        const cb_handlerRightOperation = vi.fn((data) => {
+            return data;
+        });
+
         render(<Gallery galleryItems={items}
                         title={true}
                         subtitle={true}
@@ -45,24 +50,72 @@ describe('Gallery component', () => {
                         bodyStyle='columns'
                         events={false}
                         verticalGallery={false}
-                        cb_handlerLeftOperation={handlerLeftClick}
-                        cb_handlerRightOperation={handlerRightClick} />);
+                        cb_handlerLeftOperation={cb_handlerLeftOperation}
+                        cb_handlerRightOperation={cb_handlerRightOperation} />);
 
         const buttons: HTMLButtonElement[] = screen.getAllByRole('button');
 
         if (buttons[0]) {
             const leftButton: HTMLButtonElement = buttons[0];
-            await userEvent.click(leftButton);
-            expect(handlerLeftClick).toHaveBeenCalledTimes(1);
+
+            const result = await userEvent.click(leftButton);
+            expect(cb_handlerLeftOperation).toHaveBeenCalledTimes(1);
+            if (cb_handlerLeftOperation.mock.results[0]) {
+                expect(cb_handlerLeftOperation.mock.results[0].value).toEqual({
+                    id: '1',
+                    title: 'Title',
+                    subtitle: 'Subtitle',
+                    showLeftOperation: true,
+                    showRightOperation: true,
+                    activateLeftOperation: true,
+                    activateRightOperation: true,
+                    itemClicked: 'Left'
+                });
+            };
         };
 
         if (buttons[2]) {
             const rightButton: HTMLButtonElement = buttons[2];
             await userEvent.click(rightButton);
-            expect(handlerRightClick).toHaveBeenCalledTimes(1);
+            expect(cb_handlerRightOperation).toHaveBeenCalledTimes(1);
+            if (cb_handlerRightOperation.mock.results[0]) {
+                expect(cb_handlerRightOperation.mock.results[0].value).toEqual({
+                    id: '1',
+                    title: 'Title',
+                    subtitle: 'Subtitle',
+                    showLeftOperation: true,
+                    showRightOperation: true,
+                    activateLeftOperation: true,
+                    activateRightOperation: true,
+                    itemClicked: 'Right'
+                });
+            };
         };
+    });
 
-});
+    interface iBodyStyle {
+        bodyStyle: 'columns' | 'rows';
+        expected: 'bodyColumns' | 'bodyRows'
+    };
 
+    const tests: iBodyStyle[] = [
+       { bodyStyle: 'columns', expected: 'bodyColumns'},
+       { bodyStyle: 'rows', expected: 'bodyRows' }
+    ]
 
+    test.each(tests)('Checking for expected classNames', ({ bodyStyle, expected }) => {
+        render(<Gallery galleryItems={items}
+                        title={true}
+                        subtitle={true}
+                        select='1'
+                        enableSelect={false}
+                        bodyStyle={bodyStyle}
+                        events={false}
+                        verticalGallery={false} />
+        );
+
+        const gallery = screen.getByTestId('gallery');
+        const regex = new RegExp('.*' + expected.toLowerCase() + '.*', "i");
+        expect(gallery).toHaveClass(regex);
+    });
 });
