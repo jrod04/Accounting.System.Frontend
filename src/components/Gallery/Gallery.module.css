@@ -162,8 +162,8 @@
     cursor: default;
 }
 
-.rightOperationImage,
-.leftOperationImage {
+.imgRightOperation,
+.imgLeftOperation {
     display: flex;
     justify-content: center;
     align-items: center;

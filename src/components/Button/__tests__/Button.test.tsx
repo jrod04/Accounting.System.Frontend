@@ -20,20 +20,21 @@ describe('Gray button components', () => {
         const handlerClick = vi.fn();
         render(<Button id='1' value='value' width={75} cb_handlerOperation={handlerClick} />);
 
-        const button = screen.getByRole('button') as HTMLButtonElement;
+        const button: HTMLButtonElement = screen.getByRole('button');
         commonTests(button);
 
-        const value = screen.getByText('value');
+        const value: HTMLElement = screen.getByText('value');
         expect(value).toBeInTheDocument();
+        expect(value.textContent).toBe('value');
 
         await userEvent.click(button);
         expect(handlerClick).toHaveBeenCalledTimes(1);
     });
 
-    test('Submit button', async () => {
+    test('Submit button', () => {
         render(<Button input={true} id='1' value='value' width={75} />);
 
-        const button = screen.getByRole('button') as HTMLButtonElement;
+        const button: HTMLButtonElement = screen.getByRole('button');
         commonTests(button);
 
         expect(button).toHaveAttribute(
@@ -45,6 +46,7 @@ describe('Gray button components', () => {
             'value',
             expect.stringContaining('value')
         );
+
         // fireEvent tests will be in integrated forms
     });
 });

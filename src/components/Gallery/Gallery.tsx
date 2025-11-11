@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import styles from './Gallery.module.css';
 
-interface iGalleryItem extends React.MouseEvent<HTMLButtonElement> {
+export interface iGalleryItem {
     id: string;
     title: string;
     subtitle: string;
@@ -22,14 +22,12 @@ interface iGallery {
     subtitle: boolean;
     select: string;
     enableSelect: boolean;
-    bodyColumns: boolean;
-    bodyRows: boolean;
+    bodyStyle: 'columns' | 'rows';
     events: boolean;
     galleryItems: iGalleryItem[];
     verticalGallery: boolean;
-
     mainBodyAlt?: boolean;
-    _static: boolean;
+    _static?: boolean;
     cb_handlerLeftOperation?: (data: iGalleryItem) => void;
     cb_handlerRightOperation?: (data: iGalleryItem) => void;
     cb_handlerSelectEvent?: (id: string) => void;
@@ -43,14 +41,14 @@ interface iEventTargetId extends EventTarget {
     id: string;
 };
 
-function Gallery({title, subtitle, select, enableSelect, events, bodyColumns, bodyRows, galleryItems,
+function Gallery({title, subtitle, select, enableSelect, events, bodyStyle, galleryItems,
                   verticalGallery, mainBodyAlt, cb_handlerLeftOperation, cb_handlerRightOperation,
                   cb_handlerSelectEvent, _static}: iGallery) {
     const [selected, setSelected] = useState<string>(select);
     const items = galleryItems ? galleryItems as iGalleryItem[] : [] as iGalleryItem[];
 
-    const columnStyle = bodyColumns ? styles.bodyColumns : styles.card;
-    const rowStyle = bodyRows ? styles.bodyRows : styles.card;
+    const columnStyle = bodyStyle === 'columns' ? styles.bodyColumns : styles.card;
+    const rowStyle = bodyStyle === 'rows' ? styles.bodyRows : styles.card;
     const eventStyle = events ? {border: 'none'} : {};
 
     const handlerRightOperation: iHandler = (e: React.SyntheticEvent): void => {
@@ -59,20 +57,16 @@ function Gallery({title, subtitle, select, enableSelect, events, bodyColumns, bo
         const data = {...items.filter(item => parseInt(item.id) === parseInt(id))};
 
         if (data[0] !== undefined) data[0].itemClicked = 'Right';
-        if (cb_handlerRightOperation && data[0] !== undefined) {
-            cb_handlerRightOperation(data[0]);
-        };
+        if (cb_handlerRightOperation && data[0] !== undefined) cb_handlerRightOperation(data[0]);
     };
 
     const handlerLeftOperation: iHandler = (e: React.SyntheticEvent): void => {
         e.preventDefault();
         const id: string = (e.target as HTMLElement).id;
         const data = {...items.filter(item => parseInt(item.id) === parseInt(id))};
-        if (data[0] !== undefined) data[0].itemClicked = 'Left';
 
-        if (cb_handlerLeftOperation && data[0] !== undefined) {
-            cb_handlerLeftOperation(data[0]);
-        };
+        if (data[0] !== undefined) data[0].itemClicked = 'Left';
+        if (cb_handlerLeftOperation && data[0] !== undefined) cb_handlerLeftOperation(data[0]);
     };
 
     const handlerSetSelected: iHandler = (e: React.SyntheticEvent): void => {
@@ -92,13 +86,13 @@ function Gallery({title, subtitle, select, enableSelect, events, bodyColumns, bo
 
     return(
     <>
-        {items[0] !== undefined && items[0].id && items.map((item) =>
-            <div className={`${bodyColumns && columnStyle} ${bodyRows && rowStyle}`}
+        {(items[0] && items[0] !== undefined) && items.map((item) =>
+            <div className={`${bodyStyle === 'columns' ? columnStyle : ''} ${bodyStyle === 'rows' ? rowStyle : ''}`.trim()}
                  style={eventStyle}
-                 key={item.id ? item.id : ++i}>
+                 key={item.id ? item.id : ++i}
+                 data-testid='gallery'>
 
-                <div className={`${(bodyColumns || bodyRows) && styles.mainBody}
-                                 ${(verticalGallery || mainBodyAlt) && styles.mainBodyAlt}`}
+                <div className={`${(['columns', 'rows'].includes(bodyStyle)) ? styles.mainBody : ''} ${(verticalGallery || mainBodyAlt) ? styles.mainBodyAlt : ''}`.trim()}
                       style={(enableSelect && item.id.toString() === selected.toString()) ?
                              {backgroundColor: 'rgba(0,0,0,0.3)',
                                  border: '1px solid rgba(0,0,0,0.1)',
@@ -114,16 +108,13 @@ function Gallery({title, subtitle, select, enableSelect, events, bodyColumns, bo
                                     data-name={item.title}>
                                 <img src={item.imgLeftOperation}
                                      alt='Button'
-                                     className={styles.leftOperationImage} />
+                                     className={styles.imgLeftOperation} />
                             </button>
                     }
 
                     {
                         (title || subtitle) &&
-                            <button className={`${bodyColumns && columnStyle}
-                                                ${bodyRows && styles.events}
-                                                ${_static && styles.static}
-                                                ${verticalGallery && styles.card}`}
+                            <button className={`${bodyStyle === 'columns' ? columnStyle : ''} ${bodyStyle === 'rows' ? styles.events : ''} ${_static ? styles.static : ''} ${verticalGallery ? styles.card : ''}`.trim()}
                                     id={item.id}
                                     data-name={item.title}
                                     onClick={handlerSetSelected}
@@ -143,7 +134,7 @@ function Gallery({title, subtitle, select, enableSelect, events, bodyColumns, bo
                                     data-name={item.title}>
                                 <img src={item.imgRightOperation}
                                      alt='Right Operation'
-                                     className={styles.rightOperationImage} />
+                                     className={styles.imgRightOperation} />
                             </button>
                     }
                 </div>

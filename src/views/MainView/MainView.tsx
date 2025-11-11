@@ -14,7 +14,16 @@ import styles from './MainView.module.css';
 //                         {id: '2', title: 'Title', subtitle: 'Subtitle'}]} />
 
 const MainView = () => {
-    return(
+
+   const items = [{id: '1', title: 'Reliable Rental Properties in Michigan, LLC', subtitle: ''},
+                  {id: '2', title: 'Reliable Rental Properties in North Carolina, LLC', subtitle: ''}];
+   const cards = items.map(item =>
+       <div className={styles.cards}>
+            <Card area={item.title} />
+       </div>
+   );
+
+   return(
         <>
             <Backdrop backdrop={false} loader={false}>
                 <section className={styles.mainView}>
@@ -28,8 +37,8 @@ const MainView = () => {
                         <em>Add Business</em>
                     </div>
                     <hr />
-                    <div className={styles.cards}>
-                        <Card area='Reliable Rental Properties in Michigan, LLC' />
+                    <div className={styles.cardsContainer}>
+                        {cards}
                     </div>
                 </section>
             </Backdrop>
