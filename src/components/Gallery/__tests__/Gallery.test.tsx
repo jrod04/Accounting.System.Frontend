@@ -115,7 +115,6 @@ describe('Gallery component', () => {
         );
 
         const gallery = screen.getByTestId('gallery');
-        const regex = new RegExp('.*' + expected.toLowerCase() + '.*', "i");
-        expect(gallery).toHaveClass(regex);
+        expect(gallery).toHaveClass(new RegExp('.*' + expected.toLowerCase() + '.*', "i"));
     });
 });
