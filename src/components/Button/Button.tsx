@@ -11,7 +11,7 @@ export interface iButton {
 
 const Button = ({input, id, value, width, cb_handlerOperation}: iButton) => {
     //TODO:
-    let btn: React.ComponentProps<'button'> = <button />;
+    let btn: React.ComponentProps<'button'> = <button></button>;
 
     if (!input) {
         btn = <button className={styles.btn}
