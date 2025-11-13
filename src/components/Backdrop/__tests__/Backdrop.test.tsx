@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { screen, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import Backdrop from './../Backdrop.tsx';
 
 describe('Standard semi-opaque backdrop', () => {

@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
+import createUser from './../../../utils/createUser.tsx';
 import Gallery from './../Gallery.tsx';
 import { type iGalleryItem } from './../Gallery.tsx';
 
@@ -34,6 +34,8 @@ describe('Gallery component', () => {
                   activateRightOperation: true
         }];
 
+        const user = createUser();
+
         const cb_handlerLeftOperation = vi.fn((data) => {
             return data;
         });
@@ -58,7 +60,7 @@ describe('Gallery component', () => {
         if (buttons[0]) {
             const leftButton: HTMLButtonElement = buttons[0];
 
-            const result = await userEvent.click(leftButton);
+            const result = await user.click(leftButton);
             expect(cb_handlerLeftOperation).toHaveBeenCalledTimes(1);
             if (cb_handlerLeftOperation.mock.results[0]) {
                 expect(cb_handlerLeftOperation.mock.results[0].value).toEqual({
@@ -76,7 +78,7 @@ describe('Gallery component', () => {
 
         if (buttons[2]) {
             const rightButton: HTMLButtonElement = buttons[2];
-            await userEvent.click(rightButton);
+            await user.click(rightButton);
             expect(cb_handlerRightOperation).toHaveBeenCalledTimes(1);
             if (cb_handlerRightOperation.mock.results[0]) {
                 expect(cb_handlerRightOperation.mock.results[0].value).toEqual({
@@ -101,7 +103,8 @@ describe('Gallery component', () => {
     const tests: iBodyStyle[] = [
        { bodyStyle: 'columns', expected: 'bodyColumns'},
        { bodyStyle: 'rows', expected: 'bodyRows' }
-    ]
+    ];
+
 
     test.each(tests)('Checking for expected classNames', ({ bodyStyle, expected }) => {
         render(<Gallery galleryItems={items}

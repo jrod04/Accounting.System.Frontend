@@ -17,7 +17,7 @@ export interface iGalleryItem {
     imgLeftOperation?: string;
 };
 
-interface iGallery {
+export interface iGallery {
     title: boolean;
     subtitle: boolean;
     select: string;
@@ -41,9 +41,23 @@ interface iEventTargetId extends EventTarget {
     id: string;
 };
 
-function Gallery({title, subtitle, select, enableSelect, events, bodyStyle, galleryItems,
-                  verticalGallery, mainBodyAlt, cb_handlerLeftOperation, cb_handlerRightOperation,
-                  cb_handlerSelectEvent, _static}: iGallery) {
+function Gallery(galleryInputs: iGallery) {
+    const {
+        title,
+        subtitle,
+        select,
+        enableSelect,
+        events,
+        bodyStyle,
+        galleryItems,
+        verticalGallery,
+        mainBodyAlt,
+        cb_handlerLeftOperation,
+        cb_handlerRightOperation,
+        cb_handlerSelectEvent,
+        _static
+    } = galleryInputs;
+
     const [selected, setSelected] = useState<string>(select);
     const items = galleryItems ? galleryItems as iGalleryItem[] : [] as iGalleryItem[];
 

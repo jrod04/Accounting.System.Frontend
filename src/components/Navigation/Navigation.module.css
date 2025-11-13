@@ -75,7 +75,6 @@
     border: 1px solid rgba(0,0,0,0.5);
     border-radius: 4px;
     z-index: 200;
-    border: 2px solid green;
 }
 
 .entry > a:link {

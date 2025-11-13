@@ -5,11 +5,20 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+      react({
+          jsxRuntime: 'automatic'
+      }),
+  ],
   test: {
+      coverage: {
+        enabled: true,
+        provider: 'istanbul',
+      },
       globals: true,
       environment: 'jsdom',
       setupFiles: './src/setupTests.tsx',
-      include: ['**/*.{test,spec}.?(c|m)[jt]s?(x)']
-  }
-})
+      include: ['**/*.{test,spec}.?(c|m)[jt]s?(x)'],
+      passWithNoTests: true,
+  },
+});
