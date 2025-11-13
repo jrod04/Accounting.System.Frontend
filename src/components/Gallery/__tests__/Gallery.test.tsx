@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from 'vitest';
-import { beforeEach, afterEach, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import createUser from './../../../utils/createUser.tsx';
 import Gallery from './../Gallery.tsx';
 import { type iGalleryItem } from './../Gallery.tsx';

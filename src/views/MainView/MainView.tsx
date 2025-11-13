@@ -1,30 +1,32 @@
+import { useState } from 'react';
 import Navigation from './../../components/Navigation/Navigation.tsx';
 import VerticalGallery from './../../components/VerticalGallery/VerticalGallery.tsx';
 import Backdrop from './../../components/Backdrop/Backdrop.tsx';
 import Card from './../../components/Card/Card.tsx';
 import CreateNew from './../../assets/CreateNew.svg';
+import Notify from './../../components/Notify/Notify.tsx';
 import styles from './MainView.module.css';
 
-// <Gallery bodyRows={true}
-//          enableSelect={true}
-//          select='1'
-//          title={true}
-//          subtitle={true}
-//          galleryItems={[{id: '1', title: 'Title', subtitle: 'SubTitle'},
-//                         {id: '2', title: 'Title', subtitle: 'Subtitle'}]} />
+const items = [{id: '1', title: 'Reliable Rental Properties in Michigan, LLC', subtitle: ''},
+              {id: '2', title: 'Reliable Rental Properties in North Carolina, LLC', subtitle: ''}];
 
 const MainView = () => {
-   const items = [{id: '1', title: 'Reliable Rental Properties in Michigan, LLC', subtitle: ''},
-                  {id: '2', title: 'Reliable Rental Properties in North Carolina, LLC', subtitle: ''}];
-   const cards = items.map(item =>
+    const [notify, setNotify] = useState<boolean>(false);
+
+    const cb_handlerCloseNotify = (): void => {
+        setNotify(false);
+    };
+
+    const cards = items.map(item =>
        <div className={styles.cards}>
             <Card area={item.title} />
        </div>
-   );
+    );
 
    return(
         <>
             <Backdrop backdrop={false} loader={false}>
+                <Notify stat='sucess' message='Success!' cb_handlerCloseNotify={cb_handlerCloseNotify} />
                 <section className={styles.mainView}>
                     <div className={styles.nav}>
                         <Navigation title='Accounting Suite' />

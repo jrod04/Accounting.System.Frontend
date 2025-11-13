@@ -1,10 +1,11 @@
 import { beforeEach, afterEach, describe, test, expect, assert } from 'vitest';
 import { screen, render, cleanup } from '@testing-library/react';
+import { type iGalleryItem } from './../../Gallery/Gallery.tsx';
 import VerticalGallery from './../VerticalGallery.tsx';
 
-let items = [{id: '1', title: 'Reliable Rental Properties in Michigan', subtitle: 'LLC'},
-             {id: '2', title: 'Reliable Rental Properties in North Carolina', subtitle: 'LLC'}];
-let rerender;
+let items: iGalleryItem[] = [{id: '1', title: 'Reliable Rental Properties in Michigan', subtitle: 'LLC'},
+                           {id: '2', title: 'Reliable Rental Properties in North Carolina', subtitle: 'LLC'}];
+let rerender: any;
 
 beforeEach(() => {
     const renderResult = render(<VerticalGallery galleryItems={items}
@@ -50,7 +51,7 @@ describe('Vertical gallery component with gallery=true', () => {
     });
 
     test('Vertical gallery displays with Gallery component', () => {
-        const galleries: HTMLElement = screen.getAllByTestId('gallery');
+        const galleries: HTMLElement[] = screen.getAllByTestId('gallery');
         expect(galleries).toHaveLength(2);
     });
 
