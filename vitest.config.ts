@@ -12,13 +12,15 @@ export default defineConfig({
   ],
   test: {
       coverage: {
-        enabled: true,
-        provider: 'istanbul',
+        provider: 'v8',
       },
       globals: true,
       environment: 'jsdom',
       setupFiles: './src/setupTests.tsx',
       include: ['**/*.{test,spec}.?(c|m)[jt]s?(x)'],
       passWithNoTests: true,
+  },
+  build: {
+      cssMinify: 'esbuild',
   },
 });
