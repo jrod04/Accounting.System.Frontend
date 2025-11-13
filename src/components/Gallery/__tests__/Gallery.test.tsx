@@ -1,13 +1,14 @@
 import { describe, expect, test, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { beforeEach, afterEach, render, screen } from '@testing-library/react';
 import createUser from './../../../utils/createUser.tsx';
 import Gallery from './../Gallery.tsx';
 import { type iGalleryItem } from './../Gallery.tsx';
 
+
 describe('Gallery component', () => {
     let items: iGalleryItem[] = [{id: '1', title: 'Title', subtitle: 'Subtitle'}];
 
-    test('Gallery, title, subtitle shown', () => {
+    test('Gallery shown', () => {
         render(<Gallery galleryItems={items}
                         title={true}
                         subtitle={true}
@@ -16,10 +17,20 @@ describe('Gallery component', () => {
                         bodyStyle='columns'
                         events={false}
                         verticalGallery={false} />);
-
         const gallery = screen.getByTestId('gallery');
         expect(gallery).toBeInTheDocument();
+    });
 
+
+    test('Gallery title and subtitle shown', () => {
+        render(<Gallery galleryItems={items}
+                        title={true}
+                        subtitle={true}
+                        select='1'
+                        enableSelect={false}
+                        bodyStyle='columns'
+                        events={false}
+                        verticalGallery={false} />);
         const btn: HTMLButtonElement = screen.getByRole('button');
         expect(btn.textContent).toBe('TitleSubtitle');
     });
@@ -105,8 +116,7 @@ describe('Gallery component', () => {
        { bodyStyle: 'rows', expected: 'bodyRows' }
     ];
 
-
-    test.each(tests)('Checking for expected classNames', ({ bodyStyle, expected }) => {
+    test.each(tests)('Checking for expected classNames for specific styles', ({ bodyStyle, expected }) => {
         render(<Gallery galleryItems={items}
                         title={true}
                         subtitle={true}
