@@ -65,13 +65,13 @@
     width: 97%;
 }
 
-.gallery {
+.verticalGallery {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-left: 20px;
-    height: 100px;
-    width: 100px;
+    height: 200px;
+    width: 300px;
     border-radius: 5px;
     overflow: hidden;
     border: 1px solid rgba(0,0,0,0.5);

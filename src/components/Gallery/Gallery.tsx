@@ -6,31 +6,31 @@ export interface iGalleryItem {
     id: string;
     title: string;
     subtitle: string;
-    color?: string;
-    itemClicked?: 'Right' | 'Left' | null
-    showRightOperation?:boolean;
-    showLeftOperation?: boolean;
-    activateRightOperation?: boolean;
-    activateLeftOperation?: boolean;
-    data?: React.FC;
-    imgRightOperation?: string;
-    imgLeftOperation?: string;
+    color?: string | undefined;
+    itemClicked?: 'Right' | 'Left' | null | undefined
+    showRightOperation?:boolean | undefined;
+    showLeftOperation?: boolean | undefined;
+    activateRightOperation?: boolean | undefined;
+    activateLeftOperation?: boolean | undefined;
+    data?: React.FC | undefined;
+    imgRightOperation?: string | undefined;
+    imgLeftOperation?: string | undefined;
 };
 
 export interface iGallery {
     title: boolean;
     subtitle: boolean;
-    select: string;
     enableSelect: boolean;
+    select?: string | undefined;
     events: boolean;
     bodyStyle: 'columns' | 'rows';
     galleryItems: iGalleryItem[];
     verticalGallery: boolean;
-    mainBodyAlt?: boolean;
-    _static?: boolean;
-    cb_handlerLeftOperation?: (data: iGalleryItem) => void;
-    cb_handlerRightOperation?: (data: iGalleryItem) => void;
-    cb_handlerSelectEvent?: (id: string) => void;
+    mainBodyAlt?: boolean | undefined;
+    _static?: boolean | undefined;
+    cb_handlerLeftOperation?: ((data: iGalleryItem) => void) | undefined;
+    cb_handlerRightOperation?: ((data: iGalleryItem) => void) | undefined;
+    cb_handlerSelectEvent?: ((id: string) => void) | undefined;
 };
 
 interface iHandler {
@@ -58,7 +58,7 @@ function Gallery(galleryInputs: iGallery) {
         _static
     } = galleryInputs;
 
-    const [selected, setSelected] = useState<string>(select);
+    const [selected, setSelected] = useState<string | undefined>(select);
     const items = galleryItems ? galleryItems as iGalleryItem[] : [] as iGalleryItem[];
 
     const columnStyle = bodyStyle === 'columns' ? styles.bodyColumns : styles.card;
@@ -107,7 +107,7 @@ function Gallery(galleryInputs: iGallery) {
                  data-testid='gallery'>
 
                 <div className={`${(['columns', 'rows'].includes(bodyStyle)) ? styles.mainBody : ''} ${(verticalGallery || mainBodyAlt) ? styles.mainBodyAlt : ''}`.trim()}
-                      style={(enableSelect && item.id.toString() === selected.toString()) ?
+                      style={(enableSelect && selected && item.id.toString() === selected.toString()) ?
                              {backgroundColor: 'rgba(0,0,0,0.3)',
                                  border: '1px solid rgba(0,0,0,0.1)',
                                  height: '100%',
@@ -125,7 +125,6 @@ function Gallery(galleryInputs: iGallery) {
                                      className={styles.imgLeftOperation} />
                             </button>
                     }
-
                     {
                         (title || subtitle) &&
                             <button className={`${bodyStyle === 'columns' ? columnStyle : ''} ${bodyStyle === 'rows' ? styles.events : ''} ${_static ? styles.static : ''} ${verticalGallery ? styles.card : ''}`.trim()}
@@ -137,7 +136,6 @@ function Gallery(galleryInputs: iGallery) {
                                     {item.subtitle}
                             </button>
                     }
-
                     {
                         item.showRightOperation &&
                             <button className={styles.rightOperation}
