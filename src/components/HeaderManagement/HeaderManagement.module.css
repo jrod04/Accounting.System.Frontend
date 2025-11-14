@@ -1,0 +1,85 @@
+.headerManagement {
+    display: flex;
+    height: 30px;
+    width: 100.6%;
+}
+
+.leftActions,
+.rightActions {
+    display: flex;
+    align-items: center;
+    height: inherit;
+    width: 50%;
+}
+
+.leftActions > img,
+.rightActions > img {
+    height: 26px;
+    padding: 0px 0px 0px 5px;
+    border: none;
+    z-index: 0;
+}
+
+.leftActions {
+    justify-content: left;
+}
+
+.leftActions > .leftFirstBtn,
+.leftActions > .leftSecondBtn,
+.leftActions > .leftThirdBtn,
+.leftActions > .leftFourthBtn {
+    display: flex;
+    position: absolute;
+    border: none;
+    background-color: rgba(0,0,0,0);
+    height: 30px;
+    width: 30px;
+    z-index: 100;
+    cursor: pointer;
+}
+
+.leftActions > .leftFirstBtn {
+    margin-left: 2px
+}
+
+.leftActions > .leftSecondBtn {
+    margin-left: 33px;
+}
+
+.leftActions > .leftThirdBtn {
+    margin-left: 65px;
+}
+
+.leftActions > .leftFourthBtn {
+    margin-left: 96px;
+}
+
+.rightActions {
+    justify-content: right;
+    padding-right: 2px;
+}
+
+.rightActions > .rightFirstBtn,
+.rightActions > .rightSecondBtn,
+.rightActions > .rightThirdBtn {
+    position: absolute;
+    background-color: rgba(0,0,0,0);
+    height: 30px;
+    width: 30px;
+    z-index: 5;
+    border: none;
+    cursor: pointer;
+}
+
+.rightActions > .rightSecondBtn {
+    margin-right: 29px;
+}
+
+.rightActions > .rightFirstBtn {
+    margin-right: 59px;
+}
+
+.hide {
+    visibility: hidden;
+}
+

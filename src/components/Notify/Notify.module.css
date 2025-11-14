@@ -1,0 +1,31 @@
+.notify {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 36px;
+    max-height: auto;
+    text-wrap: wrap;
+    text-align: left;
+    align-items: center;
+    z-index: 999;
+}
+
+.message {
+    padding-left: 10px;
+}
+
+.close {
+    padding-right: 10px;
+}
+
+.close > button {
+    padding-right: 10px;
+    border: none;
+    background-color: rgba(0,0,0,0);
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
+}
