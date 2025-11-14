@@ -1,5 +1,5 @@
 import { beforeEach, afterEach, describe, expect, test, vi } from 'vitest';
-import { render, screen, cleanup } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import createUser from './../../../utils/createUser.tsx';
 import userEventDefault from '@testing-library/user-event';
 import Button from './../Button.tsx';
@@ -8,8 +8,7 @@ let handlerClick = vi.fn();
 let user = createUser();
 
 afterEach(() => {
-    cleanup();
-    handlerClick = vi.fn();
+    handlerClick.mockClear();
     user = createUser();
 });
 
@@ -45,7 +44,7 @@ describe('Non-submit button component', () => {
     });
 
     test('Non-submit button, function calls correctly', async () => {
-        const button: HTMLButtonElement = screen.getByRole('button');
+        const button = screen.getByRole('button');
         await user.click(button);
         expect(handlerClick).toHaveBeenCalledTimes(1);
     });

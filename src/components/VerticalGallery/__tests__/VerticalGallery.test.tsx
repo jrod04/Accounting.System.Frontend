@@ -1,5 +1,5 @@
 import { beforeEach, afterEach, describe, test, expect, assert } from 'vitest';
-import { screen, render, cleanup } from '@testing-library/react';
+import { screen, render } from '@testing-library/react';
 import { type iGalleryItem } from './../../Gallery/Gallery.tsx';
 import VerticalGallery from './../VerticalGallery.tsx';
 
@@ -25,8 +25,6 @@ beforeEach(() => {
 afterEach(() => {
     items = [{id: '1', title: 'Reliable Rental Properties in Michigan', subtitle: 'LLC'},
              {id: '2', title: 'Reliable Rental Properties in North Carolina', subtitle: 'LLC'}];
-
-    cleanup();
 });
 
 describe('Vertical gallery component with gallery=true', () => {

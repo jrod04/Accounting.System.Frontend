@@ -4,7 +4,6 @@ import createUser from './../../../utils/createUser.tsx';
 import Gallery from './../Gallery.tsx';
 import { type iGalleryItem } from './../Gallery.tsx';
 
-
 describe('Gallery component', () => {
     let items: iGalleryItem[] = [{id: '1', title: 'Title', subtitle: 'Subtitle'}];
 

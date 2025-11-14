@@ -1,48 +1,49 @@
 import React from 'react';
+import constants from './../../utils/constants.tsx';
 import styles from './HeaderManagement.module.css';
 
 interface iHeaderManagement {
     selected: string
     bgColor: string;
-    leftFirstBtn: {
+    leftFirstBtn?: {
         handler: () => void | undefined;
-        img: React.ReactElement<React.ComponentPropsWithoutRef<'img'>> & {
+        img: React.ReactNode & {
             alt: string | undefined;
         };
     };
-    leftSecondBtn: {
+    leftSecondBtn?: {
         handler: () => void | undefined;
-        img: React.ReactElement<React.ComponentPropsWithoutRef<'img'>> & {
+        img: React.ReactNode & {
             alt: string | undefined;
         };
     };
-    leftThirdBtn: {
+    leftThirdBtn?: {
         handler: () => void | undefined;
-        img: React.ReactElement<React.ComponentPropsWithoutRef<'img'>> & {
+        img: React.ReactNode & {
             alt: string | undefined;
         };
     };
-    leftFourthBtn: {
+    leftFourthBtn?: {
         handler: () => void | undefined;
-        img: React.ReactElement<React.ComponentPropsWithoutRef<'img'>> & {
+        img: React.ReactNode & {
             alt: string | undefined;
         };
     }
-    rightFirstBtn: {
+    rightFirstBtn?: {
         handler: () => void | undefined;
-        img: React.ReactElement<React.ComponentPropsWithoutRef<'img'>> & {
+        img: React.ReactNode & {
             alt: string | undefined;
         };
     }
-    rightSecondBtn: {
+    rightSecondBtn?: {
         handler: () => void | undefined;
-        img: React.ReactElement<React.ComponentPropsWithoutRef<'img'>> & {
+        img: React.ReactNode & {
             alt: string | undefined;
         };
     }
-    rightThirdBtn: {
+    rightThirdBtn?: {
         handler: () => void | undefined;
-        img: React.ReactElement<React.ComponentPropsWithoutRef<'img'>> & {
+        img: React.ReactNode & {
             alt: string | undefined;
         };
     }
@@ -61,57 +62,85 @@ function HeaderManagement({...headerManagementInputs}: iHeaderManagement) {
         rightThirdBtn
     } = headerManagementInputs;
     return (
-        <section className={styles.headerManagement} style={{backgroundColor: bgColor}}>
+        <section data-testid='headerManagement' className={styles.headerManagement} style={{backgroundColor: bgColor}}>
             <div className={styles.leftActions}>
-                <button onClick={leftFirstBtn ? leftFirstBtn.handler : undefined}
-                        className={leftFirstBtn ? styles.leftFirstBtn : styles.hide}
-                        id='leftFirstBtn'
-                        data-id-item={selected}
-                        title={leftFirstBtn ? leftFirstBtn.img.alt : undefined} />
-                {leftFirstBtn && leftFirstBtn.img}
+                {leftFirstBtn &&
+                    <button onClick={leftFirstBtn.handler}
+                            className={leftFirstBtn ? styles.leftFirstBtn : styles.hide}
+                            id='leftFirstBtn'
+                            data-id-item={selected}
+                            style={{backgroundImage: `url("${leftFirstBtn.img.props.src}")`,
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundSize: '20px 20px'}}
+                            aria-label={`${leftFirstBtn.img.props.alt}`} />
+                }
 
-                <button onClick={leftSecondBtn ? leftSecondBtn.handler : undefined}
-                        className={leftSecondBtn ? styles.leftSecondBtn : styles.hide}
-                        id='leftSecondBtn'
-                        data-id-item={selected}
-                        title={leftSecondBtn ? leftSecondBtn.img.alt : undefined} />
-                {leftSecondBtn && leftSecondBtn.img}
+                {leftSecondBtn &&
+                    <button onClick={leftSecondBtn.handler}
+                            className={styles.leftSecondBtn}
+                            id='leftSecondBtn'
+                            data-id-item={selected}
+                            style={{backgroundImage: `url("${leftSecondBtn.img.props.src}")`,
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundSize: '20px 20px'}}
+                            aria-label={`${leftSecondBtn.img.props.alt}`} />
+                }
 
-                <button onClick={leftThirdBtn ? leftThirdBtn.handler : undefined}
-                        className={leftThirdBtn ? styles.leftThirdBtn : styles.hide}
-                        id='leftThirdBtn'
-                        data-id-item={selected}
-                        title={leftThirdBtn ? leftThirdBtn.img.alt : undefined} />
-                {leftThirdBtn && leftThirdBtn.img}
+                {leftThirdBtn &&
+                    <button onClick={leftThirdBtn.handler}
+                            className={styles.leftThirdBtn}
+                            id='leftThirdBtn'
+                            data-id-item={selected}
+                            style={{backgroundImage: `url("${leftThirdBtn.img.props.src}")`,
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundSize: '20px 20px'}}
+                            aria-label={`${leftThirdBtn.props.img.alt}`} />
+                }
 
-                <button onClick={leftFourthBtn ? leftFourthBtn.handler : undefined}
-                        className={leftFourthBtn ? styles.leftFourthBtn : styles.hide}
-                        id='leftFourthBtn'
-                        data-id-item={selected}
-                        title={leftFourthBtn ? leftFourthBtn.img.alt : undefined} />
-                {leftFourthBtn && leftFourthBtn.img}
+                {leftFourthBtn &&
+                    <button onClick={leftFourthBtn.handler}
+                            className={styles.leftFourthBtn}
+                            id='leftFourthBtn'
+                            data-id-item={selected}
+                            style={{backgroundImage: `url("${leftFourthBtn.img.props.src}")`,
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundSize: '20px 20px'}}
+                            aria-label={`${leftFourthBtn.img.props.alt}`} />
+                }
             </div>
             <div className={styles.rightActions}>
-                <button onClick={rightFirstBtn ? rightFirstBtn.handler : undefined}
-                        className={rightFirstBtn ? styles.rightFirstBtn : styles.hide}
-                        id='rightFirstBtn'
-                        data-id-item={selected}
-                        title={rightFirstBtn ? rightFirstBtn.img.alt : undefined} />
-                {rightFirstBtn && rightFirstBtn.img}
+                {rightFirstBtn &&
+                    <button onClick={rightFirstBtn.handler}
+                            className={rightFirstBtn ? styles.rightFirstBtn : styles.hide}
+                            id='rightFirstBtn'
+                            data-id-item={selected}
+                            style={{backgroundImage: `url("${rightFirstBtn.img.props.src}")`,
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundSize: '20px 20px'}}
+                            aria-label={`${rightFirstBtn.img.props.alt}`} />
+                }
 
-                <button onClick={rightSecondBtn ? rightSecondBtn.handler : undefined}
-                        className={rightSecondBtn ? styles.rightSecondBtn : styles.hide}
-                        id='rightSecondBtn'
-                        data-id-item={selected}
-                        title={rightSecondBtn ? rightSecondBtn.img.alt : undefined} />
-                {rightSecondBtn && rightSecondBtn.img}
+                {rightSecondBtn &&
+                    <button onClick={rightSecondBtn.handler}
+                            className={styles.rightSecondBtn}
+                            id='rightSecondBtn'
+                            data-id-item={selected}
+                            style={{backgroundImage: `url("${rightSecondBtn.img.props.src}")`,
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundSize: '20px 20px'}}
+                            aria-label={`${rightSecondBtn.img.props.alt}`} />
+                }
 
-                <button onClick={rightThirdBtn ? rightThirdBtn.handler : undefined}
-                        className={rightThirdBtn ? styles.rightThirdBtn : styles.hide}
-                        id='rightThirdBtn'
-                        data-id-item={selected}
-                        title={rightThirdBtn ? rightThirdBtn.img.alt : undefined} />
-                {rightThirdBtn && rightThirdBtn.img}
+                {rightThirdBtn &&
+                    <button onClick={rightThirdBtn.handler}
+                            className={rightThirdBtn ? styles.rightThirdBtn : styles.hide}
+                            id='rightThirdBtn'
+                            data-id-item={selected}
+                            style={{backgroundImage: `url("${rightThirdBtn.img.props.src}")`,
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundSize: '20px 20px'}}
+                            aria-label={`${rightThirdBtn.img.props.alt}`} />
+                }
             </div>
         </section>
     );

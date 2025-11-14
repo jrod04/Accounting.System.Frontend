@@ -1,22 +1,17 @@
 import { beforeEach, afterEach, describe, test, expect, vi } from 'vitest';
-import { screen, render, cleanup } from '@testing-library/react'
+import { screen, render } from '@testing-library/react'
 import createUser from './../../../utils/createUser.tsx';
 import Notify from './../Notify.tsx';
 
-let handlerClick: () => void | undefined;
+let handlerClick = vi.fn();
 let rerender: any;
 let notify: HTMLElement | undefined;
 
 beforeEach(() => {
-    handlerClick = vi.fn();
+    handlerClick.mockClear();
     const renderResult = render(<Notify stat='success' message='Success' cb_handlerCloseNotify={handlerClick} />)
     rerender = renderResult.rerender;
     notify = screen.getByTestId('notify');
-});
-
-afterEach(() => {
-    cleanup();
-    handlerClick = vi.fn();
 });
 
 describe('Notify component', () => {

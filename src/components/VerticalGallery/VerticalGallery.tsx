@@ -2,7 +2,7 @@
 import Gallery from './../Gallery/Gallery.tsx';
 import { type iGallery } from './../Gallery/Gallery.tsx'
 import { type iGalleryItem } from './../Gallery/Gallery.tsx';
-import { constants } from './../../utils/constants.tsx';
+import constants from './../../utils/constants.tsx';
 import styles from './VerticalGallery.module.css';
 
 interface iVerticalGallery extends iGallery {
