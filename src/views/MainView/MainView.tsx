@@ -26,7 +26,7 @@ const MainView = () => {
    return(
         <>
             <Backdrop backdrop={false} loader={false}>
-                <Notify stat='success' message='Success!' cb_handlerCloseNotify={cb_handlerCloseNotify} />
+                <Notify stat='sucess' message='Success!' cb_handlerCloseNotify={cb_handlerCloseNotify} />
                 <section className={styles.mainView}>
                     <div className={styles.nav}>
                         <Navigation title='Accounting Suite' />
