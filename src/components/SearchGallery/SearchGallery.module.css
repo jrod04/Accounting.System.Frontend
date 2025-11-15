@@ -1,0 +1,44 @@
+.search {
+    display: flex-column;
+    height: 98%;
+    overflow-y: hidden;
+    margin-left: 12px;
+}
+
+.inputArea {
+    margin: 5px 6px 5px -4px;
+}
+
+.inputNotClicked {
+    width: 92%;
+    border-radius: 5px;
+    text-align: center;
+    color: rgba(0,0,0,0.5);
+}
+
+.inputClicked {
+    width: 92%;
+    border-radius: 5px;
+    text-align: center;
+    color: rgba(0,0,0,1);
+}
+
+.searchGallery {
+    height: 90%;
+    width: 94%;
+    y-overflow: auto;
+    background-color: rgba(255,255,255,1);
+    border: 1.5px solid rgba(0,0,0,0.4);
+    border-radius: 5px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.row:nth-child(even) {
+    background-color: rgba(0,0,0,0.15);
+}
+
+.row:hover {
+    background-color: rgba(0,0,0,0.3);
+}
+

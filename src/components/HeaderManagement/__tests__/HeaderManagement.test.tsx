@@ -15,10 +15,9 @@ type tButton = {
 let user: any;
 let rerender: any;
 let handlerClick: MouseEventHandler<HTMLButtonElement> & { mockClear: () => {}} = vi.fn((e) => {
-//     console.log('HTML BUTTON ELEMENT', e.target);
     const target = e.target as HTMLElement;
-//     const id: string | undefined = (e.target as Element).dataset.idItem;
-//     return id;
+    const id: string | undefined = (e.target as HTMLButtonElement).dataset.idItem;
+    return id;
 });
 let image: ReactElement<ImgHTMLAttributes<HTMLImageElement>> = <img src={Cog} alt='cog' />;
 let btn: tButton = {
