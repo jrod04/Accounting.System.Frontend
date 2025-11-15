@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "start": "npm run dev",
-    "dev": "vite",
-    "build": "set NODE_ENV=production && tsc -b && vite build",
+    "dev": "set NODE_env=development && vite",
+    "build": "cls && set NODE_ENV=production && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest --coverage"
+    "test": "cls && vitest --coverage"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^6.9.1",

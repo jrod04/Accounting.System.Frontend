@@ -1,52 +1,24 @@
 import React from 'react';
+import { type ImgHTMLAttributes, type MouseEventHandler, type ReactElement } from 'react';
+import { type MockedFunction } from 'vitest';
 import constants from './../../utils/constants.tsx';
 import styles from './HeaderManagement.module.css';
 
+type tHandler = {
+    handler: MouseEventHandler<HTMLButtonElement>;
+    image: ReactElement<ImgHTMLAttributes<HTMLImageElement>>;
+};
+
 interface iHeaderManagement {
-    selected: string
+    selected: string;
     bgColor: string;
-    leftFirstBtn?: {
-        handler: () => void | undefined;
-        img: React.ReactNode & {
-            alt: string | undefined;
-        };
-    };
-    leftSecondBtn?: {
-        handler: () => void | undefined;
-        img: React.ReactNode & {
-            alt: string | undefined;
-        };
-    };
-    leftThirdBtn?: {
-        handler: () => void | undefined;
-        img: React.ReactNode & {
-            alt: string | undefined;
-        };
-    };
-    leftFourthBtn?: {
-        handler: () => void | undefined;
-        img: React.ReactNode & {
-            alt: string | undefined;
-        };
-    }
-    rightFirstBtn?: {
-        handler: () => void | undefined;
-        img: React.ReactNode & {
-            alt: string | undefined;
-        };
-    }
-    rightSecondBtn?: {
-        handler: () => void | undefined;
-        img: React.ReactNode & {
-            alt: string | undefined;
-        };
-    }
-    rightThirdBtn?: {
-        handler: () => void | undefined;
-        img: React.ReactNode & {
-            alt: string | undefined;
-        };
-    }
+    leftFirstBtn?: tHandler;
+    leftSecondBtn?: tHandler;
+    leftThirdBtn?: tHandler;
+    leftFourthBtn?: tHandler;
+    rightFirstBtn?: tHandler;
+    rightSecondBtn?: tHandler;
+    rightThirdBtn?: tHandler;
 };
 
 function HeaderManagement({...headerManagementInputs}: iHeaderManagement) {
@@ -69,10 +41,10 @@ function HeaderManagement({...headerManagementInputs}: iHeaderManagement) {
                             className={leftFirstBtn ? styles.leftFirstBtn : styles.hide}
                             id='leftFirstBtn'
                             data-id-item={selected}
-                            style={{backgroundImage: `url("${leftFirstBtn.img.props.src}")`,
+                            style={{backgroundImage: `url("${leftFirstBtn.image.props.src}")`,
                                     backgroundRepeat: 'no-repeat',
                                     backgroundSize: '20px 20px'}}
-                            aria-label={`${leftFirstBtn.img.props.alt}`} />
+                            aria-label={`${leftFirstBtn.image.props.alt}`} />
                 }
 
                 {leftSecondBtn &&
@@ -80,10 +52,10 @@ function HeaderManagement({...headerManagementInputs}: iHeaderManagement) {
                             className={styles.leftSecondBtn}
                             id='leftSecondBtn'
                             data-id-item={selected}
-                            style={{backgroundImage: `url("${leftSecondBtn.img.props.src}")`,
+                            style={{backgroundImage: `url("${leftSecondBtn.image.props.src}")`,
                                     backgroundRepeat: 'no-repeat',
                                     backgroundSize: '20px 20px'}}
-                            aria-label={`${leftSecondBtn.img.props.alt}`} />
+                            aria-label={`${leftSecondBtn.image.props.alt}`} />
                 }
 
                 {leftThirdBtn &&
@@ -91,10 +63,10 @@ function HeaderManagement({...headerManagementInputs}: iHeaderManagement) {
                             className={styles.leftThirdBtn}
                             id='leftThirdBtn'
                             data-id-item={selected}
-                            style={{backgroundImage: `url("${leftThirdBtn.img.props.src}")`,
+                            style={{backgroundImage: `url("${leftThirdBtn.image.props.src}")`,
                                     backgroundRepeat: 'no-repeat',
                                     backgroundSize: '20px 20px'}}
-                            aria-label={`${leftThirdBtn.props.img.alt}`} />
+                            aria-label={`${leftThirdBtn.image.props.alt}`} />
                 }
 
                 {leftFourthBtn &&
@@ -102,10 +74,10 @@ function HeaderManagement({...headerManagementInputs}: iHeaderManagement) {
                             className={styles.leftFourthBtn}
                             id='leftFourthBtn'
                             data-id-item={selected}
-                            style={{backgroundImage: `url("${leftFourthBtn.img.props.src}")`,
+                            style={{backgroundImage: `url("${leftFourthBtn.image.props.src}")`,
                                     backgroundRepeat: 'no-repeat',
                                     backgroundSize: '20px 20px'}}
-                            aria-label={`${leftFourthBtn.img.props.alt}`} />
+                            aria-label={`${leftFourthBtn.image.props.alt}`} />
                 }
             </div>
             <div className={styles.rightActions}>
@@ -114,10 +86,10 @@ function HeaderManagement({...headerManagementInputs}: iHeaderManagement) {
                             className={rightFirstBtn ? styles.rightFirstBtn : styles.hide}
                             id='rightFirstBtn'
                             data-id-item={selected}
-                            style={{backgroundImage: `url("${rightFirstBtn.img.props.src}")`,
+                            style={{backgroundImage: `url("${rightFirstBtn.image.props.src}")`,
                                     backgroundRepeat: 'no-repeat',
                                     backgroundSize: '20px 20px'}}
-                            aria-label={`${rightFirstBtn.img.props.alt}`} />
+                            aria-label={`${rightFirstBtn.image.props.alt}`} />
                 }
 
                 {rightSecondBtn &&
@@ -125,10 +97,10 @@ function HeaderManagement({...headerManagementInputs}: iHeaderManagement) {
                             className={styles.rightSecondBtn}
                             id='rightSecondBtn'
                             data-id-item={selected}
-                            style={{backgroundImage: `url("${rightSecondBtn.img.props.src}")`,
+                            style={{backgroundImage: `url("${rightSecondBtn.image.props.src}")`,
                                     backgroundRepeat: 'no-repeat',
                                     backgroundSize: '20px 20px'}}
-                            aria-label={`${rightSecondBtn.img.props.alt}`} />
+                            aria-label={`${rightSecondBtn.image.props.alt}`} />
                 }
 
                 {rightThirdBtn &&
@@ -136,10 +108,10 @@ function HeaderManagement({...headerManagementInputs}: iHeaderManagement) {
                             className={rightThirdBtn ? styles.rightThirdBtn : styles.hide}
                             id='rightThirdBtn'
                             data-id-item={selected}
-                            style={{backgroundImage: `url("${rightThirdBtn.img.props.src}")`,
+                            style={{backgroundImage: `url("${rightThirdBtn.image.props.src}")`,
                                     backgroundRepeat: 'no-repeat',
                                     backgroundSize: '20px 20px'}}
-                            aria-label={`${rightThirdBtn.img.props.alt}`} />
+                            aria-label={`${rightThirdBtn.image.props.alt}`} />
                 }
             </div>
         </section>
