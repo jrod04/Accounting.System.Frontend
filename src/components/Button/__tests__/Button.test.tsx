@@ -13,17 +13,35 @@ afterEach(() => {
 });
 
 describe('Non-submit button component', () => {
+    let rerender: any;
+
     beforeEach(() => {
-        render(<Button id='1' value='value' width={75} cb_handlerOperation={handlerClick} />);
+        const renderResult = render(<Button id='1' value='value' width={75} cb_handlerOperation={handlerClick} bgColor='rgba(0,0,0,1) '/>);
+        rerender = renderResult.rerender;
     });
 
     test('Non-submit button displays', () => {
-        const button: HTMLButtonElement = screen.getByRole('button');
+        const button = screen.getByRole('button');
         expect(button).toBeInTheDocument();
     });
 
+    test('Non-submit button displays given color', () => {
+       const button = screen.getByRole('button');
+       expect(button).toHaveStyle({
+           backgroundColor: 'rgba(0,0,0,1)'
+       });
+    });
+
+    test('Non-submit button displays default color', () => {
+        rerender(<Button id='1' value='value' width={75} cb_handlerOperation={handlerClick} />);
+        const button = screen.getByRole('button');
+        expect(button).toHaveStyle({
+            backgroundColor: 'rgba(217,215,205,1)'
+        });
+    });
+
     test('Non-submit button displays right id', () => {
-        const button: HTMLButtonElement = screen.getByRole('button');
+        const button = screen.getByRole('button');
         expect(button).toHaveAttribute(
             'id',
             expect.stringContaining('1')
@@ -31,16 +49,15 @@ describe('Non-submit button component', () => {
     });
 
     test('Non-submit button displays displays right value', () => {
-        const button: HTMLButtonElement = screen.getByRole('button');
+        const button = screen.getByRole('button');
         expect(button.textContent).toBe('value');
     });
 
     test('Non-submit button displays displays right settings', () => {
-        const button: HTMLButtonElement = screen.getByRole('button');
-        expect(button).toHaveAttribute(
-            'style',
-            expect.stringContaining('width: 75px')
-        );
+        const button = screen.getByRole('button');
+        expect(button).toHaveStyle({
+            width: '75px'
+        });
     });
 
     test('Non-submit button, function calls correctly', async () => {
@@ -51,17 +68,34 @@ describe('Non-submit button component', () => {
 });
 
 describe('Submit button component', () => {
+    let rerender: any;
     beforeEach(() => {
-        render(<Button input={true} id='1' value='value' width={75} cb_handlerOperation={handlerClick} />);
+        const renderResult = render(<Button input={true} id='1' value='value' width={75} cb_handlerOperation={handlerClick} bgColor='rgba(0,0,0,1)' />);
+        rerender = renderResult.rerender;
     });
 
     test('Submit button displays', () => {
-        const button: HTMLInputElement = screen.getByRole('button');
+        const button = screen.getByRole('button');
         expect(button).toBeInTheDocument();
     });
 
+    test('Non-submit button displays given color', () => {
+       const button = screen.getByRole('button');
+       expect(button).toHaveStyle({
+           backgroundColor: 'rgba(0,0,0,1)'
+       });
+    });
+
+    test('Non-submit button displays default color', () => {
+        rerender(<Button id='1' value='value' width={75} cb_handlerOperation={handlerClick} />);
+        const button = screen.getByRole('button');
+        expect(button).toHaveStyle({
+            backgroundColor: 'rgba(217,215,205,1)'
+        });
+    });
+
     test('Submit button displays id', () => {
-        const button: HTMLInputElement = screen.getByRole('button');
+        const button = screen.getByRole('button');
         expect(button).toHaveAttribute(
             'id',
             expect.stringContaining('1')
@@ -69,7 +103,7 @@ describe('Submit button component', () => {
     });
 
     test('Submit button displays value', () => {
-       const button: HTMLInputElement = screen.getByRole('button');
+       const button = screen.getByRole('button');
        expect(button).toHaveAttribute(
            'value',
            expect.stringContaining('value')
