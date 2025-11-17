@@ -4,7 +4,7 @@ import Card from './../../Card/Card.tsx';
 
 describe('Basic card', () => {
    test('Card is present', () => {
-       render(<Card />);
+       render(<Card area='Information' />);
        const card = screen.getByTestId('card');
        expect(card).toBeInTheDocument();
    });
