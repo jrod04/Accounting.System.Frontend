@@ -29,7 +29,7 @@ function SearchGallery({...searchGalleryInputs}: iSearchGallery) {
     };
 
     const handlerBlur = () => {
-        if (searchValue === '') setSearchValue('Search...');
+        if (searchValue.trim() === '') setSearchValue('Search...');
     };
 
     useEffect(() => {
@@ -59,7 +59,7 @@ function SearchGallery({...searchGalleryInputs}: iSearchGallery) {
                        onBlur={handlerBlur}
                        value={searchValue} />
             </div>
-            <div className={styles.searchGallery}>
+            <div data-testid='galleryContainer' className={styles.searchGallery}>
                 {galleryItems &&
                     <Gallery galleryItems={galleryItems}
                              title={true}
