@@ -103,11 +103,8 @@ describe('Submit button component', () => {
     });
 
     test('Submit button displays value', () => {
-       const button = screen.getByRole('button');
-       expect(button).toHaveAttribute(
-           'value',
-           expect.stringContaining('value')
-       );
+        const button = screen.getByRole('button');
+        expect(button.textContent).toBe('value');
     });
 
     //TODO:  Submit button function calls correctly will need to be tested inside a form

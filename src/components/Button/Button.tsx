@@ -35,11 +35,12 @@ const Button = ({...buttonProps}: iButton) => {
     };
 
     if (input) {
-        btn = <input type='submit'
-                     className={styles.btn}
-                     style={{width: width, backgroundColor: bgColor}}
-                     id={id}
-                     value={value} />
+        btn = <button className={styles.btn}
+                      type='submit'
+                      style={{width: width, backgroundColor: backgroundColor}}
+                      id={id}>
+                      {value}
+              </button>;
     };
 
     return(<>{btn}</>);
