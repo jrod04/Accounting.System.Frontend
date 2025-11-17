@@ -10,15 +10,15 @@ export type tHandler = {
 };
 
 interface iHeaderManagement {
-    selected: string;
     bgColor: string;
-    leftFirstBtn?: tHandler;
-    leftSecondBtn?: tHandler;
-    leftThirdBtn?: tHandler;
-    leftFourthBtn?: tHandler;
-    rightFirstBtn?: tHandler;
-    rightSecondBtn?: tHandler;
-    rightThirdBtn?: tHandler;
+    selected?: string | undefined;
+    leftFirstBtn?: tHandler | undefined;
+    leftSecondBtn?: tHandler | undefined;
+    leftThirdBtn?: tHandler | undefined;
+    leftFourthBtn?: tHandler | undefined;
+    rightFirstBtn?: tHandler | undefined;
+    rightSecondBtn?: tHandler | undefined;
+    rightThirdBtn?: tHandler | undefined;
 };
 
 function HeaderManagement({...headerManagementInputs}: iHeaderManagement) {
