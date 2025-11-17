@@ -4,66 +4,63 @@ import Gallery from './../Gallery/Gallery.js';
 import { type iGalleryItem } from './../Gallery/Gallery.js';
 import styles from './SearchGallery.module.css';
 
-type tRefInputProps = React.ComponentPropsWithRef<'input'>;
-
 interface iSearchGallery {
     items: iGalleryItem[];
-    message: string;
-    refInputProps: tRefInputProps;
-    cb_handlerSelectEvent: (id: string) => string | undefined;
+    cb_handlerSelectEvent?: (id: string) => string | undefined;
 };
 
 function SearchGallery({...searchGalleryInputs}: iSearchGallery) {
     const {
         items,
-        message,
-        refInputProps,
         cb_handlerSelectEvent
     } = searchGalleryInputs;
     const initialItems: iGalleryItem[] = items ? items : [];
 
-    const [searchValue, setSearchValue] = useState<string>(message);
+    const [searchValue, setSearchValue] = useState<string>('Search...');
     const [galleryItems, setGalleryItems] = useState<iGalleryItem[]>(initialItems);
     const [selected, setSelected] = useState<string>('');
 
-    const refSearchValue = useRef<HTMLInputElement | null>(null);
-
     const handlerClick = () => {
-        if (searchValue.slice(0,6) === 'Search') setSearchValue('');
+        if (searchValue === 'Search...' ) setSearchValue('');
     };
 
     const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchValue(e.target.value);
+        setSearchValue(e.target?.value);
+    };
+
+    const handlerBlur = () => {
+        if (searchValue === '') setSearchValue('Search...');
     };
 
     useEffect(() => {
-        if (refSearchValue &&
-            refSearchValue.current &&
-            refSearchValue.current.value &&
-            refSearchValue.current.value.slice(0,6).toLowerCase().trim() !== 'search') {
-                const searchTerm = refSearchValue.current.value.toLowerCase();
-                const filteredItems = initialItems.filter(item =>
-                    item.title.toLowerCase().includes(searchTerm) ||
-                    item.id.toString().toLowerCase().includes(searchTerm)
-                );
-                setGalleryItems(filteredItems);
+        if (searchValue.trim().toLowerCase() !== 'search...') {
+            const searchTerm = searchValue.trim().toLowerCase();
+            const filteredItems = initialItems.filter(item =>
+                item.title.toLowerCase().includes(searchTerm) ||
+                item.subtitle.toLowerCase().includes(searchTerm) ||
+                item.id.toString().toLowerCase().includes(searchTerm)
+            );
+            setGalleryItems(filteredItems);
         } else {
             setGalleryItems(initialItems);
         };
-    },[refSearchValue.current?.value]);
+    },[searchValue,initialItems]);
 
     return (
-        <div className={styles.search}>
+        <div data-testid='searchGallery' className={styles.search}>
             <div className={styles.inputArea}>
                 <input type='text'
-                       className={['', 'Search'].includes(searchValue) ? styles.inputNotClicked : styles.inputClicked}
-                       ref={refSearchValue}
+                       aria-label='User Input'
+                       className={searchValue === 'Search...' ?
+                                  styles.inputNotClicked :
+                                  styles.inputClicked}
                        onClick={handlerClick}
                        onChange={handlerChange}
+                       onBlur={handlerBlur}
                        value={searchValue} />
             </div>
             <div className={styles.searchGallery}>
-                {galleryItems.length > 0 &&
+                {galleryItems &&
                     <Gallery galleryItems={galleryItems}
                              title={true}
                              subtitle={true}
