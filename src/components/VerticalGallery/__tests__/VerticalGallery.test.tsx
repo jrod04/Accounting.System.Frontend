@@ -28,10 +28,21 @@ afterEach(() => {
 });
 
 describe('Vertical gallery component with gallery=true', () => {
-// TODO:
-//     test('Header management bar displays with each button', () => {
-//
-//     });
+    test('Header management bar displays with each button', () => {
+   rerender(<VerticalGallery galleryItems={items}
+                             verticalGalleryTitle='Vertical Gallery'
+                             title={true}
+                             subtitle={true}
+                             gallery={true}
+                             area={false}
+                             verticalGallery={true}
+                             events={false}
+                             actionItems={true}
+                             bodyStyle='columns'
+                             enableSelect={false} />);
+        const headerManagement = screen.getByTestId('headerManagement');
+        expect(headerManagement).toBeInTheDocument();
+    });
 
     test('Vertical gallery displays', () => {
         const verticalGallery: HTMLElement = screen.getByTestId('verticalGallery');
