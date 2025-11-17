@@ -86,7 +86,7 @@ describe('Search gallery component', () => {
     test('Search gallery clicking item button returns correct number of clicks', async () => {
         const handlerClick = vi.fn((id: string) => id);
         rerender(<SearchGallery items={items} cb_handlerSelectEvent={handlerClick} />);
-        const btn = screen.getByRole('button', { name: '1'} );
+        const btn = screen.getByRole('button', { name: 'gallery-1'} );
         await user.click(btn);
         expect(handlerClick).toBeCalledTimes(1);
     });
@@ -94,7 +94,7 @@ describe('Search gallery component', () => {
     test('Search gallery clicking item button returns correct id value', async () => {
         const handlerClick = vi.fn((id: string) => id);
         rerender(<SearchGallery items={items} cb_handlerSelectEvent={handlerClick} />);
-        const btn = screen.getByRole('button', { name: '1'} );
+        const btn = screen.getByRole('button', { name: 'gallery-1'} );
         await user.click(btn);
         expect(handlerClick.mock.results[0]?.value).toBe('1');
     });
