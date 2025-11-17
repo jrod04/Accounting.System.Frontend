@@ -128,6 +128,7 @@ function Gallery(galleryInputs: iGallery) {
                     {
                         (title || subtitle) &&
                             <button className={`${bodyStyle === 'columns' ? columnStyle : ''} ${bodyStyle === 'rows' ? styles.events : ''} ${_static ? styles.static : ''} ${verticalGallery ? styles.card : ''}`.trim()}
+                                    aria-label={`gallery-${item.id}`}
                                     id={item.id}
                                     data-name={item.title}
                                     onClick={handlerSetSelected}
