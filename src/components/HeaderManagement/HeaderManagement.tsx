@@ -4,7 +4,7 @@ import { type MockedFunction } from 'vitest';
 import constants from './../../utils/constants.tsx';
 import styles from './HeaderManagement.module.css';
 
-type tHandler = {
+export type tHandler = {
     handler: MouseEventHandler<HTMLButtonElement>;
     image: ReactElement<ImgHTMLAttributes<HTMLImageElement>>;
 };

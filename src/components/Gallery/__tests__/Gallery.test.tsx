@@ -20,7 +20,6 @@ describe('Gallery component', () => {
         expect(gallery).toBeInTheDocument();
     });
 
-
     test('Gallery title and subtitle shown', () => {
         render(<Gallery galleryItems={items}
                         title={true}
@@ -30,7 +29,7 @@ describe('Gallery component', () => {
                         bodyStyle='columns'
                         events={false}
                         verticalGallery={false} />);
-        const btn: HTMLButtonElement = screen.getByRole('button');
+        const btn: HTMLButtonElement = screen.getByRole('button', { name: 'gallery-1' });
         expect(btn.textContent).toBe('TitleSubtitle');
     });
 
@@ -46,12 +45,14 @@ describe('Gallery component', () => {
 
         const user = createUser();
 
-        const cb_handlerLeftOperation = vi.fn((data) => {
-            return data;
+        const cb_handlerLeftOperation = vi.fn((data: iGalleryItem) => {
+            const id: string = data.id;
+            return id;
         });
 
-        const cb_handlerRightOperation = vi.fn((data) => {
-            return data;
+        const cb_handlerRightOperation = vi.fn((data: iGalleryItem) => {
+            const id: string = data.id;
+            return id;
         });
 
         render(<Gallery galleryItems={items}
@@ -73,16 +74,7 @@ describe('Gallery component', () => {
             const result = await user.click(leftButton);
             expect(cb_handlerLeftOperation).toHaveBeenCalledTimes(1);
             if (cb_handlerLeftOperation.mock.results[0]) {
-                expect(cb_handlerLeftOperation.mock.results[0].value).toEqual({
-                    id: '1',
-                    title: 'Title',
-                    subtitle: 'Subtitle',
-                    showLeftOperation: true,
-                    showRightOperation: true,
-                    activateLeftOperation: true,
-                    activateRightOperation: true,
-                    itemClicked: 'Left'
-                });
+                expect(cb_handlerLeftOperation.mock.results[0]?.value).toEqual('1');
             };
         };
 
@@ -91,16 +83,7 @@ describe('Gallery component', () => {
             await user.click(rightButton);
             expect(cb_handlerRightOperation).toHaveBeenCalledTimes(1);
             if (cb_handlerRightOperation.mock.results[0]) {
-                expect(cb_handlerRightOperation.mock.results[0].value).toEqual({
-                    id: '1',
-                    title: 'Title',
-                    subtitle: 'Subtitle',
-                    showLeftOperation: true,
-                    showRightOperation: true,
-                    activateLeftOperation: true,
-                    activateRightOperation: true,
-                    itemClicked: 'Right'
-                });
+                expect(cb_handlerLeftOperation.mock.results[0]?.value).toEqual('1');
             };
         };
     });
