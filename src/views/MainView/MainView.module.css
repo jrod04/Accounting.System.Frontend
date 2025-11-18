@@ -65,14 +65,39 @@
     width: 97%;
 }
 
-.verticalGallery {
+.frmVerticalGallery {
     display: flex;
     flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     align-items: center;
-    margin-left: 20px;
-    height: 200px;
-    width: 300px;
+    height: auto;
+    width: 200px;
     border-radius: 5px;
     overflow: hidden;
     border: 1px solid rgba(0,0,0,0.5);
+    border-top: none;
+    background-color: rgba(255,255,255,1);
+    z-index: 999;
+}
+
+.frmAddBusiness {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.frmInputArea {
+    display: flex;
+    justify-content: center;
+    min-height: 50px;
+    height: auto;
+}
+
+.frmButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
