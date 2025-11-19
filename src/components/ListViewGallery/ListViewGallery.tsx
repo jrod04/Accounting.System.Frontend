@@ -15,7 +15,7 @@ export interface iListViewGalleryItem {
     itemClicked?: string | undefined;
 };
 
-interface iListViewGallery {
+export interface iListViewGallery {
     ariaLabel: string;
     galleryHeaders: string[];
     galleryColumns: string[];
@@ -26,7 +26,7 @@ interface iListViewGallery {
     cb_handlerLeftHeaderOperation?: ((data: iListViewGalleryItem) => void) | undefined;
     cb_handlerRightHeaderOperation?: ((data: iListViewGalleryItem) => void) | undefined;
 
-    leftOperationImage?: string | undefined;
+    leftFirstOperationImage?: string | undefined;
     rightFirstOperationImage?: string | undefined;
     rightSecondOperationImage?: string | undefined;
     cb_handlerLeftFirstOperation?: ((data: iListViewGalleryItem) => void) | undefined;
@@ -44,9 +44,11 @@ function ListViewGallery({...listViewGalleryInputs}: iListViewGallery) {
         rightHeaderImage,
         cb_handlerLeftHeaderOperation,
         cb_handlerRightHeaderOperation,
-        leftOperationImage,
+
+        leftFirstOperationImage,
         rightFirstOperationImage,
         rightSecondOperationImage,
+
         cb_handlerLeftFirstOperation,
         cb_handlerRightFirstOperation,
         cb_handlerRightSecondOperation
@@ -119,7 +121,7 @@ function ListViewGallery({...listViewGalleryInputs}: iListViewGallery) {
                 {items[0] && items.map(item => (
                     <tr key={`listViewGallery-${item.id}`} className={styles.row}>
                         <td>
-                            {leftOperationImage &&
+                            {leftFirstOperationImage &&
                                 <>
                                     <button aria-label={`Left First Operation-${item.id}`}
                                             className={styles.leftOperation}
@@ -127,7 +129,7 @@ function ListViewGallery({...listViewGalleryInputs}: iListViewGallery) {
                                             data-column-one={item.One}
                                             data-column-two={item.Two}
                                             id={item.id} />
-                                    <img src={leftOperationImage}
+                                    <img src={leftFirstOperationImage}
                                          className={styles.leftOperationImg} />
                                 </>
                             }

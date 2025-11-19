@@ -65,7 +65,7 @@ describe('ListViewGallery component', () => {
                                   galleryHeaders={galleryHeaders}
                                   galleryColumns={galleryColumns}
                                   galleryItems={galleryItems}
-                                  leftOperationImage={Trashcan}
+                                  leftFirstOperationImage={Trashcan}
                                   cb_handlerLeftFirstOperation={handlerClick} />);
         const button = screen.getByRole('button', { name: 'Left First Operation-1' });
         await user.click(button);
