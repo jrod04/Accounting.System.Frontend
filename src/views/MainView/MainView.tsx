@@ -8,16 +8,20 @@ import Notify from './../../components/Notify/Notify.tsx';
 import InputTextbox from './../../components/InputTextbox/InputTextbox.tsx';
 import Button from './../../components/Button/Button.tsx';
 import ButtonIcon from './../../components/ButtonIcon/ButtonIcon.tsx';
-import Ledger from './../../assets/ledger.svg';
-import ChartOfAccounts from './../../assets/chartOfAccounts.svg';
+import ChartOfAccounts from './../../views/ChartOfAccounts/ChartOfAccounts.tsx';
+import LedgerIcon from './../../assets/ledger.svg';
+import ChartOfAccountsIcon from './../../assets/chartOfAccounts.svg';
+import FinancialStatementsIcon from './../../assets/financialStatements.svg';
 import styles from './MainView.module.css';
 
-const MainView = () => {
-    const items = [{id: '1', title: 'Reliable Rental Properties in Michigan, LLC', subtitle: ''},
-                  {id: '2', title: 'Reliable Rental Properties in North Carolina, LLC', subtitle: ''}];
+const items = [{id: '1', title: 'Reliable Rental Properties in Michigan, LLC', subtitle: ''},
+              {id: '2', title: 'Reliable Rental Properties in North Carolina, LLC', subtitle: ''}];
 
+
+const MainView = () => {
     const [notify, setNotify] = useState<boolean>(false);
     const [addBusiness, setAddBusiness] = useState<boolean>(false);
+    const [view, setView] = useState<string>('Home');
 
     const refInputTextbox = useRef<null>(null);
 
@@ -31,6 +35,10 @@ const MainView = () => {
 
     const cb_handlerToggleAddBusiness = handlerToggleAddBusiness;
 
+    const handlerSetView = (e: Event) => {
+        setView(e.target.title);
+    };
+
     const frmAddBusinessArea = <form className={styles.frmAddBusiness}>
         <div className={styles.frmInputArea}>
             <InputTextbox ariaLabel='' width={175} direction='column' errors='' ref={refInputTextbox} />
@@ -40,7 +48,6 @@ const MainView = () => {
             <Button id='1' value='Submit' width={75} cb_handlerOperation={() => {}} />
         </div>
     </form>;
-
     const cards = items.map(item =>
        <div className={styles.cards} key={item.title}>
             <Card area={item.title}/>
@@ -72,24 +79,33 @@ const MainView = () => {
                                     value='Add Business'
                                     cb_handlerClick={cb_handlerToggleAddBusiness} />
                         <ButtonIcon ariaLabel='Chart of Accounts Icon Button'
-                                    icon={ChartOfAccounts}
+                                    icon={ChartOfAccountsIcon}
                                     width={30}
                                     height={30}
                                     alt='Chart of Accounts'
                                     title='Chart of Accounts'
                                     value='Chart of Accounts'
-                                    cb_handlerClick={() => {}} />
+                                    cb_handlerClick={handlerSetView} />
                         <ButtonIcon ariaLabel='Ledger Icon Button'
-                                    icon={Ledger}
+                                    icon={LedgerIcon}
                                     width={30}
                                     height={30}
                                     alt='Ledger'
                                     title='Ledger'
                                     value='Ledger'
                                     cb_handlerClick={() => {}} />
+                        <ButtonIcon ariaLabel='Financial Statements'
+                                    icon={FinancialStatementsIcon}
+                                    width={30}
+                                    height={30}
+                                    alt='Financial Statements'
+                                    title='Financial Statements'
+                                    value='Financial Statements'
+                                    cb_handlerClick={() => {}} />
                     </div>
-                    <div className={styles.cardsContainer}>
-                        {cards}
+                    <div className={styles.mainContainer}>
+                        {view === 'Home' && cards}
+                        {view === 'Chart of Accounts' && <ChartOfAccounts />}
                     </div>
                     {addBusiness &&
                         <section className={styles.frmVerticalGallery}>
