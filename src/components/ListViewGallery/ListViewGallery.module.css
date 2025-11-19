@@ -1,0 +1,111 @@
+.mainBody {
+    display: flex;
+    flex-direction: column;
+    width: inherit;
+    background-color: rgba(0,0,0,0);
+}
+
+.row {
+    display: flex;
+    width: inherit;
+    align-items: center;
+    padding: 5px 0px 5px 0px;
+    font-size: 12px;
+    cursor: default;
+    width: inherit;
+}
+
+.row > td {
+    padding: 2px;
+}
+
+.row:nth-child(even) {
+    background-color: rgba(0,0,0,0.15);
+}
+
+.row:hover {
+    background-color: rgba(0,0,0,0.3);
+}
+
+.thead > .row {
+    display: flex;
+    padding: 5px 0px 5px 0px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+    background-color: rgba(0,0,0,0);
+}
+
+.headers {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: inherit;
+    flex-grow: 1;
+    width: 150px;
+    cursor: default;
+}
+
+.data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    flex-grow: 1;
+    height: 20px;
+}
+
+.rightOperation,
+.leftOperation {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    padding: 2px;
+    height: 25px;
+    width: 25px;
+    background-color: rgba(0,0,0,0);
+    border: none;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.rightFirstOperation {
+    right: 0;
+    margin-right: 0px;
+}
+
+.rightSecondOperation > img {
+    margin-right: 5px;
+}
+
+.rightSecondOperation {
+    right: 0;
+}
+
+.leftOperation {
+    padding-left: 2px;
+}
+
+.headerLeftOperation > img,
+.headerRightOperation > img {
+    height: 25px
+}
+
+
+.headerLeftOperation,
+.headerRightOperation {
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    height: 20px;
+    width: 29px;
+    border: none;
+    background-color: rgba(0,0,0,0);
+    cursor: pointer;
+}
+
+.row > td > img,
+.row > td > img {
+    padding: 2px;
+    height: 20px;
+}
