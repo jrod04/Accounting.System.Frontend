@@ -56,7 +56,11 @@
 }
 
 .rightOperation,
-.leftOperation {
+ .rightOperation:focus,
+ .rightOperation:not(:focus),
+ .leftOperation,
+ .leftOperation:focus,
+ .leftOperation:not(:focus) {
     display: flex;
     position: absolute;
     align-items: center;
@@ -66,6 +70,7 @@
     background-color: rgba(0,0,0,0);
     border: none;
     cursor: pointer;
+    outline: none;
     z-index: 100;
 }
 
@@ -86,14 +91,12 @@
     padding-left: 2px;
 }
 
-.headerLeftOperation > img,
-.headerRightOperation > img {
-    height: 25px
-}
-
-
 .headerLeftOperation,
-.headerRightOperation {
+ .headerLeftOperation:focus,
+ .headerLeftOperation:not(:focus),
+ .headerRightOperation,
+ .headerRightOperation:focus,
+ .headerRightOperation:not(:focus) {
     display: flex;
     align-items: center;
     padding: 2px;
@@ -102,6 +105,12 @@
     border: none;
     background-color: rgba(0,0,0,0);
     cursor: pointer;
+    outline: none;
+}
+
+.headerLeftOperation > img,
+.headerRightOperation > img {
+    height: 25px
 }
 
 .row > td > img,

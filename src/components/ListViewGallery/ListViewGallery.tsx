@@ -101,7 +101,8 @@ function ListViewGallery({...listViewGalleryInputs}: iListViewGallery) {
             className={['headerLeftOperation', 'headerRightOperation'].includes(header) ? styles.headerOperation : styles.headers}>
             {header.includes('Operation') ?
                  <button aria-label={header}
-                         className={header === 'headerLeftOperation' ? styles.headerLeftOperation : styles.headerRightOperation}>
+                         className={header === 'headerLeftOperation' ? styles.headerLeftOperation : styles.headerRightOperation}
+                         onClick={header === 'headerLeftOperation' ? cb_handlerLeftHeaderOperation : cb_handlerRightHeaderOperation}>
                     <img src={header === 'headerLeftOperation' ? leftHeaderImage : rightHeaderImage} />
                  </button> :
                  header

@@ -2,4 +2,9 @@
     margin-top: 10px;
     margin-right: 10px;
     width: 100%;
+    text-align: center;
+}
+
+.aside {
+    height: 88vh;
 }

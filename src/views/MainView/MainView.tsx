@@ -48,6 +48,7 @@ const MainView = () => {
             <Button id='1' value='Submit' width={75} cb_handlerOperation={() => {}} />
         </div>
     </form>;
+
     const cards = items.map(item =>
        <div className={styles.cards} key={item.title}>
             <Card area={item.title}/>
@@ -57,6 +58,8 @@ const MainView = () => {
 //     useEffect(() => {
 //         if (refInputTextbox.current) refInputTextbox.current.focus();
 //     });
+//                         {view === 'Home' && cards}
+//                         {view === 'Chart of Accounts' && <ChartOfAccounts />}
 
    return(
         <>
@@ -104,8 +107,7 @@ const MainView = () => {
                                     cb_handlerClick={() => {}} />
                     </div>
                     <div className={styles.mainContainer}>
-                        {view === 'Home' && cards}
-                        {view === 'Chart of Accounts' && <ChartOfAccounts />}
+                        <ChartOfAccounts />
                     </div>
                     {addBusiness &&
                         <section className={styles.frmVerticalGallery}>
