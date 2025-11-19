@@ -82,14 +82,10 @@ describe('ButtonIcon component', () => {
                              alt='Ledger'
                              title='Ledger'
                              bgColor={constants.RED}
-                             handlerClick={handlerClick} />);
+                             cb_handlerClick={handlerClick} />);
 
         const button = screen.getByRole('button', { name: 'Ledger Icon Button' });
         await user.click(button);
         expect(handlerClick).toBeCalledTimes(1);
-    });
-
-    test('', () => {
-
     });
 });

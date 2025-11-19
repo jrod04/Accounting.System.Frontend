@@ -1,3 +1,4 @@
+import React, { type RefObject } from 'react';
 import constants from './../../utils/constants.tsx';
 import styles from './InputTextbox.module.css';
 
@@ -8,6 +9,7 @@ interface iFormInputTextBox {
     width: number;
     errors: string;
     direction: tFlexDirection;
+    ref?: RefObject<HTMLInputElement | null> | undefined;
 };
 
 const FormInputTextBox = ({...formInputTextBoxProps}: iFormInputTextBox) => {
@@ -15,7 +17,8 @@ const FormInputTextBox = ({...formInputTextBoxProps}: iFormInputTextBox) => {
         ariaLabel,
         width,
         direction,
-        errors
+        errors,
+        ref
     } = formInputTextBoxProps;
 
     const inputTextBox =
@@ -27,6 +30,7 @@ const FormInputTextBox = ({...formInputTextBoxProps}: iFormInputTextBox) => {
                 <label htmlFor={ariaLabel}>{ariaLabel}</label>{direction === 'row' ? '\u00A0\u00A0' : ''}
                 <input aria-label={ariaLabel}
                        type='textbox'
+                       ref={ref}
                        className={styles.input}
                        style={{border: errors ? `1.5px solid ${constants.RED}` : '1px solid rgba(0,0,0,1)',
                                outline: errors ? `1.5px solid ${constants.RED}` : '1px solid rgba(0,0,0,1)' }} />

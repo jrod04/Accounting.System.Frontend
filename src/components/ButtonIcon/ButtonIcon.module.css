@@ -1,3 +1,10 @@
+.buttonContainer {
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    width: auto;
+}
+
 .buttonIcon {
     display: flex;
     justify-content: center;
@@ -14,8 +21,6 @@
 }
 
 .buttonIcon > img {
-    height: inherit;
-    width: inherit;
     padding: 1.5px;
     z-index: 999;
 }

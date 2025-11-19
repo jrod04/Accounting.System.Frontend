@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { beforeEach, describe, test, expect, vi } from 'vitest';
 import { screen, render} from '@testing-library/react';
 import createUser from './../../../utils/createUser.tsx';
@@ -6,7 +7,16 @@ import InputTextbox from './../InputTextbox.tsx';
 
 describe('Input textbox component without errors', () => {
     beforeEach(() => {
-        render(<InputTextbox ariaLabel='Name' width={100} direction='column' errors='' />);
+//         const refInputTextbox = useRef('');
+//         render(<InputTextbox ariaLabel='Name'
+//                              width={100}
+//                              direction='column'
+//                              errors=''
+//                              ref={refInputTextbox} />);
+        render(<InputTextbox ariaLabel='Name'
+                             width={100}
+                             direction='column'
+                             errors='' />);
     });
 
     test('Input textbox displays => get by ariaLabel -Name-', () => {
@@ -39,9 +49,17 @@ describe('Input textbox component without errors', () => {
 
 describe('Input textbox component with errors', () => {
     beforeEach(() => {
-        render(<InputTextbox ariaLabel='Name' width={100} direction='row' errors='I found an error.' />);
+//         const refInputTextbox = useRef('');
+//         render(<InputTextbox ariaLabel='Name'
+//                              width={100}
+//                              direction='row'
+//                              errors='I found an error.'
+//                              ref={refInputTextbox} />);
+        render(<InputTextbox ariaLabel='Name'
+                             width={100}
+                             direction='row'
+                             errors='I found an error.' />);
     });
-
 
     test('Input textbox has row direction attribute', () => {
         const inputInnerContainer = screen.getByTestId('inputInnerContainer');

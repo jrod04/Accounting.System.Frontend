@@ -1,8 +1,8 @@
 .mainView {
     display: flex;
-    flex-direction: column;
-    height: inherit;
-    width: inherit;
+    flex-direction: row;
+    flex: 1;
+    width: auto;
     z-index: 0;
 }
 
@@ -13,7 +13,7 @@
 .cards {
     display: flex;
     justify-content: space-between;
-    margin: 10px 20px;
+    margin: 10px 10px;
     text-align: center;
     align-items: center;
     height: 150px;
@@ -32,10 +32,11 @@
     flex-direction: row;
 }
 
-.create {
+.options {
     display: flex;
-    flex-direction: row;
-    padding: 10px 0px 5px 15px;
+    flex-direction: column;
+    border-right: 1px solid rgba(0,0,0,0.2);
+    padding-top: 5px;
 }
 
 .createNew {
@@ -53,16 +54,6 @@
  .createNew:focus {
     border: none;
     outline: none;
-}
-
-.createNew > img {
-    height: inherit;
-    width: inherit;
-}
-
-.mainView > hr {
-    border: 1px solid rgba(0,0,0,0.15);
-    width: 97%;
 }
 
 .frmVerticalGallery {

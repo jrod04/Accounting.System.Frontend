@@ -7,8 +7,9 @@ interface iButtonIcon {
     ariaLabel: string;
     width: number;
     height: number;
+    value?: string | undefined;
     bgColor?: string | undefined;
-    handlerClick?: () => void | undefined;
+    cb_handlerClick?: () => void | undefined;
 };
 
 const ButtonIcon = ({...buttonIconProps}: iButtonIcon) => {
@@ -19,19 +20,20 @@ const ButtonIcon = ({...buttonIconProps}: iButtonIcon) => {
         ariaLabel,
         width,
         height,
+        value,
         bgColor,
-        handlerClick
+        cb_handlerClick
     } = buttonIconProps;
     const buttonIcon = <button aria-label={ariaLabel}
                                className={styles.buttonIcon}
                                style={{width: `${width}px`,
                                        height: `${height}px`,
                                        backgroundColor: bgColor ? bgColor : ''}}
-                               onClick={handlerClick}>
+                               onClick={cb_handlerClick}>
         <img src={icon} alt={alt} title={title} />
     </button>;
 
-    return(<>{buttonIcon}</>);
+    return(<div className={styles.buttonContainer}>{buttonIcon}&nbsp;&nbsp;{value}</div>);
 };
 
 export default ButtonIcon;
