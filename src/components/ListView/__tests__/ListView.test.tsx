@@ -35,11 +35,8 @@ describe('ListView component', () => {
 
     test('On init, aside view is hidden', () => {
         const listView = screen.getByTestId('List View Component');
-        const aside = screen.getByRole('form');
-        expect(aside).toHaveAttribute(
-            'class',
-            expect.stringContaining('hide')
-        );
+        const aside = screen.queryByRole('form');
+        expect(aside).toBeNull();
     });
 
     test('On user click, aside opens', async () => {

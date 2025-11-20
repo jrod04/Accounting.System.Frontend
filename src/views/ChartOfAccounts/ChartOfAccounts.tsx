@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type MouseEvent } from 'react';
 import ListView from './../../components/ListView/ListView.tsx';
 import { type iListViewGalleryItem } from './../../components/ListViewGallery/ListViewGallery.tsx';
 import Edit from './../../assets/edit.svg';
@@ -12,11 +12,14 @@ const ChartOfAccounts = () => {
 
     const galleryHeaders = ['headerLeftOperation', 'Code', 'Account', 'Type', 'headerRightOperation'];
     const galleryColumns = ['One', 'Two', 'Three'];
-    const galleryItems: iGalleryItem[] = accounts;
+    const galleryItems: iListViewGalleryItem[] = accounts;
 
     const aside = <div className={styles.aside}>Placeholder</div>;
 
     const cb_handlerLeftHeaderOperation = () => {
+        if (!openAside) setOpenAside(true);
+    };
+    const cb_handlerLeftFirstOperation = () => {
         if (!openAside) setOpenAside(true);
     };
 
@@ -33,10 +36,9 @@ const ChartOfAccounts = () => {
                       cb_handlerLeftHeaderOperation={cb_handlerLeftHeaderOperation}
 
                       leftFirstOperationImage={Edit}
-                      cb_handlerLeftOperation={() => {}}
+                      cb_handlerLeftFirstOperation={cb_handlerLeftFirstOperation}
 
-                      rightFirstOperationImage={Trashcan}
-                      cb_handlerRightOperation={() => {}} />
+                      rightFirstOperationImage={Trashcan} />
         </section>
     );
 };

@@ -15,6 +15,9 @@ export interface iListViewGalleryItem {
     itemClicked?: string | undefined;
 };
 
+type tHandlerHeaderOperation = ((e: MouseEvent) => void) | undefined;
+type tHandlerNotHeaderOperation = ((data: iListViewGalleryItem) => void)  | undefined;
+
 export interface iListViewGallery {
     ariaLabel: string;
     galleryHeaders: string[];
@@ -23,15 +26,16 @@ export interface iListViewGallery {
 
     leftHeaderImage?: string | undefined;
     rightHeaderImage?: string | undefined;
-    cb_handlerLeftHeaderOperation?: ((data: iListViewGalleryItem) => void) | undefined;
-    cb_handlerRightHeaderOperation?: ((data: iListViewGalleryItem) => void) | undefined;
+    cb_handlerLeftHeaderOperation?: tHandlerHeaderOperation;
+    cb_handlerRightHeaderOperation?: tHandlerHeaderOperation;
 
     leftFirstOperationImage?: string | undefined;
     rightFirstOperationImage?: string | undefined;
     rightSecondOperationImage?: string | undefined;
-    cb_handlerLeftFirstOperation?: ((data: iListViewGalleryItem) => void) | undefined;
-    cb_handlerRightFirstOperation?: ((data: iListViewGalleryItem) => void) | undefined;
-    cb_handlerRightSecondOperation?: ((data: iListViewGalleryItem) => void) | undefined;
+
+    cb_handlerLeftFirstOperation?: tHandlerNotHeaderOperation;
+    cb_handlerRightFirstOperation?: tHandlerNotHeaderOperation;
+    cb_handlerRightSecondOperation?: tHandlerNotHeaderOperation;
 };
 
 function ListViewGallery({...listViewGalleryInputs}: iListViewGallery) {
@@ -68,7 +72,7 @@ function ListViewGallery({...listViewGalleryInputs}: iListViewGallery) {
     const headers = galleryHeaders ? galleryHeaders : ddHeaders;
     const columns = galleryColumns ? galleryColumns : ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven'];
 
-    const handlerRightFirstOperation = (e: MouseEvent<HTMLButtonElement>) => {
+    const handlerRightFirstOperation = (e: MouseEvent) => {
         e.preventDefault();
         const id: string = (e.target as HTMLElement).id;
         const data = {...items.filter(item => parseInt(item.id) === parseInt(id))};
@@ -77,7 +81,7 @@ function ListViewGallery({...listViewGalleryInputs}: iListViewGallery) {
         if (cb_handlerRightFirstOperation && data[0]) cb_handlerRightFirstOperation(data[0]);
     };
 
-    const handlerRightSecondOperation = (e: MouseEvent<HTMLButtonElement>) => {
+    const handlerRightSecondOperation = (e: MouseEvent) => {
         e.preventDefault();
         const id: string = (e.target as HTMLElement).id;
         const data = {...items.filter(item => parseInt(item.id) === parseInt(id))};
@@ -86,7 +90,7 @@ function ListViewGallery({...listViewGalleryInputs}: iListViewGallery) {
         if (cb_handlerRightSecondOperation && data[0]) cb_handlerRightSecondOperation(data[0]);
     };
 
-    const handlerLeftOperation = (e: MouseEvent<HTMLButtonElement>) => {
+    const handlerLeftOperation = (e: MouseEvent) => {
         e.preventDefault();
         const id: string = (e.target as HTMLElement).id;
         const data = {...items.filter(item => parseInt(item.id) === parseInt(id))};

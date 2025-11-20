@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Backdrop from './../Backdrop/Backdrop.tsx';
 import Edit from './../../assets/edit.svg';
 import Trashcan from './../../assets/trashcan.svg';
 import ListViewGallery, { type iListViewGallery } from './../ListViewGallery/ListViewGallery.tsx';
@@ -35,26 +36,30 @@ function ListView ({...listViewInputs}: iListView) {
 
     return(
         <section data-testid='List View Component' className={styles.listViews}>
-            <form role='form' onSubmit={cb_handlerSubmitAside} className={openAside ? styles.aside : styles.hide} id={idForm}>
-                {aside}
-            </form>
-            <ListViewGallery ariaLabel={ariaLabel}
-                             galleryHeaders={galleryHeaders}
-                             galleryItems={galleryItems}
-                             galleryColumns={galleryColumns}
+            {openAside &&
+                <form role='form' onSubmit={cb_handlerSubmitAside} className={styles.aside} id={idForm}>
+                    {aside}
+                </form>
+            }
+            <Backdrop backdrop={openAside} loader={false}>
+                <ListViewGallery ariaLabel={ariaLabel}
+                                 galleryHeaders={galleryHeaders}
+                                 galleryItems={galleryItems}
+                                 galleryColumns={galleryColumns}
 
-                             leftHeaderImage={leftHeaderImage}
-                             rightHeaderImage={rightHeaderImage}
-                             cb_handlerLeftHeaderOperation={cb_handlerLeftHeaderOperation}
-                             cb_handlerRightHeaderOperation={cb_handlerRightHeaderOperation}
+                                 leftHeaderImage={leftHeaderImage}
+                                 rightHeaderImage={rightHeaderImage}
+                                 cb_handlerLeftHeaderOperation={cb_handlerLeftHeaderOperation}
+                                 cb_handlerRightHeaderOperation={cb_handlerRightHeaderOperation}
 
-                             leftFirstOperationImage={leftFirstOperationImage}
-                             cb_handlerLeftFirstOperation={cb_handlerLeftFirstOperation}
+                                 leftFirstOperationImage={leftFirstOperationImage}
+                                 cb_handlerLeftFirstOperation={cb_handlerLeftFirstOperation}
 
-                             rightFirstOperationImage={rightFirstOperationImage}
-                             rightSecondOperationImage={rightSecondOperationImage}
-                             cb_handlerRightFirstOperation={cb_handlerRightFirstOperation}
-                             cb_handlerRightSecondOperation={cb_handlerRightSecondOperation} />
+                                 rightFirstOperationImage={rightFirstOperationImage}
+                                 rightSecondOperationImage={rightSecondOperationImage}
+                                 cb_handlerRightFirstOperation={cb_handlerRightFirstOperation}
+                                 cb_handlerRightSecondOperation={cb_handlerRightSecondOperation} />
+            </Backdrop>
         </section>
     );
 };

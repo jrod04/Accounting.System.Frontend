@@ -1,8 +1,29 @@
 .mainBody {
     display: flex;
     flex-direction: column;
-    width: inherit;
+    width: 100%;
     background-color: rgba(0,0,0,0);
+}
+
+.thead > .row {
+    display: flex;
+    flex-direction: row;
+    position: sticky;
+    top: 0;
+    padding: 5px 0px 5px 0px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+    background-color: rgba(0,0,0,0);
+}
+
+.headers {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: inherit;
+    flex-grow: 1;
+    cursor: default;
 }
 
 .row {
@@ -25,25 +46,6 @@
 
 .row:hover {
     background-color: rgba(0,0,0,0.3);
-}
-
-.thead > .row {
-    display: flex;
-    padding: 5px 0px 5px 0px;
-    font-size: 14px;
-    border-bottom: 1px solid rgba(0,0,0,0.3);
-    background-color: rgba(0,0,0,0);
-}
-
-.headers {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    height: inherit;
-    flex-grow: 1;
-    width: 150px;
-    cursor: default;
 }
 
 .data {

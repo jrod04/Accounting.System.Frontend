@@ -1,3 +1,4 @@
+import { type MouseEvent } from 'react';
 import { beforeEach, describe, expect, test, vi, type MockedFunction } from 'vitest';
 import createUser from './../../../utils/createUser.tsx';
 import { screen, render } from '@testing-library/react';
@@ -5,24 +6,32 @@ import ListViewGallery, { type iListViewGalleryItem } from './../ListViewGallery
 import Trashcan from './../../../assets/trashcan.svg';
 
 let rerender: any, user: any;
-const handlerClick: MockedFunction<(data: iListViewGalleryItem) => string> | undefined = vi.fn(
+const handlerHeaderClick: MockedFunction<(e: MouseEvent) => string> | undefined = vi.fn(
+    (e: MouseEvent) => {
+        const id: string | undefined = (e.target as HTMLButtonElement).id;
+        return id;
+    }
+);
+const handlerNotHeaderClick: MockedFunction<(data: iListViewGalleryItem) => string> | undefined = vi.fn(
     (data: iListViewGalleryItem) => {
         const id: string = data.id;
         return id;
-    });
+    }
+);
 const galleryHeaders: string[] = ['Header 1'];
 const galleryColumns: string[] = ['One'];
 const galleryItems: iListViewGalleryItem[] = [{id: '1', One: 'Data 1'}];
 
 beforeEach(() => {
     user = createUser();
-    handlerClick.mockClear();
+    handlerHeaderClick.mockClear();
+    handlerNotHeaderClick.mockClear();
     const renderResult = render(<ListViewGallery ariaLabel='List View Gallery'
                                                  galleryHeaders={galleryHeaders}
                                                  galleryColumns={galleryColumns}
                                                  galleryItems={galleryItems}
                                                  rightFirstOperationImage={Trashcan}
-                                                 cb_handlerRightFirstOperation={handlerClick} />);
+                                                 cb_handlerRightFirstOperation={handlerNotHeaderClick} />);
     rerender = renderResult.rerender;
 });
 
@@ -45,7 +54,7 @@ describe('ListViewGallery component', () => {
     test('List view gallery right first operation calls successfully', async () => {
         const button = screen.getByRole('button', { name: 'Right First Operation-1' });
         await user.click(button);
-        expect(handlerClick).toBeCalledTimes(1);
+        expect(handlerNotHeaderClick).toBeCalledTimes(1);
     });
 
     test('List view gallery right second operation calls successfully', async () => {
@@ -54,10 +63,10 @@ describe('ListViewGallery component', () => {
                                   galleryColumns={galleryColumns}
                                   galleryItems={galleryItems}
                                   rightSecondOperationImage={Trashcan}
-                                  cb_handlerRightSecondOperation={handlerClick} />);
+                                  cb_handlerRightSecondOperation={handlerNotHeaderClick} />);
         const button = screen.getByRole('button', { name: 'Right Second Operation-1' });
         await user.click(button);
-        expect(handlerClick).toBeCalledTimes(1);
+        expect(handlerNotHeaderClick).toBeCalledTimes(1);
     });
 
     test('List view gallery left first operation calls successfully', async () => {
@@ -66,10 +75,10 @@ describe('ListViewGallery component', () => {
                                   galleryColumns={galleryColumns}
                                   galleryItems={galleryItems}
                                   leftFirstOperationImage={Trashcan}
-                                  cb_handlerLeftFirstOperation={handlerClick} />);
+                                  cb_handlerLeftFirstOperation={handlerNotHeaderClick} />);
         const button = screen.getByRole('button', { name: 'Left First Operation-1' });
         await user.click(button);
-        expect(handlerClick).toBeCalledTimes(1);
+        expect(handlerNotHeaderClick).toBeCalledTimes(1);
     });
 
     test('List view gallery displays correct styles.headerLeftOperation class', () => {
@@ -81,7 +90,7 @@ describe('ListViewGallery component', () => {
                                   galleryColumns={galleryColumns}
                                   galleryItems={galleryItems}
                                   leftHeaderImage={Trashcan}
-                                  cb_handlerLeftHeaderOperation={handlerClick} />);
+                                  cb_handlerLeftHeaderOperation={handlerHeaderClick} />);
         const headers = screen.getByRole('button', {name: 'headerLeftOperation'} );
         expect(headers).toHaveAttribute(
             'class',
@@ -98,15 +107,11 @@ describe('ListViewGallery component', () => {
                                   galleryColumns={galleryColumns}
                                   galleryItems={galleryItems}
                                   rightHeaderImage={Trashcan}
-                                  cb_handlerRightHeaderOperation={handlerClick} />);
+                                  cb_handlerRightHeaderOperation={handlerHeaderClick} />);
         const headers = screen.getByRole('button', {name: 'headerRightOperation'} );
         expect(headers).toHaveAttribute(
             'class',
             expect.stringContaining('headerRightOperation')
         );
-    });
-
-    test('', () => {
-
     });
 });

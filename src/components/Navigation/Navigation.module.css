@@ -1,6 +1,6 @@
 .nav {
     display: flex;
-    margin: 2px 2px;
+    margin: 2px 2px 0px 2px;
     width: 99.5%;
     height: 30px;
     border: 2px rgba(43,43,43,0.3) groove;
