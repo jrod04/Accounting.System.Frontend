@@ -17,7 +17,11 @@ const Backdrop = ({backdrop, loader, children}: PropsWithChildren<iBackdrop>) =>
                     </div>
                 </div>
             }
-            {!backdrop && children}
+            {!backdrop &&
+                <div className={styles.children}>
+                    {children}
+                </div>
+            }
         </>
     );
 };

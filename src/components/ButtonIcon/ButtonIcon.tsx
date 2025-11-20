@@ -1,3 +1,4 @@
+import { type MouseEvent } from 'react';
 import styles from './ButtonIcon.module.css';
 
 interface iButtonIcon {
@@ -9,7 +10,7 @@ interface iButtonIcon {
     height: number;
     value?: string | undefined;
     bgColor?: string | undefined;
-    cb_handlerClick?: () => void | undefined;
+    cb_handlerClick?: (e: MouseEvent<HTMLButtonElement>) => void | undefined;
 };
 
 const ButtonIcon = ({...buttonIconProps}: iButtonIcon) => {
@@ -30,7 +31,11 @@ const ButtonIcon = ({...buttonIconProps}: iButtonIcon) => {
                                        height: `${height}px`,
                                        backgroundColor: bgColor ? bgColor : ''}}
                                onClick={cb_handlerClick}>
-        <img src={icon} alt={alt} title={title} />
+        <img src={icon}
+             alt={alt}
+             title={title}
+             style={{width: `${width}px`,
+                     height: `${height}px`}} />
     </button>;
 
     return(<div className={styles.buttonContainer}>{buttonIcon}&nbsp;&nbsp;{value}</div>);

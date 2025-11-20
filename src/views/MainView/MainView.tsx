@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, type MouseEvent } from 'react';
 import Navigation from './../../components/Navigation/Navigation.tsx';
 import VerticalGallery from './../../components/VerticalGallery/VerticalGallery.tsx';
 import Backdrop from './../../components/Backdrop/Backdrop.tsx';
@@ -12,6 +12,7 @@ import ChartOfAccounts from './../../views/ChartOfAccounts/ChartOfAccounts.tsx';
 import LedgerIcon from './../../assets/ledger.svg';
 import ChartOfAccountsIcon from './../../assets/chartOfAccounts.svg';
 import FinancialStatementsIcon from './../../assets/financialStatements.svg';
+import Home from './../../assets/home.svg';
 import styles from './MainView.module.css';
 
 const items = [{id: '1', title: 'Reliable Rental Properties in Michigan, LLC', subtitle: ''},
@@ -35,8 +36,8 @@ const MainView = () => {
 
     const cb_handlerToggleAddBusiness = handlerToggleAddBusiness;
 
-    const handlerSetView = (e: Event) => {
-        setView(e.target.title);
+    const handlerSetView = (e: MouseEvent<HTMLButtonElement>) => {
+        setView((e.target as HTMLButtonElement).title);
     };
 
     const frmAddBusinessArea = <form className={styles.frmAddBusiness}>
@@ -51,15 +52,13 @@ const MainView = () => {
 
     const cards = items.map(item =>
        <div className={styles.cards} key={item.title}>
-            <Card area={item.title}/>
+            <Card area={<button className={styles.cardButton} onClick={handlerSetView}>{item.title}</button>}/>
        </div>
     );
 
 //     useEffect(() => {
 //         if (refInputTextbox.current) refInputTextbox.current.focus();
 //     });
-//                         {view === 'Home' && cards}
-//                         {view === 'Chart of Accounts' && <ChartOfAccounts />}
 
    return(
         <>
@@ -73,41 +72,58 @@ const MainView = () => {
 
                 <section className={styles.mainView}>
                     <div className={styles.options}>
-                        <ButtonIcon ariaLabel='Add Business Icon Button'
-                                    icon={CreateNew}
+                        <ButtonIcon ariaLabel='Home Icon Button'
+                                    icon={Home}
                                     width={30}
                                     height={30}
-                                    alt='Add Business'
-                                    title='Add Business'
-                                    value='Add Business'
-                                    cb_handlerClick={cb_handlerToggleAddBusiness} />
-                        <ButtonIcon ariaLabel='Chart of Accounts Icon Button'
-                                    icon={ChartOfAccountsIcon}
-                                    width={30}
-                                    height={30}
-                                    alt='Chart of Accounts'
-                                    title='Chart of Accounts'
-                                    value='Chart of Accounts'
+                                    alt='Home'
+                                    title='Home'
+                                    value='Home'
                                     cb_handlerClick={handlerSetView} />
-                        <ButtonIcon ariaLabel='Ledger Icon Button'
-                                    icon={LedgerIcon}
-                                    width={30}
-                                    height={30}
-                                    alt='Ledger'
-                                    title='Ledger'
-                                    value='Ledger'
-                                    cb_handlerClick={() => {}} />
-                        <ButtonIcon ariaLabel='Financial Statements'
-                                    icon={FinancialStatementsIcon}
-                                    width={30}
-                                    height={30}
-                                    alt='Financial Statements'
-                                    title='Financial Statements'
-                                    value='Financial Statements'
-                                    cb_handlerClick={() => {}} />
+                        {['Home', 'Chart of Accounts', 'Add Business'].includes(view) &&
+                            <div className={styles.suboptions}>
+                                <ButtonIcon ariaLabel='Add Business Icon Button'
+                                            icon={CreateNew}
+                                            width={25}
+                                            height={25}
+                                            alt='Add Business'
+                                            title='Add Business'
+                                            value='Add Business'
+                                            cb_handlerClick={cb_handlerToggleAddBusiness} />
+                                <ButtonIcon ariaLabel='Chart of Accounts Icon Button'
+                                            icon={ChartOfAccountsIcon}
+                                            width={25}
+                                            height={25}
+                                            alt='Chart of Accounts'
+                                            title='Chart of Accounts'
+                                            value='Chart of Accounts'
+                                            cb_handlerClick={handlerSetView} />
+                            </div>
+                        }
+                        {!['Home', 'Chart of Accounts', 'Add Business'].includes(view) &&
+                            <>
+                                <ButtonIcon ariaLabel='Ledger Icon Button'
+                                            icon={LedgerIcon}
+                                            width={30}
+                                            height={30}
+                                            alt='Ledger'
+                                            title='Ledger'
+                                            value='Ledger'
+                                            cb_handlerClick={ () => {} } />
+                                <ButtonIcon ariaLabel='Financial Statements'
+                                            icon={FinancialStatementsIcon}
+                                            width={30}
+                                            height={30}
+                                            alt='Financial Statements'
+                                            title='Financial Statements'
+                                            value='Financial Statements'
+                                            cb_handlerClick={ ()=>{} } />
+                            </>
+                        }
                     </div>
                     <div className={styles.mainContainer}>
-                        <ChartOfAccounts />
+                        {view === 'Home' && cards}
+                        {view === 'Chart of Accounts' && <ChartOfAccounts />}
                     </div>
                     {addBusiness &&
                         <section className={styles.frmVerticalGallery}>
