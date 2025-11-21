@@ -3,6 +3,7 @@ import ListView from './../../components/ListView/ListView.tsx';
 import { type iListViewGalleryItem } from './../../components/ListViewGallery/ListViewGallery.tsx';
 import UtilityContainer from './../../components/UtilityContainer/UtilityContainer.tsx';
 import InputSearchTextbox from './../../components/InputSearchTextbox/InputSearchTextbox.tsx';
+import SearchDateRange from './../../components/SearchDateRange/SearchDateRange.tsx';
 import ButtonIcon from './../../components/ButtonIcon/ButtonIcon.tsx';
 import Edit from './../../assets/edit.svg';
 import Trashcan from './../../assets/trashcan.svg';
@@ -16,7 +17,6 @@ const ChartOfAccounts = () => {
     const [searchValue, setSearchValue] = useState<string>('Search...');
 
     const galleryHeaders = ['headerLeftOperation', 'Code', 'Account', 'Type', 'headerRightOperation'];
-    const galleryColumns = ['One', 'Two', 'Three'];
     const [galleryItems, setGalleryItems] = useState<iListViewGalleryItem[]>(accounts);
 
     const aside = <div className={styles.aside}>Placeholder</div>;
@@ -34,17 +34,25 @@ const ChartOfAccounts = () => {
     };
 
     const cb_handlerOnFocus = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value.toLowerCase().trim() === 'search...') {
-           setSearchValue('');
-           console.log(e);
-        };
+        if (e.target.value.toLowerCase().trim() === 'search...') setSearchValue('');
     };
 
     const cb_handlerOnBlur = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.value.trim() === '') setSearchValue('Search...');
     };
 
+
+    const cb_handlerSearchDateRange = (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+    };
+
+    const cb_handlerCheckError = (e: MouseEvent<HTMLButtonElement>, error: string) => {
+        e.preventDefault();
+    };
+
     const inputContainers = [
+        <SearchDateRange cb_handlerClick={cb_handlerSearchDateRange}
+                         cb_handlerCheckError={cb_handlerCheckError} />,
         <div className={styles.inputContainers}>
             <InputSearchTextbox ariaLabel='Chart of Accounts Search'
                                 textboxWidth={200}
@@ -88,8 +96,7 @@ const ChartOfAccounts = () => {
                       idForm='1'
                       ariaLabel='Chart of Accounts List View'
                       galleryHeaders={galleryHeaders}
-                      galleryColumns={galleryColumns}
-                      galleryItems={galleryItems}
+                      galleryItems={galleryItems.slice(0,75)}
 
                       leftFirstOperationImage={Edit}
                       cb_handlerLeftFirstOperation={cb_handlerLeftFirstOperation}

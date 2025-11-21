@@ -16,7 +16,7 @@ describe('Non-submit button component', () => {
     let rerender: any;
 
     beforeEach(() => {
-        const renderResult = render(<Button id='1' value='value' width={75} cb_handlerOperation={handlerClick} bgColor='rgba(0,0,0,1) '/>);
+        const renderResult = render(<Button id='1' value='value' width={75} cb_handlerClick={handlerClick} bgColor='rgba(0,0,0,1) '/>);
         rerender = renderResult.rerender;
     });
 
@@ -33,7 +33,7 @@ describe('Non-submit button component', () => {
     });
 
     test('Non-submit button displays default color', () => {
-        rerender(<Button id='1' value='value' width={75} cb_handlerOperation={handlerClick} />);
+        rerender(<Button id='1' value='value' width={75} cb_handlerClick={handlerClick} />);
         const button = screen.getByRole('button');
         expect(button).toHaveStyle({
             backgroundColor: 'rgba(217,215,205,1)'
@@ -70,7 +70,7 @@ describe('Non-submit button component', () => {
 describe('Submit button component', () => {
     let rerender: any;
     beforeEach(() => {
-        const renderResult = render(<Button input={true} id='1' value='value' width={75} cb_handlerOperation={handlerClick} bgColor='rgba(0,0,0,1)' />);
+        const renderResult = render(<Button input={true} id='1' value='value' width={75} cb_handlerClick={handlerClick} bgColor='rgba(0,0,0,1)' />);
         rerender = renderResult.rerender;
     });
 
@@ -87,7 +87,7 @@ describe('Submit button component', () => {
     });
 
     test('Non-submit button displays default color', () => {
-        rerender(<Button id='1' value='value' width={75} cb_handlerOperation={handlerClick} />);
+        rerender(<Button id='1' value='value' width={75} cb_handlerClick={handlerClick} />);
         const button = screen.getByRole('button');
         expect(button).toHaveStyle({
             backgroundColor: 'rgba(217,215,205,1)'

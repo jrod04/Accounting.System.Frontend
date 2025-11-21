@@ -8,7 +8,7 @@ export interface iButton {
     width: number;
     bgColor?: string;
     input?: boolean;
-    cb_handlerOperation?: (event: MouseEvent<HTMLButtonElement>) => void;
+    cb_handlerClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 };
 
 const Button = ({...buttonProps}: iButton) => {
@@ -18,7 +18,7 @@ const Button = ({...buttonProps}: iButton) => {
         id,
         value,
         width,
-        cb_handlerOperation
+        cb_handlerClick
     } = buttonProps;
 
     const backgroundColor: string = bgColor ? bgColor : 'rgba(217,215,205,1)';
@@ -29,7 +29,7 @@ const Button = ({...buttonProps}: iButton) => {
         btn = <button className={styles.btn}
                       style={{width: width, backgroundColor: backgroundColor}}
                       id={id}
-                      onClick={cb_handlerOperation}>
+                      onClick={cb_handlerClick}>
                       {value}
               </button>;
     };
@@ -38,7 +38,8 @@ const Button = ({...buttonProps}: iButton) => {
         btn = <button className={styles.btn}
                       type='submit'
                       style={{width: width, backgroundColor: backgroundColor}}
-                      id={id}>
+                      id={id}
+                      onClick={cb_handlerClick}>
                       {value}
               </button>;
     };

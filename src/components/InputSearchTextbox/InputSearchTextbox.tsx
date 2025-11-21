@@ -35,7 +35,10 @@ const InputSearchTextbox = ({...inputSearchTextboxInputs}: iInputSearchTextbox) 
     return(
         <div className={styles.container}>
             <input className={styles.input}
-                   style={{width: textboxWidth, height: textboxHeight, zIndex: '2'}}
+                   style={{width: textboxWidth,
+                           height: textboxHeight,
+                           zIndex: '2',
+                           color: searchValue === 'Search...' ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,1)'}}
                    aria-label={ariaLabel}
                    type='textbox'
                    onChange={cb_handlerOnChange}

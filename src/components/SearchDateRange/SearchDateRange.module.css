@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.container > input {
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.fromDateError {
+    border: 2px solid rgba(199,0,57,1);
+}
+
+.toDateError {
+    border: 2px solid rgba(199,0,57,1);
+}

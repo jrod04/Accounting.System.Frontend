@@ -19,7 +19,6 @@ const handlerNotHeaderClick: MockedFunction<(data: iListViewGalleryItem) => stri
     }
 );
 const galleryHeaders: string[] = ['Header 1'];
-const galleryColumns: string[] = ['One'];
 const galleryItems: iListViewGalleryItem[] = [{id: '1', One: 'Data 1'}];
 
 beforeEach(() => {
@@ -28,7 +27,6 @@ beforeEach(() => {
     handlerNotHeaderClick.mockClear();
     const renderResult = render(<ListViewGallery ariaLabel='List View Gallery'
                                                  galleryHeaders={galleryHeaders}
-                                                 galleryColumns={galleryColumns}
                                                  galleryItems={galleryItems}
                                                  rightFirstOperationImage={Trashcan}
                                                  cb_handlerRightFirstOperation={handlerNotHeaderClick} />);
@@ -60,7 +58,6 @@ describe('ListViewGallery component', () => {
     test('List view gallery right second operation calls successfully', async () => {
         rerender(<ListViewGallery ariaLabel='List View Gallery'
                                   galleryHeaders={galleryHeaders}
-                                  galleryColumns={galleryColumns}
                                   galleryItems={galleryItems}
                                   rightSecondOperationImage={Trashcan}
                                   cb_handlerRightSecondOperation={handlerNotHeaderClick} />);
@@ -72,7 +69,6 @@ describe('ListViewGallery component', () => {
     test('List view gallery left first operation calls successfully', async () => {
         rerender(<ListViewGallery ariaLabel='List View Gallery'
                                   galleryHeaders={galleryHeaders}
-                                  galleryColumns={galleryColumns}
                                   galleryItems={galleryItems}
                                   leftFirstOperationImage={Trashcan}
                                   cb_handlerLeftFirstOperation={handlerNotHeaderClick} />);
@@ -83,11 +79,9 @@ describe('ListViewGallery component', () => {
 
     test('List view gallery displays correct styles.headerLeftOperation class', () => {
         const galleryHeaders: string[] = ['headerLeftOperation'];
-        const galleryColumns: string[] = ['One'];
 
         rerender(<ListViewGallery ariaLabel='List View Gallery'
                                   galleryHeaders={galleryHeaders}
-                                  galleryColumns={galleryColumns}
                                   galleryItems={galleryItems}
                                   leftHeaderImage={Trashcan}
                                   cb_handlerLeftHeaderOperation={handlerHeaderClick} />);
@@ -100,11 +94,9 @@ describe('ListViewGallery component', () => {
 
     test('List view gallery displays correct styles.headerRightOperation class', () => {
         const galleryHeaders: string[] = ['headerRightOperation'];
-        const galleryColumns: string[] = ['One'];
 
         rerender(<ListViewGallery ariaLabel='List View Gallery'
                                   galleryHeaders={galleryHeaders}
-                                  galleryColumns={galleryColumns}
                                   galleryItems={galleryItems}
                                   rightHeaderImage={Trashcan}
                                   cb_handlerRightHeaderOperation={handlerHeaderClick} />);

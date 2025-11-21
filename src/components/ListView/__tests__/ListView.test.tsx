@@ -8,7 +8,6 @@ import Edit from './../../../assets/edit.svg';
 let openAside = false;
 const handlerClick = vi.fn(() => !openAside );
 const galleryHeaders: string[] = ['Header 1'];
-const galleryColumns: string[] = ['One'];
 const galleryItems: iListViewGalleryItem[] = [{id: '1', One: 'Data 1'}];
 let rerender: any;
 
@@ -20,7 +19,6 @@ beforeEach(() => {
                                           idForm='1'
                                           ariaLabel='List View'
                                           galleryHeaders={galleryHeaders}
-                                          galleryColumns={galleryColumns}
                                           galleryItems={galleryItems}
                                           leftFirstOperationImage={Edit}
                                           cb_handlerLeftFirstOperation={handlerClick} />)
@@ -50,7 +48,6 @@ describe('ListView component', () => {
                            idForm='1'
                            ariaLabel='List View'
                            galleryHeaders={galleryHeaders}
-                           galleryColumns={galleryColumns}
                            galleryItems={galleryItems}
                            leftFirstOperationImage={Edit}
                            cb_handlerLeftFirstOperation={handlerClick} />)

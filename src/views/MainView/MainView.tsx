@@ -23,7 +23,7 @@ const MainView = () => {
     const [addBusiness, setAddBusiness] = useState<boolean>(false);
     const [view, setView] = useState<string>('Home');
 
-    const refInputTextbox = useRef<null>(null);
+    const refInputTextbox = useRef<HTMLInputElement | null>(null);
 
     const cb_handlerCloseNotify = (): void => {
         setNotify(false);
@@ -44,8 +44,8 @@ const MainView = () => {
             <InputTextbox ariaLabel='' width={175} direction='column' errors='' ref={refInputTextbox} />
         </div>
         <div className={styles.frmButtons}>
-            <Button id='1' value='Cancel' width={75} cb_handlerOperation={cb_handlerToggleAddBusiness} />
-            <Button id='1' value='Submit' width={75} cb_handlerOperation={() => {}} />
+            <Button id='1' value='Cancel' width={75} cb_handlerClick={cb_handlerToggleAddBusiness} />
+            <Button id='1' value='Submit' width={75} cb_handlerClick={() => {}} />
         </div>
     </form>;
 
@@ -55,9 +55,9 @@ const MainView = () => {
        </div>
     );
 
-//     useEffect(() => {
-//         if (refInputTextbox.current) refInputTextbox.current.focus();
-//     });
+    useEffect(() => {
+        if (refInputTextbox.current) refInputTextbox.current.focus();
+    });
 
 //                         {view === 'Home' && cards}
 //                         {view === 'Chart of Accounts' && <ChartOfAccounts />}
@@ -148,3 +148,5 @@ const MainView = () => {
 };
 
 export default MainView;
+
+//TODO: Add refInputTextbox to addBusinessVerticalGallery

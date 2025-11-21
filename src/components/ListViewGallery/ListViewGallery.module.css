@@ -5,11 +5,20 @@
     background-color: rgba(0,0,0,0);
 }
 
-.thead > .row {
-    position: sticky;
+.thead {
+    display: relative;
     top: 0;
-    display: flex;
-    flex-direction: row;
+    position: sticky;
+    background-color: rgba(255,255,255,1);
+}
+.thead > .row {
+    padding: 5px 0px 5px 0px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+    background-color: rgba(0,0,0,0);
+}
+
+.thead > .row:hover {
     padding: 5px 0px 5px 0px;
     font-size: 14px;
     border-bottom: 1px solid rgba(0,0,0,0.3);

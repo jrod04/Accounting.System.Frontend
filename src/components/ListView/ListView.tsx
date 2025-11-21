@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Backdrop from './../Backdrop/Backdrop.tsx';
 import Edit from './../../assets/edit.svg';
 import Trashcan from './../../assets/trashcan.svg';
-import ListViewGallery, { type iListViewGallery } from './../ListViewGallery/ListViewGallery.tsx';
+import ListViewGallery, { type iListViewGallery, type iListViewGalleryItem} from './../ListViewGallery/ListViewGallery.tsx';
 import styles from './ListView.module.css';
 
 interface iListView extends iListViewGallery {
@@ -20,7 +20,6 @@ function ListView ({...listViewInputs}: iListView) {
         cb_handlerSubmitAside,
         ariaLabel,
         galleryHeaders,
-        galleryColumns,
         galleryItems,
         leftHeaderImage,
         rightHeaderImage,
@@ -45,7 +44,6 @@ function ListView ({...listViewInputs}: iListView) {
                 <ListViewGallery ariaLabel={ariaLabel}
                                  galleryHeaders={galleryHeaders}
                                  galleryItems={galleryItems}
-                                 galleryColumns={galleryColumns}
 
                                  leftHeaderImage={leftHeaderImage}
                                  rightHeaderImage={rightHeaderImage}
