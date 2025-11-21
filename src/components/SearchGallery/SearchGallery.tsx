@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, type ChangeEvent } from 'react';
 import Gallery from './../Gallery/Gallery.js';
 import { type iGalleryItem } from './../Gallery/Gallery.js';
 import styles from './SearchGallery.module.css';
@@ -24,8 +23,8 @@ function SearchGallery({...searchGalleryInputs}: iSearchGallery) {
         if (searchValue === 'Search...' ) setSearchValue('');
     };
 
-    const handlerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchValue(e.target?.value);
+    const handlerChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearchValue(e.target.value);
     };
 
     const handlerBlur = () => {

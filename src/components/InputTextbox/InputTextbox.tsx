@@ -34,8 +34,7 @@ const FormInputTextBox = ({...formInputTextBoxProps}: iFormInputTextBox) => {
                        className={styles.input}
                        style={{border: errors ? `1.5px solid ${constants.RED}` : '1px solid rgba(0,0,0,1)',
                                outline: errors ? `1.5px solid ${constants.RED}` : '1px solid rgba(0,0,0,1)' }} />
-                 {
-                     direction === 'row' &&
+                 {direction === 'row' &&
                      <div className={styles.placeholder}>{ariaLabel}</div>
                  }
             </div>

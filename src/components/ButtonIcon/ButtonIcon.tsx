@@ -26,10 +26,11 @@ const ButtonIcon = ({...buttonIconProps}: iButtonIcon) => {
         cb_handlerClick
     } = buttonIconProps;
     const buttonIcon = <button aria-label={ariaLabel}
-                               className={styles.buttonIcon}
+                               className={styles.btn}
                                style={{width: `${width}px`,
                                        height: `${height}px`,
-                                       backgroundColor: bgColor ? bgColor : ''}}
+                                       backgroundColor: bgColor ? bgColor : '',
+                                       cursor: cb_handlerClick ? 'pointer' : 'default'}}
                                onClick={cb_handlerClick}>
         <img src={icon}
              alt={alt}
@@ -38,7 +39,7 @@ const ButtonIcon = ({...buttonIconProps}: iButtonIcon) => {
                      height: `${height}px`}} />
     </button>;
 
-    return(<div className={styles.buttonContainer}>{buttonIcon}&nbsp;&nbsp;{value}</div>);
+    return(<div className={styles.buttonContainer}>{buttonIcon}&nbsp;{value}</div>);
 };
 
 export default ButtonIcon;

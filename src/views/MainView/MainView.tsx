@@ -18,7 +18,6 @@ import styles from './MainView.module.css';
 const items = [{id: '1', title: 'Reliable Rental Properties in Michigan, LLC', subtitle: ''},
               {id: '2', title: 'Reliable Rental Properties in North Carolina, LLC', subtitle: ''}];
 
-
 const MainView = () => {
     const [notify, setNotify] = useState<boolean>(false);
     const [addBusiness, setAddBusiness] = useState<boolean>(false);
@@ -59,6 +58,9 @@ const MainView = () => {
 //     useEffect(() => {
 //         if (refInputTextbox.current) refInputTextbox.current.focus();
 //     });
+
+//                         {view === 'Home' && cards}
+//                         {view === 'Chart of Accounts' && <ChartOfAccounts />}
 
    return(
         <>
@@ -122,8 +124,7 @@ const MainView = () => {
                         }
                     </div>
                     <div className={styles.mainContainer}>
-                        {view === 'Home' && cards}
-                        {view === 'Chart of Accounts' && <ChartOfAccounts />}
+                        <ChartOfAccounts />
                     </div>
                     {addBusiness &&
                         <section className={styles.frmVerticalGallery}>

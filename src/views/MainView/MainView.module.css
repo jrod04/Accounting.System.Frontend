@@ -3,12 +3,9 @@
     flex-direction: row;
     width: 99.6%;
     top: 0;
-    z-index: 0;
     height: 94vh;
     overflow-y: auto;
-    margin: auto;
-    top: 0;
-    left: 0;
+    z-index: 0;
 }
 
 .nav {
