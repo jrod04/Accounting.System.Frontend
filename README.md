@@ -6,7 +6,7 @@ I currently have 2 LLCs that I use to manage my rental properties to limit my pe
 ## Tools & Technologies
 JavaScript: React & TypeScript  
 HTML5  
-CSS
+CSS  
 Unit testing: Vitest
 
 ## Skills Demonstrated
