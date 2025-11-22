@@ -5,16 +5,37 @@ import ReverseControl from './../../assets/revControl.svg';
 import ForwardControl from './../../assets/fwdControl.svg';
 import Edit from './../../assets/edit.svg';
 import Trashcan from './../../assets/trashcan.svg';
-import ListViewGallery, { type iListViewGallery, type iListViewGalleryItem} from './../ListViewGallery/ListViewGallery.tsx';
+import ListViewGallery, { type iListViewGalleryItem} from './../ListViewGallery/ListViewGallery.tsx';
 import styles from './ListView.module.css';
 
-interface iListView extends iListViewGallery {
+type tHandlerHeaderOperation = ((e: MouseEvent) => void) | undefined;
+type tHandlerNotHeaderOperation = ((data: iListViewGalleryItem) => void)  | undefined;
+
+export interface iListView {
     openAside: boolean;
     showControls?: boolean | undefined;
-    controlInterval: number;
     aside?: React.ReactNode | undefined;
     idForm?: string | undefined;
     cb_handlerSubmitAside?: () => void | undefined;
+
+    controlInterval: number;
+
+    ariaLabel: string;
+    galleryHeaders: string[];
+    galleryItems: iListViewGalleryItem[];
+
+    leftHeaderImage?: string | undefined;
+    rightHeaderImage?: string | undefined;
+    cb_handlerLeftHeaderOperation?: tHandlerHeaderOperation;
+    cb_handlerRightHeaderOperation?: tHandlerHeaderOperation;
+
+    leftFirstOperationImage?: string | undefined;
+    rightFirstOperationImage?: string | undefined;
+    rightSecondOperationImage?: string | undefined;
+    cb_handlerLeftFirstOperation?: tHandlerNotHeaderOperation;
+    cb_handlerRightFirstOperation?: tHandlerNotHeaderOperation;
+    cb_handlerRightSecondOperation?: tHandlerNotHeaderOperation;
+
 };
 
 function ListView ({...listViewInputs}: iListView) {
@@ -82,7 +103,7 @@ function ListView ({...listViewInputs}: iListView) {
                                     textSide='right'
                                     cb_handlerClick={cb_decreaseControlCount} />
                         <div className={styles.controlCounter}>
-                            <strong>{startSlice}-{endSlice} of {galleryItems.length}</strong>
+                            <strong>{} of {galleryItems.length}</strong>
                         </div>
                         <ButtonIcon ariaLabel='Forward Control Icon'
                                     icon={ForwardControl}
@@ -99,6 +120,9 @@ function ListView ({...listViewInputs}: iListView) {
                 <ListViewGallery ariaLabel={ariaLabel}
                                  galleryHeaders={galleryHeaders}
                                  galleryItems={filteredGalleryItems}
+
+                                 controlCount={controlCount}
+                                 controlInterval={controlInterval}
 
                                  leftHeaderImage={leftHeaderImage}
                                  rightHeaderImage={rightHeaderImage}

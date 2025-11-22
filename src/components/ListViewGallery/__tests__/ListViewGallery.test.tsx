@@ -29,7 +29,9 @@ beforeEach(() => {
                                                  galleryHeaders={galleryHeaders}
                                                  galleryItems={galleryItems}
                                                  rightFirstOperationImage={Trashcan}
-                                                 cb_handlerRightFirstOperation={handlerNotHeaderClick} />);
+                                                 cb_handlerRightFirstOperation={handlerNotHeaderClick}
+                                                 controlCount={0}
+                                                 controlInterval={15} />);
     rerender = renderResult.rerender;
 });
 
@@ -60,7 +62,9 @@ describe('ListViewGallery component', () => {
                                   galleryHeaders={galleryHeaders}
                                   galleryItems={galleryItems}
                                   rightSecondOperationImage={Trashcan}
-                                  cb_handlerRightSecondOperation={handlerNotHeaderClick} />);
+                                  cb_handlerRightSecondOperation={handlerNotHeaderClick}
+                                  controlCount={0}
+                                  controlInterval={15} />);
         const button = screen.getByRole('button', { name: 'Right Second Operation-1' });
         await user.click(button);
         expect(handlerNotHeaderClick).toBeCalledTimes(1);
@@ -71,7 +75,9 @@ describe('ListViewGallery component', () => {
                                   galleryHeaders={galleryHeaders}
                                   galleryItems={galleryItems}
                                   leftFirstOperationImage={Trashcan}
-                                  cb_handlerLeftFirstOperation={handlerNotHeaderClick} />);
+                                  cb_handlerLeftFirstOperation={handlerNotHeaderClick}
+                                  controlCount={0}
+                                  controlInterval={15} />);
         const button = screen.getByRole('button', { name: 'Left First Operation-1' });
         await user.click(button);
         expect(handlerNotHeaderClick).toBeCalledTimes(1);
@@ -84,7 +90,9 @@ describe('ListViewGallery component', () => {
                                   galleryHeaders={galleryHeaders}
                                   galleryItems={galleryItems}
                                   leftHeaderImage={Trashcan}
-                                  cb_handlerLeftHeaderOperation={handlerHeaderClick} />);
+                                  cb_handlerLeftHeaderOperation={handlerHeaderClick}
+                                  controlCount={0}
+                                  controlInterval={15} />);
         const headers = screen.getByRole('button', {name: 'headerLeftOperation'} );
         expect(headers).toHaveAttribute(
             'class',
@@ -99,7 +107,9 @@ describe('ListViewGallery component', () => {
                                   galleryHeaders={galleryHeaders}
                                   galleryItems={galleryItems}
                                   rightHeaderImage={Trashcan}
-                                  cb_handlerRightHeaderOperation={handlerHeaderClick} />);
+                                  cb_handlerRightHeaderOperation={handlerHeaderClick}
+                                  controlCount={0}
+                                  controlInterval={15} />);
         const headers = screen.getByRole('button', {name: 'headerRightOperation'} );
         expect(headers).toHaveAttribute(
             'class',

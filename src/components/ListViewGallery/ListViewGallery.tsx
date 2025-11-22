@@ -1,4 +1,5 @@
 import React, { useState, type MouseEvent, memo } from 'react';
+import { type iListView } from './../ListView/ListView.tsx';
 import styles from './ListViewGallery.module.css';
 
 type tListViewGalleryItemKeys = keyof iListViewGalleryItem;
@@ -15,21 +16,16 @@ export interface iListViewGalleryItem {
     itemClicked?: string | undefined;
 };
 
-interface iListViewGalleryRow {
+type tOMITiListViewGallery = Omit<iListViewGallery, 'ariaLabel' | 'controlCount' | 'controlInterval' | 'galleryHeaders'>;
+
+interface iListViewGalleryRow extends tOMITiListViewGallery {
     item: iListViewGalleryItem;
-    items: iListViewGalleryItem[];
-    leftFirstOperationImage?: string | undefined;
-    rightFirstOperationImage?: string | undefined;
-    rightSecondOperationImage?: string | undefined;
-    cb_handlerLeftFirstOperation?: tHandlerNotHeaderOperation;
-    cb_handlerRightFirstOperation?: tHandlerNotHeaderOperation;
-    cb_handlerRightSecondOperation?: tHandlerNotHeaderOperation;
 };
 
 const ListViewGalleryRow = ({...listViewGalleryRowInputs}: iListViewGalleryRow) => {
     const {
         item,
-        items,
+        galleryItems,
         leftFirstOperationImage,
         rightFirstOperationImage,
         rightSecondOperationImage,
@@ -40,28 +36,28 @@ const ListViewGalleryRow = ({...listViewGalleryRowInputs}: iListViewGalleryRow) 
 
     let i = 0;
 
-    const handlerRightFirstOperation = (e: MouseEvent) => {
+    const handlerRightFirstOperation = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const id: string = (e.target as HTMLElement).id;
-        const data = {...items?.filter(item => parseInt(item.id) === parseInt(id))};
+        const data = {...galleryItems.filter(item => parseInt(item.id) === parseInt(id))};
 
         if (data[0]) data[0].itemClicked = 'Right First';
         if (cb_handlerRightFirstOperation && data[0]) cb_handlerRightFirstOperation(data[0]);
     };
 
-    const handlerRightSecondOperation = (e: MouseEvent) => {
+    const handlerRightSecondOperation = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const id: string = (e.target as HTMLElement).id;
-        const data = {...items?.filter(item => parseInt(item.id) === parseInt(id))};
+        const data = {...galleryItems.filter(item => parseInt(item.id) === parseInt(id))};
 
         if (data[0]) data[0].itemClicked = 'Right Second';
         if (cb_handlerRightSecondOperation && data[0]) cb_handlerRightSecondOperation(data[0]);
     };
 
-    const handlerLeftOperation = (e: MouseEvent) => {
+    const handlerLeftOperation = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const id: string = (e.target as HTMLElement).id;
-        const data = {...items?.filter(item => parseInt(item.id) === parseInt(id))};
+        const data = {...galleryItems.filter(item => parseInt(item.id) === parseInt(id))};
 
         if (data[0]) data[0].itemClicked = 'Left';
         if (cb_handlerLeftFirstOperation && data[0]) cb_handlerLeftFirstOperation(data[0]);
@@ -126,25 +122,10 @@ const ListViewGalleryRow = ({...listViewGalleryRowInputs}: iListViewGalleryRow) 
     )
 };
 
-type tHandlerHeaderOperation = ((e: MouseEvent) => void) | undefined;
-type tHandlerNotHeaderOperation = ((data: iListViewGalleryItem) => void)  | undefined;
+type tOMITiListView = Omit<iListView, 'openAside' | 'showControls' | 'aside' | 'idForm' | 'cb_handlerSubmitAside'>;
 
-export interface iListViewGallery {
-    ariaLabel: string;
-    galleryHeaders: string[];
-    galleryItems: iListViewGalleryItem[];
-
-    leftHeaderImage?: string | undefined;
-    rightHeaderImage?: string | undefined;
-    cb_handlerLeftHeaderOperation?: tHandlerHeaderOperation;
-    cb_handlerRightHeaderOperation?: tHandlerHeaderOperation;
-
-    leftFirstOperationImage?: string | undefined;
-    rightFirstOperationImage?: string | undefined;
-    rightSecondOperationImage?: string | undefined;
-    cb_handlerLeftFirstOperation?: tHandlerNotHeaderOperation;
-    cb_handlerRightFirstOperation?: tHandlerNotHeaderOperation;
-    cb_handlerRightSecondOperation?: tHandlerNotHeaderOperation;
+export interface iListViewGallery extends tOMITiListView {
+    controlCount: number;
 };
 
 const ListViewGallery = ({...listViewGalleryInputs}: iListViewGallery) => {
@@ -205,7 +186,7 @@ const ListViewGallery = ({...listViewGalleryInputs}: iListViewGallery) => {
                 {items.map(item => (
                     <tr key={`row-${item.id}`} className={styles.row}>
                         <ListViewGalleryRow item={item}
-                                            items={items}
+                                            galleryItems={items}
                                             leftFirstOperationImage={leftFirstOperationImage}
                                             rightFirstOperationImage={rightFirstOperationImage}
                                             rightSecondOperationImage={rightSecondOperationImage}
