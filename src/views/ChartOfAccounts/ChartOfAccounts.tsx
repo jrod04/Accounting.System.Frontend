@@ -3,7 +3,6 @@ import ListView from './../../components/ListView/ListView.tsx';
 import { type iListViewGalleryItem } from './../../components/ListViewGallery/ListViewGallery.tsx';
 import UtilityContainer from './../../components/UtilityContainer/UtilityContainer.tsx';
 import InputSearchTextbox from './../../components/InputSearchTextbox/InputSearchTextbox.tsx';
-import SearchDateRange from './../../components/SearchDateRange/SearchDateRange.tsx';
 import ButtonIcon from './../../components/ButtonIcon/ButtonIcon.tsx';
 import Edit from './../../assets/edit.svg';
 import Trashcan from './../../assets/trashcan.svg';
@@ -51,8 +50,6 @@ const ChartOfAccounts = () => {
     };
 
     const inputContainers = [
-        <SearchDateRange cb_handlerClick={cb_handlerSearchDateRange}
-                         cb_handlerCheckError={cb_handlerCheckError} />,
         <div className={styles.inputContainers}>
             <InputSearchTextbox ariaLabel='Chart of Accounts Search'
                                 textboxWidth={200}
@@ -93,6 +90,8 @@ const ChartOfAccounts = () => {
                               border='none' />
             <ListView openAside={openAside}
                       aside={aside}
+                      showControls={true}
+                      controlInterval={15}
                       idForm='1'
                       ariaLabel='Chart of Accounts List View'
                       galleryHeaders={galleryHeaders}

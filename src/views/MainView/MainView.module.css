@@ -41,7 +41,7 @@
     flex-direction: column;
     position: sticky;
     top: 0;
-    width: 275px;
+    min-width: 200px;
     border-right: 1px solid rgba(0,0,0,0.2);
     padding-top: 5px;
     font-size: 16px;

@@ -9,6 +9,8 @@ interface iButtonIcon {
     width: number;
     height: number;
     value?: string | undefined;
+    textSide?: string | undefined;
+    addTextSpace?: string | undefined;
     bgColor?: string | undefined;
     cb_handlerClick?: (e: MouseEvent<HTMLButtonElement>) => void | undefined;
 };
@@ -22,6 +24,8 @@ const ButtonIcon = ({...buttonIconProps}: iButtonIcon) => {
         width,
         height,
         value,
+        textSide,
+        addTextSpace,
         bgColor,
         cb_handlerClick
     } = buttonIconProps;
@@ -39,7 +43,15 @@ const ButtonIcon = ({...buttonIconProps}: iButtonIcon) => {
                      height: `${height}px`}} />
     </button>;
 
-    return(<div className={styles.buttonContainer}>{buttonIcon}&nbsp;{value}</div>);
+    return(
+        <div className={styles.buttonContainer}>
+            {textSide === 'left' ? value : ''}
+                {addTextSpace === 'left' ? '\u00A0\u00A0' : ''}
+                   {buttonIcon}
+                {addTextSpace === 'right' ? '\u00A0\u00A0' : ''}
+            {textSide === 'right' ? value : ''}
+
+        </div>);
 };
 
 export default ButtonIcon;

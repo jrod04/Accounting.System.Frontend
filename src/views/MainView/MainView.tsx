@@ -81,6 +81,8 @@ const MainView = () => {
                                     alt='Home'
                                     title='Home'
                                     value='Home'
+                                    textSide='right'
+                                    addTextSpace='right'
                                     cb_handlerClick={handlerSetView} />
                         {['Home', 'Chart of Accounts', 'Add Business'].includes(view) &&
                             <div className={styles.suboptions}>
@@ -91,6 +93,8 @@ const MainView = () => {
                                             alt='Add Business'
                                             title='Add Business'
                                             value='Add Business'
+                                            textSide='right'
+                                            addTextSpace='right'
                                             cb_handlerClick={cb_handlerToggleAddBusiness} />
                                 <ButtonIcon ariaLabel='Chart of Accounts Icon Button'
                                             icon={ChartOfAccountsIcon}
@@ -99,6 +103,8 @@ const MainView = () => {
                                             alt='Chart of Accounts'
                                             title='Chart of Accounts'
                                             value='Chart of Accounts'
+                                            textSide='right'
+                                            addTextSpace='right'
                                             cb_handlerClick={handlerSetView} />
                             </div>
                         }
@@ -111,6 +117,8 @@ const MainView = () => {
                                             alt='Ledger'
                                             title='Ledger'
                                             value='Ledger'
+                                            textSide='right'
+                                            addTextSpace='right'
                                             cb_handlerClick={ () => {} } />
                                 <ButtonIcon ariaLabel='Financial Statements'
                                             icon={FinancialStatementsIcon}
@@ -119,6 +127,8 @@ const MainView = () => {
                                             alt='Financial Statements'
                                             title='Financial Statements'
                                             value='Financial Statements'
+                                            textSide='right'
+                                            addTextSpace='right'
                                             cb_handlerClick={ ()=>{} } />
                             </>
                         }

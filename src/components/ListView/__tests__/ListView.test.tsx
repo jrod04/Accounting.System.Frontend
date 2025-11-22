@@ -20,6 +20,8 @@ beforeEach(() => {
                                           ariaLabel='List View'
                                           galleryHeaders={galleryHeaders}
                                           galleryItems={galleryItems}
+                                          showControls={false}
+                                          controlInterval={0}
                                           leftFirstOperationImage={Edit}
                                           cb_handlerLeftFirstOperation={handlerClick} />)
     rerender = renderResult.rerender;
@@ -49,6 +51,8 @@ describe('ListView component', () => {
                            ariaLabel='List View'
                            galleryHeaders={galleryHeaders}
                            galleryItems={galleryItems}
+                           showControls={false}
+                           controlInterval={0}
                            leftFirstOperationImage={Edit}
                            cb_handlerLeftFirstOperation={handlerClick} />)
 
