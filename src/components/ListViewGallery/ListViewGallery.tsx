@@ -126,6 +126,7 @@ type tOMITiListView = Omit<iListView, 'openAside' | 'showControls' | 'aside' | '
 
 export interface iListViewGallery extends tOMITiListView {
     controlCount: number;
+    cb_controlInfo: (startSlice: number, endSlice: number, galleryLength: number) => void;
 };
 
 const ListViewGallery = ({...listViewGalleryInputs}: iListViewGallery) => {
@@ -136,6 +137,7 @@ const ListViewGallery = ({...listViewGalleryInputs}: iListViewGallery) => {
 
         controlCount,
         controlInterval,
+        cb_controlInfo,
 
         leftHeaderImage,
         rightHeaderImage,
@@ -183,7 +185,6 @@ const ListViewGallery = ({...listViewGalleryInputs}: iListViewGallery) => {
         </th>
     ));
 
-
     useEffect(() => {
         const newStartSlice: number = controlCount * controlInterval + 1;
         const newEndSlice: number = (controlCount * controlInterval + 1) + controlInterval - 1;
@@ -194,6 +195,7 @@ const ListViewGallery = ({...listViewGalleryInputs}: iListViewGallery) => {
     useEffect(() => {
         const filteredItems = galleryItems.slice(startSlice, endSlice);
         setFilteredItems(filteredItems);
+        cb_controlInfo(startSlice, endSlice, galleryItems.length);
     },[startSlice, endSlice]);
 
     return (

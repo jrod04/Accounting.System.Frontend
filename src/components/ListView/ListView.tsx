@@ -62,31 +62,34 @@ function ListView ({...listViewInputs}: iListView) {
     } = listViewInputs;
 
     const [controlCount, setControlCount] = useState<number>(0);
-    const [controlInfo, setControlInfo] = useState(`${controlCount * controlInterval + 1}-${(controlCount * controlInterval + 1) + controlInterval - 1}`);
+    const [controlInfo, setControlInfo] = useState<string>(`${controlCount * controlInterval + 1}-${(controlCount * controlInterval + 1) + controlInterval - 1}`);
+    const [startSlice, setStartSlice] = useState<number>(controlCount * controlInterval + 1);
+    const [endSlice, setEndSlice] = useState<number>((controlCount * controlInterval + 1) + controlInterval - 1);
+    const [galleryLength, setGalleryLength] = useState<number>(galleryItems.length);
 
     const cb_increaseControlCount = (e: MouseEvent<HTMLButtonElement>) => {
-//         if (controlInterval) {
-//             if (endSlice + controlInterval <= galleryItems.length) {
-                setControlCount(controlCount => controlCount + 1);
-//             };
-//         };
+        if (startSlice + controlInterval < galleryLength) setControlCount(controlCount => controlCount + 1);
     };
 
     const cb_decreaseControlCount = (e: MouseEvent<HTMLButtonElement>) => {
-//         if (controlInterval) {
-//             if (startSlice - controlInterval >= 0) {
-                setControlCount(controlCount => controlCount - 1);
-//             };
-//         };
+        if (controlCount > 0) setControlCount(controlCount => controlCount - 1);
     };
 
     const cb_controlInfo = (startSlice: number, endSlice: number, galleryLength: number) => {
         let info;
         switch (info) {
-            case endSlice > galleryLength:
-
+            case (startSlice + controlInterval) < galleryLength:
+                info = `${startSlice}-${galleryLength} of ${galleryLength}`;
                 break;
-        }
+
+            default:
+                info = `${startSlice}-${endSlice} of ${galleryLength}`;
+                break;
+        };
+        setControlInfo(info);
+        setStartSlice(startSlice);
+        setEndSlice(endSlice);
+        setGalleryLength(galleryLength);
     };
 
     return(
@@ -109,7 +112,7 @@ function ListView ({...listViewInputs}: iListView) {
                                     textSide='right'
                                     cb_handlerClick={cb_decreaseControlCount} />
                         <div className={styles.controlCounter}>
-                            <strong>{controlInfo} of {galleryItems.length}</strong>
+                            <strong>{controlInfo}</strong>
                         </div>
                         <ButtonIcon ariaLabel='Forward Control Icon'
                                     icon={ForwardControl}
@@ -129,6 +132,7 @@ function ListView ({...listViewInputs}: iListView) {
 
                                  controlCount={controlCount}
                                  controlInterval={controlInterval}
+                                 cb_controlInfo={cb_controlInfo}
 
                                  leftHeaderImage={leftHeaderImage}
                                  rightHeaderImage={rightHeaderImage}
