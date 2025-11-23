@@ -29,6 +29,7 @@ const ButtonIcon = ({...buttonIconProps}: iButtonIcon) => {
         bgColor,
         cb_handlerClick
     } = buttonIconProps;
+
     const buttonIcon = <button aria-label={ariaLabel}
                                className={styles.btn}
                                style={{width: `${width}px`,
@@ -44,13 +45,15 @@ const ButtonIcon = ({...buttonIconProps}: iButtonIcon) => {
     </button>;
 
     return(
-        <div className={styles.buttonContainer}>
-            {textSide === 'left' ? value : ''}
-                {addTextSpace === 'left' ? '\u00A0\u00A0' : ''}
+        <div data-testid='buttonContainer' className={styles.buttonContainer}>
+            <span data-testid='value'>
+                {value}{textSide === 'left' ? '\u00A0\u00A0' : ''}
+            </span>
                    {buttonIcon}
                 {addTextSpace === 'right' ? '\u00A0\u00A0' : ''}
-            {textSide === 'right' ? value : ''}
-
+            <span data-testid='value'>
+                {textSide === 'left' ? '\u00A0\u00A0' : ''}{value}
+            </span>
         </div>);
 };
 

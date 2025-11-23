@@ -1,4 +1,5 @@
 import React from 'react';
+import Backdrop from './../../components/Backdrop/Backdrop.tsx';
 import styles from './UtilityContainer.module.css';
 
 interface iUtilityContainer {
@@ -9,6 +10,7 @@ interface iUtilityContainer {
     justifyContent: string;
     bgColor: string;
     border: string;
+    backdrop: boolean;
 };
 
 const UtilityContainer = ({...utilitContainerInputs}: iUtilityContainer) => {
@@ -19,7 +21,8 @@ const UtilityContainer = ({...utilitContainerInputs}: iUtilityContainer) => {
         inputContainers,
         justifyContent,
         bgColor,
-        border
+        border,
+        backdrop
     } = utilitContainerInputs;
 
     if (inputContainers.length <= 0) {
@@ -46,7 +49,9 @@ const UtilityContainer = ({...utilitContainerInputs}: iUtilityContainer) => {
                          justifyContent: justifyContent,
                          backgroundColor: bgColor,
                          border: border}}>
-            {containers}
+            <Backdrop backdrop={backdrop} loader={false}>
+                {containers}
+            </Backdrop>
         </section>
     );
 };

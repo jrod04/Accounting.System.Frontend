@@ -3,6 +3,7 @@ import ListView from './../../components/ListView/ListView.tsx';
 import { type iListViewGalleryItem } from './../../components/ListViewGallery/ListViewGallery.tsx';
 import UtilityContainer from './../../components/UtilityContainer/UtilityContainer.tsx';
 import InputSearchTextbox from './../../components/InputSearchTextbox/InputSearchTextbox.tsx';
+import InputTextbox from './../../components/InputTextbox/InputTextbox.tsx';
 import ButtonIcon from './../../components/ButtonIcon/ButtonIcon.tsx';
 import Button from './../../components/Button/Button.tsx';
 import Edit from './../../assets/edit.svg';
@@ -14,6 +15,7 @@ import styles from './ChartOfAccounts.module.css';
 
 const ChartOfAccounts = () => {
     const [openAside, setOpenAside] = useState<boolean>(false);
+    const [operation, setOperation] = useState<string>('');
     const [searchValue, setSearchValue] = useState<string>('Search...');
 
     const galleryHeaders = ['headerLeftOperation', 'Code', 'Account', 'Type', 'headerRightOperation'];
@@ -21,10 +23,12 @@ const ChartOfAccounts = () => {
 
     const cb_handlerAddAccount = () => {
         if (!openAside) setOpenAside(true);
+        setOperation('Add Account')
     };
 
     const cb_handlerLeftFirstOperation = () => {
         if (!openAside) setOpenAside(true);
+        setOperation('Edit Account');
     };
 
     const cb_handlerOnChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +42,6 @@ const ChartOfAccounts = () => {
     const cb_handlerOnBlur = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.value.trim() === '') setSearchValue('Search...');
     };
-
 
     const cb_handlerSearchDateRange = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -71,29 +74,47 @@ const ChartOfAccounts = () => {
         </div>
     ];
 
-    const aside = <div className={styles.aside}>
-        <div className={styles.title}>
+    const handlerCancelAside = () => {
+        setOpenAside(false);
+        setOperation('');
+    };
 
+    const aside = <div className={styles.aside}>
+        <div className={styles.title}
+             style={{backgroundColor: constants.LIGHT_GRAY}}>
+            {operation}
         </div>
         <div className={styles.body}>
-
+            <InputTextbox ariaLabel='Code'
+                          width={175}
+                          direction='column'
+                          errors='' />
+            <InputTextbox ariaLabel='Account'
+                          width={175}
+                          direction='column'
+                          errors='' />
+            <InputTextbox ariaLabel='Type'
+                          width={175}
+                          direction='column'
+                          errors='' />
         </div>
         <div className={styles.asideBtns}>
-            <Button id='1' value='Cancel' width={75} cb_handlerClick={() => {}} />
+            <Button id='1' value='Cancel' width={75} cb_handlerClick={handlerCancelAside} />
             <Button id='1' value='Submit' width={75} cb_handlerClick={() => {}} />
         </div>
     </div>;
 
     return(
         <section className={styles.chartOfAccounts}>
-            <UtilityContainer label='Chart of Accounts'
-                              height={20}
+            <UtilityContainer backdrop={openAside}
+                              label='Chart of Accounts'
+                              height={40}
                               width={0}
                               justifyContent='flex-end'
                               bgColor={constants.LIGHT_GRAY}
                               inputContainers={inputContainers}
                               border='none' />
-            <ListView openAside={true}
+            <ListView openAside={openAside}
                       aside={aside}
                       showControls={true}
                       controlInterval={15}

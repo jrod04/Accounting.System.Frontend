@@ -59,9 +59,6 @@ const MainView = () => {
         if (refInputTextbox.current) refInputTextbox.current.focus();
     });
 
-//                         {view === 'Home' && cards}
-//                         {view === 'Chart of Accounts' && <ChartOfAccounts />}
-
    return(
         <>
             <Backdrop backdrop={addBusiness} loader={false}>
@@ -134,7 +131,8 @@ const MainView = () => {
                         }
                     </div>
                     <div className={styles.mainContainer}>
-                        <ChartOfAccounts />
+                        {view === 'Home' && cards}
+                        {view === 'Chart of Accounts' && <ChartOfAccounts />}
                     </div>
                     {addBusiness &&
                         <section className={styles.frmVerticalGallery}>

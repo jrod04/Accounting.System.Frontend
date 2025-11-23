@@ -2,6 +2,7 @@
     display: inline-flex;
     height: inherit;
     width: 100%;
+    overflow-x: hidden;
 }
 
 .aside {

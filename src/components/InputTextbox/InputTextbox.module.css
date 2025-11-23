@@ -1,4 +1,4 @@
-.inputTextBox {
+.inputTextbox {
     display: flex;
     margin: 5px;
 }
@@ -16,5 +16,9 @@
 
 .placeholder {
     visibility: hidden;
+}
+
+.inputTextbox > label {
+    padding-bottom: 5px;
 }
 

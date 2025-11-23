@@ -4,7 +4,7 @@
     width: 99.5%;
     height: 30px;
     border: 2px rgba(43,43,43,0.3) groove;
-    border-radius: 5px;
+    border-radius: 5px 5px 0px 0px;
     font-size: 1em;
     justify-content: space-evenly;
     background-color: rgba(43,43,43,1);

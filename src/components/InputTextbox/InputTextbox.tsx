@@ -21,14 +21,15 @@ const FormInputTextBox = ({...formInputTextBoxProps}: iFormInputTextBox) => {
         ref
     } = formInputTextBoxProps;
 
-    const inputTextBox =
+    return (
         <section data-testid='inputOuterContainer'
                  style={{width: `${width}px`}}>
             <div data-testid='inputInnerContainer'
-                 className={styles.inputTextBox}
+                 className={styles.inputTextbox}
                  style={{flexDirection: direction}}>
                 <label htmlFor={ariaLabel}>{ariaLabel}</label>{direction === 'row' ? '\u00A0\u00A0' : ''}
                 <input aria-label={ariaLabel}
+                       name={ariaLabel}
                        type='textbox'
                        ref={ref}
                        className={styles.input}
@@ -44,7 +45,7 @@ const FormInputTextBox = ({...formInputTextBoxProps}: iFormInputTextBox) => {
                  {errors}
             </div>
         </section>
-    return(inputTextBox);
+    );
 };
 
 export default FormInputTextBox;

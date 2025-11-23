@@ -3,6 +3,7 @@
     flex-direction: row;
     padding: 5px;
     width: auto;
+    align-items: center;
     cursor: default;
 }
 

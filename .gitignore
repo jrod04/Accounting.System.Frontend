@@ -27,4 +27,4 @@ dist-ssr
 backend
 coverage
 middleware
-
+vitest.config.ts
