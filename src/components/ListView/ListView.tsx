@@ -24,6 +24,8 @@ export interface iListView {
     galleryHeaders: string[];
     galleryItems: iListViewGalleryItem[];
 
+    searchValue: string;
+
     leftHeaderImage?: string | undefined;
     rightHeaderImage?: string | undefined;
     cb_handlerLeftHeaderOperation?: tHandlerHeaderOperation;
@@ -49,6 +51,7 @@ function ListView ({...listViewInputs}: iListView) {
         ariaLabel,
         galleryHeaders,
         galleryItems,
+        searchValue,
         leftHeaderImage,
         rightHeaderImage,
         cb_handlerLeftHeaderOperation,
@@ -76,16 +79,8 @@ function ListView ({...listViewInputs}: iListView) {
     };
 
     const cb_controlInfo = (startSlice: number, endSlice: number, galleryLength: number) => {
-        let info;
-        switch (info) {
-            case (startSlice + controlInterval) < galleryLength:
-                info = `${startSlice}-${galleryLength} of ${galleryLength}`;
-                break;
-
-            default:
-                info = `${startSlice}-${endSlice} of ${galleryLength}`;
-                break;
-        };
+        let info = `${startSlice + 1}-${endSlice} of ${galleryLength}`;
+        if (endSlice > galleryLength) info = `${startSlice + 1}-${galleryLength} of ${galleryLength}`;
         setControlInfo(info);
         setStartSlice(startSlice);
         setEndSlice(endSlice);
@@ -129,6 +124,7 @@ function ListView ({...listViewInputs}: iListView) {
                 <ListViewGallery ariaLabel={ariaLabel}
                                  galleryHeaders={galleryHeaders}
                                  galleryItems={galleryItems}
+                                 searchValue={searchValue}
 
                                  controlCount={controlCount}
                                  controlInterval={controlInterval}

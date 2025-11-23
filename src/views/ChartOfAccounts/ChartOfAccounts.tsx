@@ -1,9 +1,10 @@
-import { useState, useEffect, type MouseEvent, type ChangeEvent, type FocusEvent } from 'react';
+import { useState, useEffect, type MouseEvent, type ChangeEvent } from 'react';
 import ListView from './../../components/ListView/ListView.tsx';
 import { type iListViewGalleryItem } from './../../components/ListViewGallery/ListViewGallery.tsx';
 import UtilityContainer from './../../components/UtilityContainer/UtilityContainer.tsx';
 import InputSearchTextbox from './../../components/InputSearchTextbox/InputSearchTextbox.tsx';
 import ButtonIcon from './../../components/ButtonIcon/ButtonIcon.tsx';
+import Button from './../../components/Button/Button.tsx';
 import Edit from './../../assets/edit.svg';
 import Trashcan from './../../assets/trashcan.svg';
 import CreateNew from './../../assets/createNew.svg';
@@ -17,8 +18,6 @@ const ChartOfAccounts = () => {
 
     const galleryHeaders = ['headerLeftOperation', 'Code', 'Account', 'Type', 'headerRightOperation'];
     const [galleryItems, setGalleryItems] = useState<iListViewGalleryItem[]>(accounts);
-
-    const aside = <div className={styles.aside}>Placeholder</div>;
 
     const cb_handlerAddAccount = () => {
         if (!openAside) setOpenAside(true);
@@ -72,12 +71,18 @@ const ChartOfAccounts = () => {
         </div>
     ];
 
-    useEffect(() => {
-        if (searchValue !== 'Search...') {
-            const filteredItems = accounts.filter(account => account.Two.toLowerCase().includes(searchValue.toLowerCase()));
-            setGalleryItems(filteredItems);
-        };
-    },[searchValue]);
+    const aside = <div className={styles.aside}>
+        <div className={styles.title}>
+
+        </div>
+        <div className={styles.body}>
+
+        </div>
+        <div className={styles.asideBtns}>
+            <Button id='1' value='Cancel' width={75} cb_handlerClick={() => {}} />
+            <Button id='1' value='Submit' width={75} cb_handlerClick={() => {}} />
+        </div>
+    </div>;
 
     return(
         <section className={styles.chartOfAccounts}>
@@ -88,10 +93,11 @@ const ChartOfAccounts = () => {
                               bgColor={constants.LIGHT_GRAY}
                               inputContainers={inputContainers}
                               border='none' />
-            <ListView openAside={openAside}
+            <ListView openAside={true}
                       aside={aside}
                       showControls={true}
                       controlInterval={15}
+                      searchValue={searchValue}
                       idForm='1'
                       ariaLabel='Chart of Accounts List View'
                       galleryHeaders={galleryHeaders}

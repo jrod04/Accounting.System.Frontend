@@ -28,6 +28,8 @@ beforeEach(() => {
     const renderResult = render(<ListViewGallery ariaLabel='List View Gallery'
                                                  galleryHeaders={galleryHeaders}
                                                  galleryItems={galleryItems}
+                                                 searchValue='Search...'
+                                                 cb_controlInfo={() => {}}
                                                  rightFirstOperationImage={Trashcan}
                                                  cb_handlerRightFirstOperation={handlerNotHeaderClick}
                                                  controlCount={0}
@@ -61,6 +63,8 @@ describe('ListViewGallery component', () => {
         rerender(<ListViewGallery ariaLabel='List View Gallery'
                                   galleryHeaders={galleryHeaders}
                                   galleryItems={galleryItems}
+                                  searchValue='Search...'
+                                  cb_controlInfo={() => {}}
                                   rightSecondOperationImage={Trashcan}
                                   cb_handlerRightSecondOperation={handlerNotHeaderClick}
                                   controlCount={0}
@@ -74,6 +78,8 @@ describe('ListViewGallery component', () => {
         rerender(<ListViewGallery ariaLabel='List View Gallery'
                                   galleryHeaders={galleryHeaders}
                                   galleryItems={galleryItems}
+                                  searchValue='Search...'
+                                  cb_controlInfo={() => {}}
                                   leftFirstOperationImage={Trashcan}
                                   cb_handlerLeftFirstOperation={handlerNotHeaderClick}
                                   controlCount={0}
@@ -89,6 +95,8 @@ describe('ListViewGallery component', () => {
         rerender(<ListViewGallery ariaLabel='List View Gallery'
                                   galleryHeaders={galleryHeaders}
                                   galleryItems={galleryItems}
+                                  searchValue='Search...'
+                                  cb_controlInfo={() => {}}
                                   leftHeaderImage={Trashcan}
                                   cb_handlerLeftHeaderOperation={handlerHeaderClick}
                                   controlCount={0}
@@ -106,6 +114,8 @@ describe('ListViewGallery component', () => {
         rerender(<ListViewGallery ariaLabel='List View Gallery'
                                   galleryHeaders={galleryHeaders}
                                   galleryItems={galleryItems}
+                                  searchValue='Search...'
+                                  cb_controlInfo={() => {}}
                                   rightHeaderImage={Trashcan}
                                   cb_handlerRightHeaderOperation={handlerHeaderClick}
                                   controlCount={0}

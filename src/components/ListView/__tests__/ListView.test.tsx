@@ -20,6 +20,7 @@ beforeEach(() => {
                                           ariaLabel='List View'
                                           galleryHeaders={galleryHeaders}
                                           galleryItems={galleryItems}
+                                          searchValue={'Search...'}
                                           showControls={false}
                                           controlInterval={0}
                                           leftFirstOperationImage={Edit}

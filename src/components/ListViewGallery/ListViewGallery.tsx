@@ -16,7 +16,8 @@ export interface iListViewGalleryItem {
     itemClicked?: string | undefined;
 };
 
-type tOMITiListViewGallery = Omit<iListViewGallery, 'ariaLabel' | 'controlCount' | 'controlInterval' | 'galleryHeaders'>;
+type tOMITiListViewGallery = Omit<iListViewGallery, 'ariaLabel' | 'controlCount' | 'controlInterval' | 'galleryHeaders' |
+                                                    'searchValue' | 'cb_controlInfo'>;
 
 interface iListViewGalleryRow extends tOMITiListViewGallery {
     item: iListViewGalleryItem;
@@ -31,7 +32,7 @@ const ListViewGalleryRow = ({...listViewGalleryRowInputs}: iListViewGalleryRow) 
         rightSecondOperationImage,
         cb_handlerLeftFirstOperation,
         cb_handlerRightFirstOperation,
-        cb_handlerRightSecondOperation
+        cb_handlerRightSecondOperation,
     } = listViewGalleryRowInputs;
 
     let i = 0;
@@ -135,6 +136,7 @@ const ListViewGallery = ({...listViewGalleryInputs}: iListViewGallery) => {
         galleryHeaders,
         galleryItems,
 
+        searchValue,
         controlCount,
         controlInterval,
         cb_controlInfo,
@@ -186,16 +188,31 @@ const ListViewGallery = ({...listViewGalleryInputs}: iListViewGallery) => {
     ));
 
     useEffect(() => {
-        const newStartSlice: number = controlCount * controlInterval + 1;
-        const newEndSlice: number = (controlCount * controlInterval + 1) + controlInterval - 1;
-        setStartSlice(newStartSlice);
-        setEndSlice(newEndSlice);
-    },[controlCount]);
+        if (['',  'search...'].includes(searchValue.trim().toLowerCase())) {
+            const newStartSlice: number = controlCount * controlInterval;
+            const newEndSlice: number = (controlCount * controlInterval) + controlInterval;
+            setStartSlice(newStartSlice);
+            setEndSlice(newEndSlice);
+        } else {
+            const filteredItems: iListViewGalleryItem[] = galleryItems.filter(item => {
+                const sValue = searchValue.trim().toLowerCase();
+                const itemOne = item.One.trim().toLowerCase()
+                const itemTwo = item.Two?.trim().toLowerCase();
+                const itemThree = item.Three?.trim().toLowerCase();
+                return (itemOne.includes(sValue) || itemTwo?.includes(sValue) || itemThree?.includes(sValue));
+            });
+            setFilteredItems(filteredItems);
+        };
+    },[controlCount, searchValue]);
 
     useEffect(() => {
-        const filteredItems = galleryItems.slice(startSlice, endSlice);
-        setFilteredItems(filteredItems);
-        cb_controlInfo(startSlice, endSlice, galleryItems.length);
+        if (['',  'search...'].includes(searchValue.trim().toLowerCase())) {
+            const filteredItems = galleryItems.slice(startSlice, endSlice);
+            setFilteredItems(filteredItems);
+            cb_controlInfo(startSlice, endSlice, galleryItems.length);
+        } else {
+
+        };
     },[startSlice, endSlice]);
 
     return (
