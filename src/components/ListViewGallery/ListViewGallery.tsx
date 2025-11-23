@@ -1,4 +1,4 @@
-import React, { useState, type MouseEvent, memo } from 'react';
+import React, { useState, useEffect, type MouseEvent, memo } from 'react';
 import { type iListView } from './../ListView/ListView.tsx';
 import styles from './ListViewGallery.module.css';
 
@@ -133,6 +133,10 @@ const ListViewGallery = ({...listViewGalleryInputs}: iListViewGallery) => {
         ariaLabel,
         galleryHeaders,
         galleryItems,
+
+        controlCount,
+        controlInterval,
+
         leftHeaderImage,
         rightHeaderImage,
         cb_handlerLeftHeaderOperation,
@@ -146,6 +150,10 @@ const ListViewGallery = ({...listViewGalleryInputs}: iListViewGallery) => {
         cb_handlerRightFirstOperation,
         cb_handlerRightSecondOperation
     } = listViewGalleryInputs;
+
+    const [startSlice, setStartSlice] = useState<number>(controlCount * controlInterval + 1);
+    const [endSlice, setEndSlice] = useState<number>((controlCount * controlInterval + 1) + controlInterval - 1);
+    const [filteredItems, setFilteredItems] = useState<iListViewGalleryItem[]>(galleryItems.slice(controlCount * controlInterval + 1, (controlCount * controlInterval + 1) + controlInterval - 1));
 
     const ddHeaders = ['headerLeftOperation',
                        'Column 1',
@@ -175,6 +183,19 @@ const ListViewGallery = ({...listViewGalleryInputs}: iListViewGallery) => {
         </th>
     ));
 
+
+    useEffect(() => {
+        const newStartSlice: number = controlCount * controlInterval + 1;
+        const newEndSlice: number = (controlCount * controlInterval + 1) + controlInterval - 1;
+        setStartSlice(newStartSlice);
+        setEndSlice(newEndSlice);
+    },[controlCount]);
+
+    useEffect(() => {
+        const filteredItems = galleryItems.slice(startSlice, endSlice);
+        setFilteredItems(filteredItems);
+    },[startSlice, endSlice]);
+
     return (
         <table aria-label={ariaLabel} className={styles.mainBody}>
             <thead className={styles.thead}>
@@ -183,10 +204,10 @@ const ListViewGallery = ({...listViewGalleryInputs}: iListViewGallery) => {
                 </tr>
             </thead>
             <tbody>
-                {items.map(item => (
+                {filteredItems.map(item => (
                     <tr key={`row-${item.id}`} className={styles.row}>
                         <ListViewGalleryRow item={item}
-                                            galleryItems={items}
+                                            galleryItems={filteredItems}
                                             leftFirstOperationImage={leftFirstOperationImage}
                                             rightFirstOperationImage={rightFirstOperationImage}
                                             rightSecondOperationImage={rightSecondOperationImage}

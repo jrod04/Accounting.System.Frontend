@@ -95,7 +95,7 @@ const ChartOfAccounts = () => {
                       idForm='1'
                       ariaLabel='Chart of Accounts List View'
                       galleryHeaders={galleryHeaders}
-                      galleryItems={galleryItems.slice(0,75)}
+                      galleryItems={galleryItems}
 
                       leftFirstOperationImage={Edit}
                       cb_handlerLeftFirstOperation={cb_handlerLeftFirstOperation}
