@@ -33,10 +33,10 @@ const InputSearchTextbox = ({...inputSearchTextboxInputs}: iInputSearchTextbox) 
     const refInputSearchTextbox = useRef<HTMLInputElement | null>(null);
 
     return(
-        <div className={styles.container}>
+        <div data-testid='Input search textbox container' className={styles.container}>
             <input className={styles.input}
-                   style={{width: textboxWidth,
-                           height: textboxHeight,
+                   style={{width: `${textboxWidth}px`,
+                           height: `${textboxHeight}px`,
                            zIndex: '2',
                            color: searchValue === 'Search...' ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,1)'}}
                    aria-label={ariaLabel}

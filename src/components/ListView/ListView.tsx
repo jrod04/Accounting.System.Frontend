@@ -70,11 +70,11 @@ function ListView ({...listViewInputs}: iListView) {
     const [endSlice, setEndSlice] = useState<number>((controlCount * controlInterval + 1) + controlInterval - 1);
     const [galleryLength, setGalleryLength] = useState<number>(galleryItems.length);
 
-    const cb_increaseControlCount = (e: MouseEvent<HTMLButtonElement>) => {
+    const cb_handlerIncreaseControlCount = (e: MouseEvent<HTMLButtonElement>) => {
         if (startSlice + controlInterval < galleryLength) setControlCount(controlCount => controlCount + 1);
     };
 
-    const cb_decreaseControlCount = (e: MouseEvent<HTMLButtonElement>) => {
+    const cb_handlerDecreaseControlCount = (e: MouseEvent<HTMLButtonElement>) => {
         if (controlCount > 0) setControlCount(controlCount => controlCount - 1);
     };
 
@@ -90,14 +90,14 @@ function ListView ({...listViewInputs}: iListView) {
     return(
         <section data-testid='List View Component' className={styles.listViews}>
             {openAside &&
-                <form role='form' onSubmit={cb_handlerSubmitAside} className={styles.aside} id={idForm}>
+                <form aria-label='Aside form' onSubmit={cb_handlerSubmitAside} className={styles.aside} id={idForm}>
                     {aside}
                 </form>
             }
             <Backdrop backdrop={openAside} loader={false}>
                 {showControls &&
-                    <div className={styles.controls}>
-                        <ButtonIcon ariaLabel='Back Control Icon'
+                    <div data-testid='controlContainer' className={styles.controls}>
+                        <ButtonIcon ariaLabel='Back Control Button'
                                     icon={ReverseControl}
                                     width={15}
                                     height={15}
@@ -105,11 +105,11 @@ function ListView ({...listViewInputs}: iListView) {
                                     title='Back Control'
                                     value='Previous'
                                     textSide='right'
-                                    cb_handlerClick={cb_decreaseControlCount} />
-                        <div className={styles.controlCounter}>
+                                    cb_handlerClick={cb_handlerDecreaseControlCount} />
+                        <div data-testid='controlCounter' className={styles.controlCounter}>
                             <strong>{controlInfo}</strong>
                         </div>
-                        <ButtonIcon ariaLabel='Forward Control Icon'
+                        <ButtonIcon ariaLabel='Forward Control Button'
                                     icon={ForwardControl}
                                     width={15}
                                     height={15}
@@ -117,7 +117,7 @@ function ListView ({...listViewInputs}: iListView) {
                                     title='Forward Control'
                                     value='Next'
                                     textSide='left'
-                                    cb_handlerClick={cb_increaseControlCount} />
+                                    cb_handlerClick={cb_handlerIncreaseControlCount} />
                     </div>
 
                 }

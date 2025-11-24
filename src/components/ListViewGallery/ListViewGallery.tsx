@@ -203,15 +203,13 @@ const ListViewGallery = ({...listViewGalleryInputs}: iListViewGallery) => {
             });
             setFilteredItems(filteredItems);
         };
-    },[controlCount, searchValue]);
+    },[controlCount, controlInterval, searchValue]);
 
     useEffect(() => {
         if (['',  'search...'].includes(searchValue.trim().toLowerCase())) {
             const filteredItems = galleryItems.slice(startSlice, endSlice);
             setFilteredItems(filteredItems);
             cb_controlInfo(startSlice, endSlice, galleryItems.length);
-        } else {
-
         };
     },[startSlice, endSlice]);
 

@@ -47,12 +47,13 @@ const ButtonIcon = ({...buttonIconProps}: iButtonIcon) => {
     return(
         <div data-testid='buttonContainer' className={styles.buttonContainer}>
             <span data-testid='value'>
-                {value}{textSide === 'left' ? '\u00A0\u00A0' : ''}
+                {textSide === 'left' ? value : ''}
+                {textSide === 'left' ? '\u00A0\u00A0' : ''}
             </span>
                    {buttonIcon}
-                {addTextSpace === 'right' ? '\u00A0\u00A0' : ''}
             <span data-testid='value'>
-                {textSide === 'left' ? '\u00A0\u00A0' : ''}{value}
+                {textSide === 'right' ? '\u00A0\u00A0' : ''}
+                {textSide === 'right' ? value : ''}
             </span>
         </div>);
 };

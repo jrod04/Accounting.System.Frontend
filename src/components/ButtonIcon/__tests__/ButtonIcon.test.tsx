@@ -109,8 +109,8 @@ describe('ButtonIcon component', () => {
                              bgColor={constants.RED}
                              cb_handlerClick={handlerClick}
                              value='Button'
-                             textSide='left'
-                             addTextSpace='left' />);
+                             textSide='right'
+                             addTextSpace='right' />);
         const buttonContainer = screen.getByTestId('buttonContainer');
         const elements = buttonContainer.children;
         expect(elements[2]?.textContent).toBe('\u00A0\u00A0Button');
