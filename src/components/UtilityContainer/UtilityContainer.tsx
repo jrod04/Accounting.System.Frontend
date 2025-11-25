@@ -33,9 +33,7 @@ const UtilityContainer = ({...utilitContainerInputs}: iUtilityContainer) => {
         return(
             <div className={styles.inputContainers}
                  key={`${label}-${index}`}
-                 style={{width: width === 0 ? '100%' : `${width}px`,
-                         height: `${height}px`,
-                         justifyContent: justifyContent,
+                 style={{justifyContent: justifyContent,
                          border: border}}>
                 {container}
             </div>
@@ -45,7 +43,7 @@ const UtilityContainer = ({...utilitContainerInputs}: iUtilityContainer) => {
     return(
         <section className={styles.container}
                  style={{width: width === 0 ? '100%' : `${width}px`,
-                         height: `${height}px`,
+                         height: height === 0 ? '100%' : `${height}px`,
                          justifyContent: justifyContent,
                          backgroundColor: bgColor,
                          border: border}}>

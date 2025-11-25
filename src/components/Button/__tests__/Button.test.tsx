@@ -1,22 +1,21 @@
-import { beforeEach, afterEach, describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import createUser from './../../../utils/createUser.tsx';
 import userEventDefault from '@testing-library/user-event';
 import Button from './../Button.tsx';
 
+let rerender: any, user: any;
 let handlerClick = vi.fn();
-let user = createUser();
-
-afterEach(() => {
-    handlerClick.mockClear();
-    user = createUser();
-});
 
 describe('Non-submit button component', () => {
-    let rerender: any;
-
     beforeEach(() => {
-        const renderResult = render(<Button id='1' value='value' width={75} cb_handlerClick={handlerClick} bgColor='rgba(0,0,0,1) '/>);
+        user = createUser();
+        handlerClick.mockClear();
+        const renderResult = render(<Button id='1'
+                                            value='value'
+                                            width={75}
+                                            cb_handlerClick={handlerClick}
+                                            bgColor='rgba(0,0,0,1) '/>);
         rerender = renderResult.rerender;
     });
 
@@ -68,9 +67,13 @@ describe('Non-submit button component', () => {
 });
 
 describe('Submit button component', () => {
-    let rerender: any;
     beforeEach(() => {
-        const renderResult = render(<Button input={true} id='1' value='value' width={75} cb_handlerClick={handlerClick} bgColor='rgba(0,0,0,1)' />);
+        const renderResult = render(<Button input={true}
+                                            id='1'
+                                            value='value'
+                                            width={75}
+                                            cb_handlerClick={handlerClick}
+                                            bgColor='rgba(0,0,0,1)' />);
         rerender = renderResult.rerender;
     });
 

@@ -4,17 +4,16 @@ import createUser from './../../../utils/createUser.tsx';
 import Notify from './../Notify.tsx';
 
 let handlerClick = vi.fn();
-let rerender: any;
-let notify: HTMLElement | undefined;
-
-beforeEach(() => {
-    handlerClick.mockClear();
-    const renderResult = render(<Notify stat='success' message='Success' cb_handlerCloseNotify={handlerClick} />)
-    rerender = renderResult.rerender;
-    notify = screen.getByTestId('notify');
-});
+let rerender: any, notify: HTMLElement | undefined;
 
 describe('Notify component', () => {
+    beforeEach(() => {
+        handlerClick.mockClear();
+        const renderResult = render(<Notify stat='success' message='Success' cb_handlerCloseNotify={handlerClick} />)
+        rerender = renderResult.rerender;
+        notify = screen.getByTestId('notify');
+    });
+
     test('Notify is present', () => {
         expect(notify).toBeInTheDocument();
     });

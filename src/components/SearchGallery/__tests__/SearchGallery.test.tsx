@@ -11,18 +11,19 @@ let items: iGalleryItem[] = [
     { id: '2', title: 'Title 2', subtitle: 'Subtitle 2' }
 ];
 
-beforeEach(() => {
-    items = [
-        { id: '1', title: 'Title 1', subtitle: 'Subtitle 1' },
-        { id: '2', title: 'Title 2', subtitle: 'Subtitle 2' }
-    ];
-    user = createUser();
-    handlerClick.mockClear();
-    const renderResult = render(<SearchGallery items={items} cb_handlerSelectEvent={handlerClick} />);
-    rerender = renderResult.rerender;
-});
 
 describe('Search gallery component', () => {
+    beforeEach(() => {
+        items = [
+            { id: '1', title: 'Title 1', subtitle: 'Subtitle 1' },
+            { id: '2', title: 'Title 2', subtitle: 'Subtitle 2' }
+        ];
+        user = createUser();
+        handlerClick.mockClear();
+        const renderResult = render(<SearchGallery items={items} cb_handlerSelectEvent={handlerClick} />);
+        rerender = renderResult.rerender;
+    });
+
     test('Search gallery shown', () => {
         const searchGallery = screen.getByTestId('searchGallery');
         expect(searchGallery).toBeInTheDocument();

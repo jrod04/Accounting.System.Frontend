@@ -1,5 +1,5 @@
 import React from 'react';
-import { type ImgHTMLAttributes, type MouseEventHandler, type MouseEvent, type ReactElement } from 'react';
+import { type ImgHTMLAttributes, type MouseEvent, type ReactElement } from 'react';
 import { beforeEach, afterEach, describe, expect, test, vi, type MockedFunction } from 'vitest';
 import { screen, render } from '@testing-library/react';
 import constants from './../../../utils/constants.tsx';
@@ -8,38 +8,23 @@ import Cog from './../../../assets/cog.svg';
 import HeaderManagement from './../HeaderManagement.tsx';
 
 type tButton = {
-    handler: MouseEventHandler<HTMLButtonElement> & { mockClear: () => {} };
+    handler: MockedFunction<(e: MouseEvent<HTMLButtonElement>) => string | undefined>;
     image: ReactElement<ImgHTMLAttributes<HTMLImageElement>>;
 };
 
-let user: any;
-let rerender: any;
-let handlerClick: MouseEventHandler<HTMLButtonElement> & { mockClear: () => {}} = vi.fn((e) => {
-    const target = e.target as HTMLElement;
+let rerender: any, user: any, testedBtn: any;
+let handlerClick: tButton['handler'] = vi.fn((e: MouseEvent<HTMLButtonElement>) => {
     const id: string | undefined = (e.target as HTMLButtonElement).dataset.idItem;
     return id;
 });
-let image: ReactElement<ImgHTMLAttributes<HTMLImageElement>> = <img src={Cog} alt='cog' />;
+
+let image: tButton['image'] = <img src={Cog} alt='cog' />;
 let btn: tButton = {
     handler: handlerClick,
     image: image
 };
 
-beforeEach(() => {
-    user = createUser();
-    handlerClick.mockClear();
-
-    btn = {
-        handler: handlerClick,
-        image: image
-    };
-
-    const renderResult = render(<HeaderManagement selected='1' bgColor={constants.TAN} />);
-    rerender = renderResult.rerender;
-});
-
-let testedBtn;
-const checkBtn = async (purpose: string, handlerClick: MouseEventHandler<HTMLButtonElement> & { mockClear: () => {} }) => {
+const checkBtn = async (purpose: string, handlerClick: tButton['handler']) => {
     testedBtn = (purpose === 'hidden') ? screen.queryByRole('button', { name: 'cog' }) :
                                          screen.getByRole('button', { name: 'cog' });
 
@@ -65,6 +50,20 @@ const checkBtn = async (purpose: string, handlerClick: MouseEventHandler<HTMLBut
 };
 
 describe('Header management component', () => {
+    beforeEach(() => {
+        user = createUser();
+        handlerClick.mockClear();
+
+        btn = {
+            handler: handlerClick,
+            image: image
+        };
+
+        const renderResult = render(<HeaderManagement selected='1' bgColor={constants.TAN} />);
+        rerender = renderResult.rerender;
+    });
+
+
     test('Header management shown', () => {
         const headerManagement = screen.getByTestId('headerManagement');
         expect(headerManagement).toBeInTheDocument();

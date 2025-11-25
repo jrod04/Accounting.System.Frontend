@@ -21,23 +21,23 @@ const handlerNotHeaderClick: MockedFunction<(data: iListViewGalleryItem) => stri
 const galleryHeaders: string[] = ['Header 1'];
 const galleryItems: iListViewGalleryItem[] = [{id: '1', One: 'Data 1'}];
 
-beforeEach(() => {
-    user = createUser();
-    handlerHeaderClick.mockClear();
-    handlerNotHeaderClick.mockClear();
-    const renderResult = render(<ListViewGallery ariaLabel='List View Gallery'
-                                                 galleryHeaders={galleryHeaders}
-                                                 galleryItems={galleryItems}
-                                                 searchValue='Search...'
-                                                 cb_controlInfo={() => {}}
-                                                 rightFirstOperationImage={Trashcan}
-                                                 cb_handlerRightFirstOperation={handlerNotHeaderClick}
-                                                 controlCount={0}
-                                                 controlInterval={15} />);
-    rerender = renderResult.rerender;
-});
-
 describe('ListViewGallery component', () => {
+    beforeEach(() => {
+        user = createUser();
+        handlerHeaderClick.mockClear();
+        handlerNotHeaderClick.mockClear();
+        const renderResult = render(<ListViewGallery ariaLabel='List View Gallery'
+                                                     galleryHeaders={galleryHeaders}
+                                                     galleryItems={galleryItems}
+                                                     searchValue='Search...'
+                                                     cb_controlInfo={() => {}}
+                                                     rightFirstOperationImage={Trashcan}
+                                                     cb_handlerRightFirstOperation={handlerNotHeaderClick}
+                                                     controlCount={0}
+                                                     controlInterval={15} />);
+        rerender = renderResult.rerender;
+    });
+
     test('List view gallery displayed, name checks aria-label', () => {
         const listViewGallery = screen.getByRole('table', { name: 'List View Gallery' });
         expect(listViewGallery).toBeInTheDocument();

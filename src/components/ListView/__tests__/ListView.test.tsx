@@ -8,7 +8,6 @@ import Edit from './../../../assets/edit.svg';
 
 let rerender: any, user: any;
 let openAside = false;
-
 const handlerClick = vi.fn(() => {});
 
 const galleryHeaders: string[] = ['Header 1'];
@@ -16,6 +15,7 @@ let galleryItems: iListViewGalleryItem[] = [];
 for (let i = 1; i < 32; i++) {
     galleryItems.push({id: `${i}`, One: `Data ${i}`});
 };
+
 const aside = <section>Test the aside.</section>;
 
 describe('List View component', () => {

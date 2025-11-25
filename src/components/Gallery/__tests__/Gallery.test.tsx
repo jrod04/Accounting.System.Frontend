@@ -16,23 +16,22 @@ const cb_handlerRightOperation = vi.fn((data: iGalleryItem) => {
     return id;
 });
 
-beforeEach(() => {
-    user = createUser();
-    cb_handlerLeftOperation.mockClear();
-    cb_handlerRightOperation.mockClear();
-    const renderResult = render(<Gallery galleryItems={items}
-                                         title={true}
-                                         subtitle={true}
-                                         select='1'
-                                         enableSelect={false}
-                                         bodyStyle='columns'
-                                         events={false}
-                                         verticalGallery={false} />);
-    rerender = renderResult.rerender;
-
-});
-
 describe('Gallery component', () => {
+    beforeEach(() => {
+        user = createUser();
+        cb_handlerLeftOperation.mockClear();
+        cb_handlerRightOperation.mockClear();
+        const renderResult = render(<Gallery galleryItems={items}
+                                             title={true}
+                                             subtitle={true}
+                                             select='1'
+                                             enableSelect={false}
+                                             bodyStyle='columns'
+                                             events={false}
+                                             verticalGallery={false} />);
+        rerender = renderResult.rerender;
+    });
+
     test('Gallery shown', () => {
         const gallery = screen.getByTestId('gallery');
         expect(gallery).toBeInTheDocument();
@@ -144,13 +143,9 @@ describe('Gallery component', () => {
                           verticalGallery={false} />);
 
         const buttons = screen.getAllByRole('button');
-
-            const leftButton = buttons[1];
-
-            const result = await user.click(leftButton);
-            expect(cb_handlerRightOperation).toHaveBeenCalledTimes(0);
-
-
+        const leftButton = buttons[1];
+        const result = await user.click(leftButton);
+        expect(cb_handlerRightOperation).toHaveBeenCalledTimes(0);
     });
 
 });

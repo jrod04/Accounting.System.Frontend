@@ -11,21 +11,16 @@ interface iEvents {
 };
 let events: iEvents = {};
 
-beforeEach(() => {
-    // vi.spyOn intercepts the 'addEventListener' attachment to window in the tested Component and adds its functions to events object
-    // the effect is that the event listeners don't execute until you action them from the new events object
-    vi.spyOn(window, 'addEventListener').mockImplementation((type: string, listener: EventListenerOrEventListenerObject) => events[type] = listener);
-    vi.spyOn(window, 'removeEventListener').mockImplementation((type: string, listener: EventListenerOrEventListenerObject) => delete events[type]);
-});
-
-afterEach(() => {
-    vi.restoreAllMocks();
-    events = {};
-});
 
 describe('Navigation component', () => {
     beforeEach(() => {
         user = createUser();
+        events = {};
+        vi.restoreAllMocks();
+        // vi.spyOn intercepts the 'addEventListener' attachment to window in the tested Component and adds its functions to events object
+        // the effect is that the event listeners don't execute until you action them from the new events object
+        vi.spyOn(window, 'addEventListener').mockImplementation((type: string, listener: EventListenerOrEventListenerObject) => events[type] = listener);
+        vi.spyOn(window, 'removeEventListener').mockImplementation((type: string, listener: EventListenerOrEventListenerObject) => delete events[type]);
     });
 
     test('Navigation title shown', () => {
@@ -74,5 +69,4 @@ describe('Navigation component', () => {
                 expect(settingsContainer).toBeNull();
             };
     });
-
 });

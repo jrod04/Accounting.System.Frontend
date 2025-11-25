@@ -8,22 +8,22 @@ import constants from './../../../utils/constants.tsx';
 let rerender: any;
 let handlerClick = vi.fn();
 
-beforeEach(() => {
-    handlerClick.mockClear();
-   const renderResult = render(<ButtonIcon ariaLabel='Ledger Icon Button'
-                                           icon={Ledger}
-                                           width={30}
-                                           height={35}
-                                           alt='Ledger'
-                                           title='Ledger'
-                                           bgColor={constants.RED}
-                                           value='Button'
-                                           textSide='left'
-                                           addTextSpace='left' />);
-   rerender = renderResult.rerender;
-});
-
 describe('ButtonIcon component', () => {
+    beforeEach(() => {
+        handlerClick.mockClear();
+        const renderResult = render(<ButtonIcon ariaLabel='Ledger Icon Button'
+                                                icon={Ledger}
+                                                width={30}
+                                                height={35}
+                                                alt='Ledger'
+                                                title='Ledger'
+                                                bgColor={constants.RED}
+                                                value='Button'
+                                                textSide='left'
+                                                addTextSpace='left' />);
+       rerender = renderResult.rerender;
+    });
+
     test('Button shown', () => {
         const button = screen.getByRole('button', { name: 'Ledger Icon Button' });
         expect(button).toBeInTheDocument();
@@ -74,7 +74,6 @@ describe('ButtonIcon component', () => {
         const button = screen.getByRole('button', { name: 'Ledger Icon Button'});
         expect(button).toHaveStyle({backgroundColor: ''});
     });
-
 
     test('Button clicks', async () => {
         const user = createUser();
