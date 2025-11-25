@@ -3,6 +3,7 @@ import { type MouseEvent, type ComponentProps } from 'react';
 import styles from './Button.module.css';
 
 export interface iButton {
+    ariaLabel: string;
     id: string;
     value: string;
     width: number;
@@ -13,6 +14,7 @@ export interface iButton {
 
 const Button = ({...buttonProps}: iButton) => {
     const {
+        ariaLabel,
         input,
         bgColor,
         id,
@@ -26,7 +28,8 @@ const Button = ({...buttonProps}: iButton) => {
     let btn: ComponentProps<'button'> = <button></button>;
 
     if (!input) {
-        btn = <button className={styles.btn}
+        btn = <button aria-label={ariaLabel}
+                      className={styles.btn}
                       style={{width: width, backgroundColor: backgroundColor}}
                       id={id}
                       onClick={cb_handlerClick}>
@@ -35,7 +38,8 @@ const Button = ({...buttonProps}: iButton) => {
     };
 
     if (input) {
-        btn = <button className={styles.btn}
+        btn = <button aria-label={ariaLabel}
+                      className={styles.btn}
                       type='submit'
                       style={{width: width, backgroundColor: backgroundColor}}
                       id={id}

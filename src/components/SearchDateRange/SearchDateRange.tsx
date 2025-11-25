@@ -55,7 +55,7 @@ const SearchDateRange = ({...searchDateRangeInputs}: iSearchDateRange) => {
     };
 
     return(
-        <form className={styles.container}>
+        <form role='form' aria-label='Search Date Range Container' className={styles.container}>
             <label htmlFor='fromDate'><strong>From:</strong></label>&nbsp;&nbsp;
             <input aria-label='fromDate'
                    className={error === 'fromDate' ? styles.fromDateError : ''}
@@ -66,7 +66,8 @@ const SearchDateRange = ({...searchDateRangeInputs}: iSearchDateRange) => {
                    className={error === 'toDate' ? styles.toDateError : ''}
                    type='date'
                    onChange={handlerOnChange} />
-            <Button input={true}
+            <Button ariaLabel='Search Date Range Button'
+                    input={true}
                     id='searchDateRange'
                     value='Search'
                     width={75}

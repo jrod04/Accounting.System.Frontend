@@ -99,15 +99,23 @@ const ChartOfAccounts = () => {
                           errors='' />
         </div>
         <div className={styles.asideBtns}>
-            <Button id='1' value='Cancel' width={75} cb_handlerClick={handlerCancelAside} />
-            <Button id='1' value='Submit' width={75} cb_handlerClick={() => {}} />
+            <Button ariaLabel='Form Cancel Button'
+                    id='1'
+                    value='Cancel'
+                    width={75}
+                    cb_handlerClick={handlerCancelAside} />
+            <Button ariaLabel='Form Submit Button'
+                    id='1'
+                    value='Submit'
+                    width={75}
+                    cb_handlerClick={() => {}} />
         </div>
     </div>;
 
     return(
         <section className={styles.chartOfAccounts}>
             <UtilityContainer backdrop={openAside}
-                              label='Chart of Accounts'
+                              ariaLabel='Chart of Accounts'
                               height={40}
                               width={0}
                               justifyContent='flex-end'

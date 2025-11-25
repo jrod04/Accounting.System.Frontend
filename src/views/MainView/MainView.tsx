@@ -44,8 +44,16 @@ const MainView = () => {
             <InputTextbox ariaLabel='' width={175} direction='column' errors='' ref={refInputTextbox} />
         </div>
         <div className={styles.frmButtons}>
-            <Button id='1' value='Cancel' width={75} cb_handlerClick={cb_handlerToggleAddBusiness} />
-            <Button id='1' value='Submit' width={75} cb_handlerClick={() => {}} />
+            <Button ariaLabel='Add Business Form Cancel Button'
+                    id='1'
+                    value='Cancel'
+                    width={75}
+                    cb_handlerClick={cb_handlerToggleAddBusiness} />
+            <Button ariaLabel='Add Business Form Submit Button'
+                    id='1'
+                    value='Submit'
+                    width={75}
+                    cb_handlerClick={() => {}} />
         </div>
     </form>;
 

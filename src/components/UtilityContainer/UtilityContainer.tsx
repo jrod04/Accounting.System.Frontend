@@ -3,7 +3,7 @@ import Backdrop from './../../components/Backdrop/Backdrop.tsx';
 import styles from './UtilityContainer.module.css';
 
 interface iUtilityContainer {
-    label: string,
+    ariaLabel: string,
     width: number;
     height: number;
     inputContainers: React.ReactNode[];
@@ -13,9 +13,9 @@ interface iUtilityContainer {
     backdrop: boolean;
 };
 
-const UtilityContainer = ({...utilitContainerInputs}: iUtilityContainer) => {
+const UtilityContainer = ({...utilityContainerInputs}: iUtilityContainer) => {
     const {
-        label,
+        ariaLabel,
         width,
         height,
         inputContainers,
@@ -23,7 +23,7 @@ const UtilityContainer = ({...utilitContainerInputs}: iUtilityContainer) => {
         bgColor,
         border,
         backdrop
-    } = utilitContainerInputs;
+    } = utilityContainerInputs;
 
     if (inputContainers.length <= 0) {
         throw new Error('inputContainers.length attribute must be greater than 0 to populate the UtilityContainer.');
@@ -32,21 +32,21 @@ const UtilityContainer = ({...utilitContainerInputs}: iUtilityContainer) => {
     const containers: React.ReactNode[] = inputContainers.map((container, index) => {
         return(
             <div className={styles.inputContainers}
-                 key={`${label}-${index}`}
-                 style={{justifyContent: justifyContent,
-                         border: border}}>
+                 key={`${ariaLabel}-${index}`}
+                 style={{justifyContent: justifyContent}}>
                 {container}
             </div>
         );
     });
 
     return(
-        <section className={styles.container}
+        <section data-testid='utilityContainer'
+                 className={styles.container}
                  style={{width: width === 0 ? '100%' : `${width}px`,
                          height: height === 0 ? '100%' : `${height}px`,
                          justifyContent: justifyContent,
-                         backgroundColor: bgColor,
-                         border: border}}>
+                         border: border,
+                         backgroundColor: bgColor}}>
             <Backdrop backdrop={backdrop} loader={false}>
                 {containers}
             </Backdrop>

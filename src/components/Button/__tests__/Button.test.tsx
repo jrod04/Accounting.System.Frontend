@@ -11,7 +11,8 @@ describe('Non-submit button component', () => {
     beforeEach(() => {
         user = createUser();
         handlerClick.mockClear();
-        const renderResult = render(<Button id='1'
+        const renderResult = render(<Button ariaLabel='Button'
+                                            id='1'
                                             value='value'
                                             width={75}
                                             cb_handlerClick={handlerClick}
@@ -32,7 +33,11 @@ describe('Non-submit button component', () => {
     });
 
     test('Non-submit button displays default color', () => {
-        rerender(<Button id='1' value='value' width={75} cb_handlerClick={handlerClick} />);
+        rerender(<Button ariaLabel='Button'
+                         id='1'
+                         value='value'
+                         width={75}
+                         cb_handlerClick={handlerClick} />);
         const button = screen.getByRole('button');
         expect(button).toHaveStyle({
             backgroundColor: 'rgba(217,215,205,1)'
@@ -68,7 +73,8 @@ describe('Non-submit button component', () => {
 
 describe('Submit button component', () => {
     beforeEach(() => {
-        const renderResult = render(<Button input={true}
+        const renderResult = render(<Button ariaLabel='Button'
+                                            input={true}
                                             id='1'
                                             value='value'
                                             width={75}
@@ -90,7 +96,11 @@ describe('Submit button component', () => {
     });
 
     test('Non-submit button displays default color', () => {
-        rerender(<Button id='1' value='value' width={75} cb_handlerClick={handlerClick} />);
+        rerender(<Button ariaLabel='Button'
+                         id='1'
+                         value='value'
+                         width={75}
+                         cb_handlerClick={handlerClick} />);
         const button = screen.getByRole('button');
         expect(button).toHaveStyle({
             backgroundColor: 'rgba(217,215,205,1)'
