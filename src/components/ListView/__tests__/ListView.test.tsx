@@ -1,5 +1,6 @@
-import { beforeEach, describe, expect, test, vi, type MockedFunction } from 'vitest';
-import { screen, render } from '@testing-library/react';
+import { useState } from 'react';
+import { beforeEach, describe, expect, test, vi, } from 'vitest';
+import { screen, render, cleanup } from '@testing-library/react';
 import createUser from './../../../utils/createUser.tsx';
 import ListView from './../ListView.tsx';
 import { type iListViewGalleryItem } from './../../ListViewGallery/ListViewGallery.tsx';
@@ -17,27 +18,26 @@ for (let i = 1; i < 32; i++) {
 };
 const aside = <section>Test the aside.</section>;
 
-beforeEach(() => {
-    user = createUser();
-    handlerClick.mockClear();
-    const renderResult = render(<ListView openAside={openAside}
-                                          aside={aside}
-                                          idForm='1'
-                                          ariaLabel='List View'
-                                          galleryHeaders={galleryHeaders}
-                                          galleryItems={galleryItems}
-                                          searchValue={'Search...'}
-                                          showControls={false}
-                                          controlInterval={0}
-                                          leftFirstOperationImage={Edit}
-                                          cb_handlerLeftFirstOperation={handlerClick} />)
-    rerender = renderResult.rerender;
-});
+describe('List View component', () => {
+    beforeEach(() => {
+        user = createUser();
+        handlerClick.mockClear();
+        const renderResult = render(<ListView openAside={openAside}
+                                              aside={aside}
+                                              idForm='1'
+                                              ariaLabel='List View'
+                                              galleryHeaders={galleryHeaders}
+                                              galleryItems={galleryItems}
+                                              searchValue={'Search...'}
+                                              showControls={false}
+                                              controlInterval={0} />)
+        rerender = renderResult.rerender;
+    });
 
-describe('ListView component', () => {
     test('List view displays', () => {
         const listView = screen.getByTestId('List View Component');
         expect(listView).toBeInTheDocument();
+
     });
 
     test('On init, aside view is hidden', () => {
@@ -51,44 +51,36 @@ describe('ListView component', () => {
         expect(controls).toBeNull();
     });
 
-    test('On showControls=true, control container is shown', () => {
+    beforeEach((context) => {
+        user = createUser();
+        handlerClick.mockClear();
+
+        if (context.task.name === 'On user click, aside opens') {
+            cleanup();
+            return;
+        };
+
         rerender(<ListView openAside={openAside}
                            aside={aside}
                            idForm='1'
                            ariaLabel='List View'
                            galleryHeaders={galleryHeaders}
                            galleryItems={galleryItems}
-                           searchValue={'Search...'}
+                           searchValue='Search...'
                            showControls={true}
-                           controlInterval={0} />);
+                           controlInterval={15}
+                           leftFirstOperationImage={Edit}
+                           cb_handlerLeftFirstOperation={handlerClick} />);
+    });
+
+    test('On showControls=true, control container is shown', () => {
         const controlContainer = screen.getByTestId('controlContainer');
         expect(controlContainer).toBeInTheDocument();
     });
 
     test('On showControls=true, control counter is shown', () => {
-        rerender(<ListView openAside={openAside}
-                           aside={aside}
-                           idForm='1'
-                           ariaLabel='List View'
-                           galleryHeaders={galleryHeaders}
-                           galleryItems={galleryItems}
-                           searchValue={'Search...'}
-                           showControls={true}
-                           controlInterval={0} />);
         const controlCounter = screen.getByTestId('controlCounter');
         expect(controlCounter).toBeInTheDocument();
-    });
-
-    beforeEach(() => {
-       rerender(<ListView openAside={openAside}
-                   aside={aside}
-                   idForm='1'
-                   ariaLabel='List View'
-                   galleryHeaders={galleryHeaders}
-                   galleryItems={galleryItems}
-                   searchValue={'Search...'}
-                   showControls={true}
-                   controlInterval={15} />);
     });
 
     test('On showControls=true, control back button is shown', () => {
@@ -132,26 +124,36 @@ describe('ListView component', () => {
         expect(controlInfo.textContent).toBe('31-31 of 31');
     });
 
-//      TODO: Research this issue. Vitest does not successfully pass img strings down more than one child
-//     test('On user click, aside opens', async () => {
-//         const button = screen.getByRole('button', { name: 'Left First Operation-1'} )
-//         await user.click(button);
-//         expect(handlerClick).toHaveBeenCalledTimes(1);
-//         rerender(<ListView openAside={true}
-//                            aside={aside}
-//                            idForm='1'
-//                            ariaLabel='List View'
-//                            galleryHeaders={galleryHeaders}
-//                            galleryItems={galleryItems}
-//                            showControls={false}
-//                            controlInterval={0}
-//                            leftFirstOperationImage={Edit}
-//                            cb_handlerLeftFirstOperation={handlerClick} />)
-//
-//         const asideForm = screen.getByRole('form', { name: 'Aside form' });
-//         expect(asideForm).toHaveAttribute(
-//             'class',
-//             expect.stringContaining('aside')
-//         );
-//     });
+    test('On user click, aside opens', async () => {
+        const TestWrapper = () => {
+            const [openAside, setOpenAside] = useState<boolean>(false);
+
+            const handlerToggleAside = () => {
+                setOpenAside(!openAside);
+            };
+
+            return(<ListView openAside={openAside}
+                             aside={aside}
+                             idForm='1'
+                             ariaLabel='List View'
+                             galleryHeaders={galleryHeaders}
+                             galleryItems={galleryItems}
+                             searchValue='Search...'
+                             showControls={true}
+                             controlInterval={15}
+                             leftFirstOperationImage={Edit}
+                             cb_handlerLeftFirstOperation={handlerToggleAside} />);
+        };
+
+        render(<TestWrapper />)
+
+        const button = screen.getByRole('button', { name: 'Left First Operation-1'});
+        await user.click(button);
+
+        const asideForm = screen.getByRole('form', { name: 'Aside Form' });
+        expect(asideForm).toHaveAttribute(
+            'class',
+            expect.stringContaining('aside')
+        );
+    });
 });

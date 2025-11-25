@@ -90,7 +90,7 @@ function ListView ({...listViewInputs}: iListView) {
     return(
         <section data-testid='List View Component' className={styles.listViews}>
             {openAside &&
-                <form aria-label='Aside form' onSubmit={cb_handlerSubmitAside} className={styles.aside} id={idForm}>
+                <form role='form' aria-label='Aside Form' onSubmit={cb_handlerSubmitAside} className={styles.aside} id={idForm}>
                     {aside}
                 </form>
             }
