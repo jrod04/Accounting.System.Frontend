@@ -13,6 +13,9 @@ import LedgerIcon from './../../assets/ledger.svg';
 import ChartOfAccountsIcon from './../../assets/chartOfAccounts.svg';
 import FinancialStatementsIcon from './../../assets/financialStatements.svg';
 import Home from './../../assets/home.svg';
+
+import LedgerView from './../LedgerView/LedgerView.tsx';
+
 import styles from './MainView.module.css';
 
 const items = [{id: '1', title: 'Reliable Rental Properties in Michigan, LLC', subtitle: ''},
@@ -36,6 +39,7 @@ const MainView = () => {
     const cb_handlerToggleAddBusiness = handlerToggleAddBusiness;
 
     const handlerSetView = (e: MouseEvent<HTMLButtonElement>) => {
+        console.log(e);
         setView((e.target as HTMLButtonElement).title);
     };
 
@@ -59,14 +63,19 @@ const MainView = () => {
 
     const cards = items.map(item =>
        <div className={styles.cards} key={item.title}>
-            <Card area={<button className={styles.cardButton} onClick={handlerSetView}>{item.title}</button>}/>
+            <Card area={<button className={styles.cardButton}
+                                onClick={handlerSetView}
+                                title={item.title}>{item.title}</button>} />
        </div>
     );
+
+    const businessName = !['Home', 'Chart Of Accounts', 'Add Business'].includes(view) ? ` - ${view}` : '';
 
     useEffect(() => {
         if (refInputTextbox.current) refInputTextbox.current.focus();
     });
-
+//                         {view === 'Home' && cards}
+//                         {view === 'Chart of Accounts' && <ChartOfAccounts />}
    return(
         <>
             <Backdrop backdrop={addBusiness} loader={false}>
@@ -74,7 +83,7 @@ const MainView = () => {
                     <Notify stat='success' message='Success!' cb_handlerCloseNotify={cb_handlerCloseNotify} />
                 }
                 <div className={styles.nav}>
-                    <Navigation title='Accounting Suite' />
+                    <Navigation title={`Accounting Suite${businessName}`} />
                 </div>
 
                 <section className={styles.mainView}>
