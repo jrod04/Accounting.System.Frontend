@@ -1,0 +1,4 @@
+.ledger {
+    display: flex;
+    flex-direction: column;
+}

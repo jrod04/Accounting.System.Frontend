@@ -39,7 +39,6 @@ const MainView = () => {
     const cb_handlerToggleAddBusiness = handlerToggleAddBusiness;
 
     const handlerSetView = (e: MouseEvent<HTMLButtonElement>) => {
-        console.log(e);
         setView((e.target as HTMLButtonElement).title);
     };
 
@@ -148,8 +147,7 @@ const MainView = () => {
                         }
                     </div>
                     <div className={styles.mainContainer}>
-                        {view === 'Home' && cards}
-                        {view === 'Chart of Accounts' && <ChartOfAccounts />}
+                        {<LedgerView />}
                     </div>
                     {addBusiness &&
                         <section className={styles.frmVerticalGallery}>
