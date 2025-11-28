@@ -1,5 +1,6 @@
-import { useState, useEffect, type MouseEvent, type ChangeEvent } from 'react';
-import ListView, { type iListViewGalleryItem } from './../../components/ListView/ListView.tsx';
+import { useState, useRef, useEffect, type MouseEvent, type ChangeEvent } from 'react';
+import ListView from './../../components/ListView/ListView.tsx';
+import { type iListViewGalleryItem } from './../../components/ListViewGallery/ListViewGallery.tsx';
 import UtilityContainer from './../../components/UtilityContainer/UtilityContainer.tsx';
 import InputSearchTextbox from './../../components/InputSearchTextbox/InputSearchTextbox.tsx';
 import InputTextbox from './../../components/InputTextbox/InputTextbox.tsx';
@@ -19,6 +20,8 @@ const ChartOfAccounts = () => {
 
     const galleryHeaders = ['headerLeftOperation', 'Code', 'Account', 'Type', 'headerRightOperation'];
     const [galleryItems, setGalleryItems] = useState<iListViewGalleryItem[]>(accounts);
+
+    const refSearchAccounts = useRef<HTMLInputElement | null>(null);
 
     const cb_handlerAddAccount = () => {
         if (!openAside) setOpenAside(true);
@@ -61,6 +64,7 @@ const ChartOfAccounts = () => {
                                 iconHeight={25}
                                 showImage={true}
                                 searchValue={searchValue}
+                                ref={refSearchAccounts}
                                 cb_handlerOnChange={cb_handlerOnChange}
                                 cb_handlerOnFocus={cb_handlerOnFocus}
                                 cb_handlerOnBlur={cb_handlerOnBlur} />

@@ -12,7 +12,7 @@ const LedgerView = () => {
 
     return(
         <article className={styles.ledger}>
-            <AcctDoubleEntryCard width={500} />
+            <AcctDoubleEntryCard width={500} dropdownValues={[]} />
         </article>
     );
 };

@@ -1,22 +1,23 @@
-import React, { useState, useRef, useEffect, type MouseEvent, type ChangeEvent } from 'react';
+import React, { useState, useRef, useEffect, type MouseEvent, type ChangeEvent, type RefObject } from 'react';
 import Button from './../Button/Button.tsx';
 import ButtonIcon from './../ButtonIcon/ButtonIcon.tsx';
 import InputSearchTextbox from './../InputSearchTextbox/InputSearchTextbox.tsx';
 import CreateNew from './../../assets/createNew.svg';
 import MagnifyingGlass from './../../assets/magnifyingGlass.svg';
+import accounts from './../../utils/tmpData.tsx';
 import styles from './AcctDoubleEntryCard.module.css';
 
 interface iEntryData {
-    account: string;
-    amount: number;
+    account: string | undefined;
+    amount: number | undefined;
 };
 
 interface iResultData {
-    debits: entryData[];
-    credits: entryData[];
+    debits: iEntryData[] | [];
+    credits: iEntryData[] | [];
 };
 
-const AcctDoubleEntryCard = ({width}: number) => {
+const AcctDoubleEntryCard = ({width, dropdownValues}: {width: number, dropdownValues: [] | undefined}) => {
     const [results, setResults] = useState<iResultData>({debits: [], credits: []});
     const [searchValue, setSearchValue] = useState<string>('Search for account...');
     const [totalDebitAmount, setTotalDebitAmount] = useState<number>(0);
@@ -24,13 +25,16 @@ const AcctDoubleEntryCard = ({width}: number) => {
     const [balanced, setBalanced] = useState<boolean>(false);
     const [fileNames, setFileNames] = useState<string[]>([]);
 
-    const refAccount = useRef(null);
-    const refAmount = useRef(null);
+    const refAccount = useRef<HTMLInputElement | null>(null);
+    const refAmount = useRef<HTMLInputElement | null>(null);
 
+    const finalDropdownValues = dropdownValues && dropdownValues?.length > 0 ?
+                                dropdownValues :
+                                accounts.map(account => (account.One + ' - ' + account.Two ));
     const sumTotal = (values: number[]) => {
         const initValue = 0;
         const finalValue = values.reduce(
-            (accumulator, currentValue) => Number(accumulator) + Number(currentValue),
+            (accumulator, currentValue) => accumulator + currentValue,
             initValue
         );
         return finalValue;
@@ -54,41 +58,41 @@ const AcctDoubleEntryCard = ({width}: number) => {
         //TODO: Check if entry textbox contains only numerical and . figures, etc., if not: error
         //TODO: Check if entry already exists
         const entry = {
-            account: refAccount.current?.value ?? '',
-            amount:  refAmount.current?.value ?? ''
+            account: refAccount ? refAccount.current?.value : undefined,
+            amount:  refAmount ? Number(refAmount.current?.value) : undefined
         };
-        setResults({
-            ...results,
-            debits: [
-                ...results.debits,
-                entry
-            ]
-        });
+
+        if (entry.account && entry.amount) {
+            setResults(prevResults => ({
+                ...prevResults,
+                debits: prevResults.debits ? [...prevResults.debits, entry] : []
+            }));
+        };
     };
 
-    const handlerAddCredit = () => {
+   const handlerAddCredit = () => {
         //TODO: Check if selected searchValue exists, if not: error
         //TODO: Check if entry textbox contains only numerical and . figures, etc., if not: error
         const entry = {
-            account: refAccount.current?.value ?? '',
-            amount:  refAmount.current?.value ?? ''
+            account: refAccount ? refAccount.current?.value : undefined,
+            amount:  refAmount ? Number(refAmount.current?.value) : undefined
         };
-        setResults({
-            ...results,
-            credits: [
-                ...results.credits,
-                entry
-            ]
-        });
+
+        if (entry.account && entry.amount) {
+            setResults(prevResults => ({
+                ...prevResults,
+                credits: prevResults.credits ? [...prevResults.credits, entry] : [entry]
+            }));
+        };
     };
 
     const handlerClickAttachment = () => {
         const fileInput = document.getElementById('attachments');
-        fileInput.click();
+        fileInput?.click();
     };
 
     const handlerOnChangeFiles = (e: ChangeEvent<HTMLInputElement>) => {
-        const fileList = Array.from(e.target.files);
+        const fileList = e.target?.files ? Array.from(e.target.files) : [];
         setFileNames(fileList.map(file => file.name));
     };
 
@@ -129,7 +133,7 @@ const AcctDoubleEntryCard = ({width}: number) => {
                 <td className={(results.debits.length > 0 || results.credits.length > 0) ? styles.totalAmount : ''}>
                     {(results.debits.length > 0 || results.credits.length > 0) ?
                         <span style={{color: !balanced ? 'rgba(199,0,57,1)' : 'rgba(0,0,0,1)'}}>
-                            {sumTotal(results.debits.map(debit => debit.amount))}
+                            {sumTotal(results.debits.map(debit => Number(debit.amount)))}
                         </span> :
                          ''
                     }
@@ -137,7 +141,7 @@ const AcctDoubleEntryCard = ({width}: number) => {
                 <td className={(results.debits.length > 0 || results.credits.length > 0)  ? styles.totalAmount : ''}>
                     {(results.debits.length > 0 || results.credits.length > 0) ?
                         <span style={{color: !balanced ? 'rgba(199,0,57,1)' : 'rgba(0,0,0,1)'}}>
-                            {sumTotal(results.credits.map(credit => credit.amount))}
+                            {sumTotal(results.credits.map(credit => Number(credit.amount)))}
                         </span> :
                         ''
                     }
@@ -148,8 +152,8 @@ const AcctDoubleEntryCard = ({width}: number) => {
     </table>
 
     useEffect(() => {
-        setTotalDebitAmount(sumTotal(results.debits.map(debit => debit.amount)));
-        setTotalCreditAmount(sumTotal(results.credits.map(credit => credit.amount)));
+        setTotalDebitAmount(sumTotal(results.debits.map(debit => Number(debit.amount))));
+        setTotalCreditAmount(sumTotal(results.credits.map(credit => Number(credit.amount))));
     },[results]);
 
     useEffect(() => {
@@ -170,12 +174,18 @@ const AcctDoubleEntryCard = ({width}: number) => {
             <div className={styles.entries}>
                 <div className={styles.accountButton}>
                     <ButtonIcon icon={MagnifyingGlass}
+                                ariaLabel='Search Accounts Icon'
+                                alt='Search Icon'
+                                title='Search Icon'
                                 height={20}
                                 width={20} />
                 </div>
                 <div className={styles.accountContainer}>
                     <InputSearchTextbox ariaLabel='Account Search Textbox'
                                         searchValue={searchValue}
+                                        dropdownValues={finalDropdownValues}
+                                        dropdownWidth={218}
+                                        dropdownHeight={190}
                                         showImage={false}
                                         ref={refAccount}
                                         cb_handlerOnChange={cb_handlerOnChange}
@@ -192,11 +202,13 @@ const AcctDoubleEntryCard = ({width}: number) => {
                            ref={refAmount} />
                 </div>
                 <div className={styles.entryButtonContainer}>
-                    <Button ariaLabel='Debit Entry'
+                    <Button id='debitEntryButton'
+                            ariaLabel='Debit Entry'
                             value='Debit'
                             width={50}
                             cb_handlerClick={handlerAddDebit} />
-                    <Button ariaLabel='Credit Entry'
+                    <Button id='creditEntryButton'
+                            ariaLabel='Credit Entry'
                             value='Credit'
                             width={50}
                             cb_handlerClick={handlerAddCredit} />
@@ -210,7 +222,8 @@ const AcctDoubleEntryCard = ({width}: number) => {
                 <textarea name='notes'></textarea>
             </div>
             <div className={styles.inputFile}>
-                <Button ariaLabel='Attachments'
+                <Button id='attachmentsButton'
+                        ariaLabel='Attachments'
                         value='Attachments'
                         width={100}
                         cb_handlerClick={handlerClickAttachment} />
@@ -232,11 +245,13 @@ const AcctDoubleEntryCard = ({width}: number) => {
             </div>
             <div>
                 <div className={styles.submissionButtonContainer}>
-                    <Button ariaLabel='Cancel Button'
+                    <Button id='cancelEntryButton'
+                            ariaLabel='Cancel Button'
                             value='Cancel'
                             width={50}
                             cb_handlerClick={() => {}} />
-                    <Button ariaLabel='Submit Button'
+                    <Button id='submitEntryButton'
+                            ariaLabel='Submit Button'
                             value='Submit'
                             width={50}
                             cb_handlerClick={() => {}} />
