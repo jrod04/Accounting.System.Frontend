@@ -8,108 +8,157 @@
     overflow: hidden;
 }
 
-.topContainers,
- .titles {
+.totalAmount {
+    border-top: 1px solid rgba(0,0,0,0.3);;
+ }
+
+.date {
+    padding: 5px;
+    margin-left: 5%;
+}
+
+.date > input {
+    border-radius: 5px;
+    border: 1px solid rgba(0,0,0,1);
+    outline: 1px solid rgba(0,0,0,1);
+}
+
+.title {
     display: flex;
     flex-direction: row;
     width: 100%;
-    flex: 1;
-}
-
-.titles {
-    display: flex;
-    flex-direction: row;
     background-color: rgba(0,0,0,0.1);
     font-weight: bold;
-}
-
-.titleContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    margin-left: -5px;
-    flex: 1;
-}
-
-.container,
- .entryContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    padding: 5px;
-    min-width: 0;
-    flex: 1;
+    padding-left: 10px;
 }
 
 .notes {
     display: flex;
-    padding: 5px 5px 10px 5px;
-    width: 100%;
-
+    flex-direction: column;
+    padding: 5px;
 }
 
-.notes > textarea {
-    border-radius: 5px;
-    max-width: 85%;
+.notes textarea {
+    min-width: 98.5%;
+    max-width: 98.5%;
+}
+
+.addEntryButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.results {
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    padding: 5px;
+}
+
+.submissionButtonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    padding: 5px;
+}
+
+
+.submissionButtonContainer button {
+    margin: 5px;
+}
+
+.inputFile {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+}
+
+.inputFile input {
+    display: none;
+}
+
+.fileNames {
+    display: flex;
+    flex-direction: column;
+}
+
+.fileNames li {
+    list-style-type: none;
+}
+
+.table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    min-width: 0;
     flex: 1;
 }
 
-.debitContainer,
- .creditContainer {
+.table thead {
+    width: 100%;
+}
+
+.tblOperation {
+    width: 30px;
+}
+
+.tblAmount {
+    text-align: center;
+}
+
+.entries {
     display: flex;
     flex-direction: row;
     align-items: center;
-    text-align: center;
-    width: 100%;
     padding: 5px;
     min-width: 0;
     flex: 1;
 }
 
-.debitContainer {
-    border-right: 1px solid rgba(0,0,0,0.3);
-}
-
-.titles > .container {
-    padding-left: -15px;
-    border: 2px solid green;
-}
-
-.container > img {
-    border: 1px solid blue;
-}
-
-.container > textarea {
-    border-radius: 5px;
-    height: 50px;
-    flex: 0.97;
-}
-
-.subContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 100%;;
-    min-width: 0;
-    flex: 1;
-    margin: 5px;
-    justify-content: space-between;
-}
-
-.buttons {
+.accountButton {
     display: flex;
     height: 20px;
     width: 20px;
     justify-content: center;
 }
 
-.accountOptions {
-    height: 18px;
-    border-radius: 5px;
+.accountContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    padding: 5px;
     min-width: 0;
+    flex: 2;
+}
+
+.accountContainer input {
+    border: 1px solid rgba(0,0,0,1);
+    outline: 1px solid rgba(0,0,0,1);
+}
+
+.entryContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    height: 100%;
+    padding: 5px;
+    min-width: 0;
+    flex: 1;
+}
+
+.entryButtonContainer {
+    display: flex;
+    padding: 5px;
+    min-with: 0;
+    justify-content: space-between;
     flex: 1;
 }
 
@@ -118,6 +167,8 @@
     border-radius: 5px;
     text-align: center;
     border: 1px solid rgba(0,0,0,1);
+    outline: 1px solid rgba(0,0,0,1);
     min-width: 0;
     flex: 1;
 };
+

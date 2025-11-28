@@ -1,6 +1,5 @@
 import { useState, useEffect, type MouseEvent, type ChangeEvent } from 'react';
-import ListView from './../../components/ListView/ListView.tsx';
-import { type iListViewGalleryItem } from './../../components/ListViewGallery/ListViewGallery.tsx';
+import ListView, { type iListViewGalleryItem } from './../../components/ListView/ListView.tsx';
 import UtilityContainer from './../../components/UtilityContainer/UtilityContainer.tsx';
 import InputSearchTextbox from './../../components/InputSearchTextbox/InputSearchTextbox.tsx';
 import InputTextbox from './../../components/InputTextbox/InputTextbox.tsx';
@@ -43,10 +42,12 @@ const ChartOfAccounts = () => {
         if (e.target.value.trim() === '') setSearchValue('Search...');
     };
 
+    // TODO
     const cb_handlerSearchDateRange = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
     };
 
+    // TODO
     const cb_handlerCheckError = (e: MouseEvent<HTMLButtonElement>, error: string) => {
         e.preventDefault();
     };
