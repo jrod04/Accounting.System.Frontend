@@ -1,14 +1,19 @@
-import { useState, useRef, useEffect, type ChangeEvent, type FocusEvent, type RefObject } from 'react';
+import { useState, useRef, useEffect, type MouseEvent, type ChangeEvent, type FocusEvent, type RefObject } from 'react';
 import ButtonIcon from './../ButtonIcon/ButtonIcon.tsx';
 import MagnifyingGlass from './../../assets/magnifyingGlass.svg';
 import styles from './InputSearchTextbox.module.css';
+
+type tDropdownValues = {
+    id: string | number,
+    value: string
+};
 
 interface iInputSearchTextbox {
     ariaLabel: string;
     showImage: boolean;
     searchValue: string;
-    ref: RefObject<HTMLInputElement | null>;
-    dropdownValues?: string[] | undefined;
+    ref?: RefObject<HTMLInputElement | null> | undefined;
+    dropdownValues?: tDropdownValues[] | undefined;
     dropdownHeight?: number | undefined;
     dropdownWidth?: number | undefined;
     textboxWidth?: number | undefined;
@@ -38,12 +43,40 @@ const InputSearchTextbox = ({...inputSearchTextboxInputs}: iInputSearchTextbox) 
         cb_handlerOnFocus
     } = inputSearchTextboxInputs;
 
+    const [openDropdown, setOpenDropdown] = useState<boolean>(false);
+
     const finalIconWidth = iconWidth ? iconWidth : 0;
     const finalIconHeight = iconHeight ? iconHeight : 0;
 
-    const dropdown = dropdownValues?.map((value, index) => (
-        <button key={`${value}-${index}`} className={styles.dropdownButton}>
-            {value}
+    const handlerOnFocus = (e: ChangeEvent<HTMLInputElement>) => {
+        setOpenDropdown(true);
+        cb_handlerOnFocus(e);
+    };
+
+    const handlerOnBlur = (e: ChangeEvent<HTMLInputElement>) => {
+        const clickedElement = e.relatedTarget;
+        if (clickedElement) {
+            if (dropdownValues.filter(value => value.value === clickedElement.textContent).length > 0) {
+                handlerClickDropdown
+                return;
+            };
+        };
+        setOpenDropdown(false);
+        cb_handlerOnBlur(e);
+    };
+
+    const handlerClickDropdown = (e: MouseEvent<HTMLButtonElement>) => {
+        cb_handlerOnChange(e);
+        setOpenDropdown(false);
+    };
+
+    const dropdownPopulation = dropdownValues?.map(value => (
+        <button key={`inputSearchTextbox-${value.id}`}
+                id={value.id}
+                className={styles.dropdownButton}
+                value={value.value}
+                onClick={handlerClickDropdown}>
+            {value.value}
         </button>
     ));
 
@@ -59,15 +92,17 @@ const InputSearchTextbox = ({...inputSearchTextboxInputs}: iInputSearchTextbox) 
                        aria-label={ariaLabel}
                        type='textbox'
                        onChange={cb_handlerOnChange}
-                       onFocus={cb_handlerOnFocus}
-                       onBlur={cb_handlerOnBlur}
+                       onFocus={handlerOnFocus}
+                       onBlur={handlerOnBlur}
                        value={searchValue}
                        ref={ref} />
-                <div className={styles.dropdown}
-                     style={{width: dropdownWidth ? `${dropdownWidth}px` : '',
-                             height: dropdownHeight ? `${dropdownHeight}px` : ''}}>
-                    {dropdown}
+                {openDropdown &&
+                    <div className={styles.dropdown}
+                         style={{width: dropdownWidth ? `${dropdownWidth}px` : '',
+                                 height: dropdownHeight ? `${dropdownHeight}px` : ''}}>
+                        {dropdownPopulation}
                 </div>
+                }
             </div>
             {showImage &&
                 <div className={styles.btn}>

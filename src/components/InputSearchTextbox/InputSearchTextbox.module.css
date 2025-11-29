@@ -25,7 +25,6 @@
     overflow-y: auto;
     overflow-x: hidden;
     z-index: 1;
-    display: none;
 }
 
 .dropdown button,
@@ -34,7 +33,7 @@
     background-color: transparent;
     outline: none;
     border: none;
-    border-bottom: 1px solid rgba(0,0,0,0.3);;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
     border-radius: 0;
     width: 100%;
     font-size: 12px;

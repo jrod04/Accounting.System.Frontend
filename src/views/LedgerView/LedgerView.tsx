@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import AcctDoubleEntryCard from './../../components/AcctDoubleEntryCard/AcctDoubleEntryCard.tsx';
+import JournalEntryCard from './../../components/JournalEntryCard/JournalEntryCard.tsx';
 import styles from './LedgerView.module.css';
 
 const LedgerView = () => {
@@ -12,7 +12,7 @@ const LedgerView = () => {
 
     return(
         <article className={styles.ledger}>
-            <AcctDoubleEntryCard width={500} dropdownValues={[]} />
+            <JournalEntryCard width={500} dropdownValues={[]} />
         </article>
     );
 };

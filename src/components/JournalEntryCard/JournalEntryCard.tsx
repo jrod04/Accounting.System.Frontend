@@ -5,7 +5,7 @@ import InputSearchTextbox from './../InputSearchTextbox/InputSearchTextbox.tsx';
 import CreateNew from './../../assets/createNew.svg';
 import MagnifyingGlass from './../../assets/magnifyingGlass.svg';
 import accounts from './../../utils/tmpData.tsx';
-import styles from './AcctDoubleEntryCard.module.css';
+import styles from './JournalEntryCard.module.css';
 
 interface iEntryData {
     account: string | undefined;
@@ -17,7 +17,7 @@ interface iResultData {
     credits: iEntryData[] | [];
 };
 
-const AcctDoubleEntryCard = ({width, dropdownValues}: {width: number, dropdownValues: [] | undefined}) => {
+const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValues: [] | undefined}) => {
     const [results, setResults] = useState<iResultData>({debits: [], credits: []});
     const [searchValue, setSearchValue] = useState<string>('Search for account...');
     const [totalDebitAmount, setTotalDebitAmount] = useState<number>(0);
@@ -28,9 +28,17 @@ const AcctDoubleEntryCard = ({width, dropdownValues}: {width: number, dropdownVa
     const refAccount = useRef<HTMLInputElement | null>(null);
     const refAmount = useRef<HTMLInputElement | null>(null);
 
-    const finalDropdownValues = dropdownValues && dropdownValues?.length > 0 ?
-                                dropdownValues :
-                                accounts.map(account => (account.One + ' - ' + account.Two ));
+    let finalDropdownValues = dropdownValues && dropdownValues?.length > 0 ?
+       dropdownValues :
+       accounts.map(account => ({
+           id: account.id,
+           value: account.One + ' - ' + account.Two
+    }));
+
+    finalDropdownValues = ['','search for account...'].includes(searchValue.trim().toLowerCase()) ?
+        finalDropdownValues :
+        finalDropdownValues.filter(value => value.value.trim().toLowerCase().includes(searchValue.trim().toLowerCase()));
+
     const sumTotal = (values: number[]) => {
         const initValue = 0;
         const finalValue = values.reduce(
@@ -165,7 +173,7 @@ const AcctDoubleEntryCard = ({width, dropdownValues}: {width: number, dropdownVa
                  className={styles.card}
                  style={{width: `${width}px`}}>
             <div className={styles.title}>
-                Double Entry Card
+                Journal Entry
             </div>
             <div className={styles.date}>
                 <input aria-label='Date Textbox'
@@ -261,4 +269,4 @@ const AcctDoubleEntryCard = ({width, dropdownValues}: {width: number, dropdownVa
     );
 };
 
-export default AcctDoubleEntryCard;
+export default JournalEntryCard;

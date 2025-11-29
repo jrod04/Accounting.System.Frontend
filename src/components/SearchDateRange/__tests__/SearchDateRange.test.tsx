@@ -6,7 +6,7 @@ import SearchDateRange from './../SearchDateRange.tsx';
 
 let user: any;
 const cb_handlerClick = vi.fn((e: MouseEvent<HTMLButtonElement>) => {});
-const cb_handlerCheckError = vi.fn((e: MouseEvent<HTMLButtonElement>, error: string) => {});;
+const cb_handlerCheckError = vi.fn((e: MouseEvent<HTMLButtonElement>, error: string) => {});
 let fromDate: HTMLInputElement, toDate: HTMLInputElement;
 
 describe('Search Date Range component', () => {
