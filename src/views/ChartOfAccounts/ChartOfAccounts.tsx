@@ -37,12 +37,12 @@ const ChartOfAccounts = () => {
         setSearchValue(e.target.value);
     };
 
-    const cb_handlerOnFocus = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value.toLowerCase().trim() === 'search...') setSearchValue('');
+    const cb_handlerOnFocus = (e: MouseEvent<HTMLInputElement>) => {
+        if ((e.target as HTMLInputElement).value.toLowerCase().trim() === 'search...') setSearchValue('');
     };
 
-    const cb_handlerOnBlur = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value.trim() === '') setSearchValue('Search...');
+    const cb_handlerOnBlur = (e: MouseEvent<HTMLInputElement>) => {
+        if ((e.target as HTMLInputElement).value.trim() === '') setSearchValue('Search...');
     };
 
     // TODO

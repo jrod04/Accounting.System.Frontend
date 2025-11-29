@@ -48,15 +48,20 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
         return finalValue;
     };
 
+    const cb_handlerSetSearchValue = (searchValue: string) => {
+        console.log(searchValue);
+        setSearchValue(searchValue);
+    };
+
     const cb_handlerOnChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchValue(e.target.value);
     };
 
-    const cb_handlerOnFocus = (e: ChangeEvent<HTMLInputElement>) => {
+    const cb_handlerOnFocus = (e: MouseEvent<HTMLInputElement>) => {
         if (e.target.value.toLowerCase().trim() === 'search for account...') setSearchValue('');
     };
 
-    const cb_handlerOnBlur = (e: ChangeEvent<HTMLInputElement>) => {
+    const cb_handlerOnBlur = (e: MouseEvent<HTMLInputElement>) => {
         if (e.target.value.trim() === '') setSearchValue('Search for account...');
     };
 
@@ -75,6 +80,8 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
                 ...prevResults,
                 debits: prevResults.debits ? [...prevResults.debits, entry] : []
             }));
+            setSearchValue('');
+            refAmount.current.value = '';
         };
     };
 
@@ -91,6 +98,8 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
                 ...prevResults,
                 credits: prevResults.credits ? [...prevResults.credits, entry] : [entry]
             }));
+            setSearchValue('');
+            refAmount.current.value = '';
         };
     };
 
@@ -198,7 +207,8 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
                                         ref={refAccount}
                                         cb_handlerOnChange={cb_handlerOnChange}
                                         cb_handlerOnFocus={cb_handlerOnFocus}
-                                        cb_handlerOnBlur={cb_handlerOnBlur} />
+                                        cb_handlerOnBlur={cb_handlerOnBlur}
+                                        cb_handlerSetSearchValue={cb_handlerSetSearchValue} />
                 </div>
                 <div className={styles.entryContainer}>
                     $&nbsp;

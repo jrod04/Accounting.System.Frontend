@@ -1,4 +1,4 @@
-import { type ChangeEvent } from 'react';
+import { type ChangeEvent, type MouseEvent } from 'react';
 import { beforeEach, describe, test, expect, vi } from 'vitest';
 import { screen, render } from '@testing-library/react';
 import createUser from './../../../utils/createUser.tsx';
@@ -6,8 +6,8 @@ import InputSearchTextbox from './../InputSearchTextbox.tsx';
 
 let rerender: any, user: any;
 const cb_handlerOnChange = vi.fn((e: ChangeEvent<HTMLInputElement>) => {});
-const cb_handlerOnFocus = vi.fn((e: ChangeEvent<HTMLInputElement>) => {});
-const cb_handlerOnBlur = vi.fn((e: ChangeEvent<HTMLInputElement>) => {});
+const cb_handlerOnFocus = vi.fn((e: MouseEvent<HTMLInputElement>) => {});
+const cb_handlerOnBlur = vi.fn((e: MouseEvent<HTMLInputElement>) => {});
 
 beforeEach(() => {
     user = createUser();
@@ -76,8 +76,12 @@ describe('Input search textbox component', () => {
     test('Image shown to the right of the textbox if showImage=true', () => {
         const container = screen.getByTestId('Input search textbox container');
         const children = container.children;
-        expect(children[0]?.tagName).toBe('INPUT');
-        expect(children[1]?.tagName).toBe('DIV');
+        expect(children[0]?.tagName).toBe('DIV');
+        expect(children[1]).toHaveAttribute(
+            'class',
+            expect.stringContaining('btn')
+        );
+
     });
 
     test('Input textbox color gray when searchValue === Search...', () => {

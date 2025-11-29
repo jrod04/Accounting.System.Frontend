@@ -4,7 +4,7 @@ import MagnifyingGlass from './../../assets/magnifyingGlass.svg';
 import styles from './InputSearchTextbox.module.css';
 
 type tDropdownValues = {
-    id: string | number,
+    id: string,
     value: string
 };
 
@@ -21,8 +21,9 @@ interface iInputSearchTextbox {
     iconWidth? : number | undefined;
     iconHeight? : number | undefined;
     cb_handlerOnChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    cb_handlerOnFocus: (e: ChangeEvent<HTMLInputElement>) => void;
-    cb_handlerOnBlur: (e: ChangeEvent<HTMLInputElement>) => void;
+    cb_handlerOnFocus: (e: MouseEvent<HTMLInputElement>) => void;
+    cb_handlerOnBlur: (e: MouseEvent<HTMLInputElement>) => void;
+    cb_handlerSetSearchValue: (searchValue: string) => void;
 };
 
 const InputSearchTextbox = ({...inputSearchTextboxInputs}: iInputSearchTextbox) => {
@@ -40,7 +41,8 @@ const InputSearchTextbox = ({...inputSearchTextboxInputs}: iInputSearchTextbox) 
         ref,
         cb_handlerOnChange,
         cb_handlerOnBlur,
-        cb_handlerOnFocus
+        cb_handlerOnFocus,
+        cb_handlerSetSearchValue
     } = inputSearchTextboxInputs;
 
     const [openDropdown, setOpenDropdown] = useState<boolean>(false);
@@ -48,16 +50,16 @@ const InputSearchTextbox = ({...inputSearchTextboxInputs}: iInputSearchTextbox) 
     const finalIconWidth = iconWidth ? iconWidth : 0;
     const finalIconHeight = iconHeight ? iconHeight : 0;
 
-    const handlerOnFocus = (e: ChangeEvent<HTMLInputElement>) => {
+    const handlerOnFocus = (e: MouseEvent<HTMLInputElement>) => {
         setOpenDropdown(true);
         cb_handlerOnFocus(e);
     };
 
-    const handlerOnBlur = (e: ChangeEvent<HTMLInputElement>) => {
-        const clickedElement = e.relatedTarget;
+    const handlerOnBlur = (e: MouseEvent<HTMLInputElement>) => {
+        const clickedElement = e?.relatedTarget as HTMLInputElement;
         if (clickedElement) {
-            if (dropdownValues.filter(value => value.value === clickedElement.textContent).length > 0) {
-                handlerClickDropdown
+            if (dropdownValues?.filter(value => value.value === clickedElement.textContent).length ?? 0 > 0) {
+                handlerClickDropdown(e, clickedElement.textContent);
                 return;
             };
         };
@@ -65,8 +67,8 @@ const InputSearchTextbox = ({...inputSearchTextboxInputs}: iInputSearchTextbox) 
         cb_handlerOnBlur(e);
     };
 
-    const handlerClickDropdown = (e: MouseEvent<HTMLButtonElement>) => {
-        cb_handlerOnChange(e);
+    const handlerClickDropdown = (e: MouseEvent<HTMLButtonElement>, searchValue: string) => {
+        cb_handlerSetSearchValue(searchValue);
         setOpenDropdown(false);
     };
 

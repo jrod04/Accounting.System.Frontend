@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from 'react';
+import { useState, type ChangeEvent, type MouseEvent } from 'react';
 import { beforeEach, describe, test, expect, vi } from 'vitest';
 import { screen, render, cleanup } from '@testing-library/react';
 import createUser from './../../../utils/createUser.tsx';
@@ -33,15 +33,15 @@ const TestWrapper = ({zeroChildContainers}: {zeroChildContainers: boolean}) => {
     };
 
     const cb_handlerOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setSearchValue(e.target.value);
+        setSearchValue((e.target as HTMLInputElement).value);
     };
 
-    const cb_handlerOnFocus = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value.toLowerCase().trim() === 'search...') setSearchValue('');
+    const cb_handlerOnFocus = (e: MouseEvent<HTMLInputElement>) => {
+        if ((e.target as HTMLInputElement).value.toLowerCase().trim() === 'search...') setSearchValue('');
     };
 
-    const cb_handlerOnBlur = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value.trim() === '') setSearchValue('Search...');
+    const cb_handlerOnBlur = (e: MouseEvent<HTMLInputElement>) => {
+        if ((e.target as HTMLInputElement).value.trim() === '') setSearchValue('Search...');
     };
 
     const inputContainers = [
