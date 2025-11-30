@@ -16,6 +16,7 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
     "@tsconfig/node-lts": "^22.0.2",
+    "cloc": "^2.6.0-cloc",
     "eslint-plugin-istanbul-ignore-preserve": "^0.0.3",
     "eslint-plugin-react-x": "^2.3.5",
     "react": "^19.2.0",

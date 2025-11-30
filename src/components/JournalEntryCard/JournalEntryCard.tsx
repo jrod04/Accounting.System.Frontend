@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, type MouseEvent, type ChangeEvent, type RefObject } from 'react';
+import React, { useState, useRef, useEffect, type FocusEvent, type ChangeEvent, type RefObject } from 'react';
 import Button from './../Button/Button.tsx';
 import ButtonIcon from './../ButtonIcon/ButtonIcon.tsx';
 import InputSearchTextbox from './../InputSearchTextbox/InputSearchTextbox.tsx';
@@ -42,10 +42,18 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
     const sumTotal = (values: number[]) => {
         const initValue = 0;
         const finalValue = values.reduce(
-            (accumulator, currentValue) => accumulator + currentValue,
+            (accumulator, currentValue) => Number(accumulator) + Number(currentValue),
             initValue
         );
         return finalValue;
+    };
+
+    const insertCommas = (num: number) => {
+        const value = num.toString();
+        const data = output.split('.');
+        //TODO: Start here
+
+        return output;
     };
 
     const cb_handlerSetSearchValue = (searchValue: string) => {
@@ -57,11 +65,11 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
         setSearchValue(e.target.value);
     };
 
-    const cb_handlerOnFocus = (e: MouseEvent<HTMLInputElement>) => {
+    const cb_handlerOnFocus = (e: FocusEvent<HTMLInputElement>) => {
         if (e.target.value.toLowerCase().trim() === 'search for account...') setSearchValue('');
     };
 
-    const cb_handlerOnBlur = (e: MouseEvent<HTMLInputElement>) => {
+    const cb_handlerOnBlur = (e: FocusEvent<HTMLInputElement>) => {
         if (e.target.value.trim() === '') setSearchValue('Search for account...');
     };
 
@@ -72,7 +80,7 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
         //TODO: Check if entry already exists
         const entry = {
             account: refAccount ? refAccount.current?.value : undefined,
-            amount:  refAmount ? Number(refAmount.current?.value) : undefined
+            amount:  refAmount ? Number(refAmount.current?.value.replace(',','')) : undefined
         };
 
         if (entry.account && entry.amount) {
@@ -81,7 +89,7 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
                 debits: prevResults.debits ? [...prevResults.debits, entry] : []
             }));
             setSearchValue('');
-            refAmount.current.value = '';
+            if (refAmount.current) refAmount.current.value = '';
         };
     };
 
@@ -90,7 +98,7 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
         //TODO: Check if entry textbox contains only numerical and . figures, etc., if not: error
         const entry = {
             account: refAccount ? refAccount.current?.value : undefined,
-            amount:  refAmount ? Number(refAmount.current?.value) : undefined
+            amount:  refAmount ? Number(refAmount.current?.value.replace(',','')) : undefined
         };
 
         if (entry.account && entry.amount) {
@@ -99,7 +107,7 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
                 credits: prevResults.credits ? [...prevResults.credits, entry] : [entry]
             }));
             setSearchValue('');
-            refAmount.current.value = '';
+            if (refAmount.current) refAmount.current.value = '';
         };
     };
 
@@ -113,10 +121,18 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
         setFileNames(fileList.map(file => file.name));
     };
 
+    const handlerChangeAmount = (e: ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        if (refAmount.current) {
+            const newValue = refAmount.current.value.replace(/[a-zA-Z ]/, '');
+            refAmount.current.value = newValue;
+        };
+    };
+
     const debitElements = results.debits.map((debit, index) => (
         <tr key={`debit-${index}`}>
             <td className={styles.tblAccount}>{debit.account}</td>
-            <td className={styles.tblAmount}>{debit.amount}</td>
+            <td className={styles.tblAmount}>{debit.amount.toFixed(2)}</td>
             <td></td>
             <td className={styles.tblOperation}></td>
         </tr>
@@ -126,7 +142,7 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
         <tr key={`credit-${index}`}>
             <td className={styles.tblAccount}>{credit.account}</td>
             <td></td>
-            <td className={styles.tblAmount}>{credit.amount}</td>
+            <td className={styles.tblAmount}>{credit.amount.toFixed(2)}</td>
             <td className={styles.tblOperation}></td>
         </tr>
     ));
@@ -150,7 +166,7 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
                 <td className={(results.debits.length > 0 || results.credits.length > 0) ? styles.totalAmount : ''}>
                     {(results.debits.length > 0 || results.credits.length > 0) ?
                         <span style={{color: !balanced ? 'rgba(199,0,57,1)' : 'rgba(0,0,0,1)'}}>
-                            {sumTotal(results.debits.map(debit => Number(debit.amount)))}
+                            {Number(sumTotal(results.debits.map(debit => debit.amount))).toFixed(2)}
                         </span> :
                          ''
                     }
@@ -158,7 +174,7 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
                 <td className={(results.debits.length > 0 || results.credits.length > 0)  ? styles.totalAmount : ''}>
                     {(results.debits.length > 0 || results.credits.length > 0) ?
                         <span style={{color: !balanced ? 'rgba(199,0,57,1)' : 'rgba(0,0,0,1)'}}>
-                            {sumTotal(results.credits.map(credit => Number(credit.amount)))}
+                            {Number(sumTotal(results.credits.map(credit => credit.amount))).toFixed(2)}
                         </span> :
                         ''
                     }
@@ -213,10 +229,10 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
                 <div className={styles.entryContainer}>
                     $&nbsp;
                     <input aria-label='Entry Textbox'
-                           name='credit'
+                           name='amountTextbox'
                            className={styles.entryAmount}
-                           type='number'
-                           step='0.01'
+                           type='text'
+                           onChange={handlerChangeAmount}
                            ref={refAmount} />
                 </div>
                 <div className={styles.entryButtonContainer}>

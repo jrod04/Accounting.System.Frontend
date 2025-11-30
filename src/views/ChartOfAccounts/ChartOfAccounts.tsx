@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, type MouseEvent, type ChangeEvent } from 'react';
+import { useState, useRef, useEffect, type MouseEvent, type FocusEvent, type ChangeEvent } from 'react';
 import ListView from './../../components/ListView/ListView.tsx';
 import { type iListViewGalleryItem } from './../../components/ListViewGallery/ListViewGallery.tsx';
 import UtilityContainer from './../../components/UtilityContainer/UtilityContainer.tsx';
@@ -37,11 +37,11 @@ const ChartOfAccounts = () => {
         setSearchValue(e.target.value);
     };
 
-    const cb_handlerOnFocus = (e: MouseEvent<HTMLInputElement>) => {
+    const cb_handlerOnFocus = (e: FocusEvent<HTMLInputElement>) => {
         if ((e.target as HTMLInputElement).value.toLowerCase().trim() === 'search...') setSearchValue('');
     };
 
-    const cb_handlerOnBlur = (e: MouseEvent<HTMLInputElement>) => {
+    const cb_handlerOnBlur = (e: FocusEvent<HTMLInputElement>) => {
         if ((e.target as HTMLInputElement).value.trim() === '') setSearchValue('Search...');
     };
 

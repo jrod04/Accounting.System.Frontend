@@ -21,9 +21,9 @@ interface iInputSearchTextbox {
     iconWidth? : number | undefined;
     iconHeight? : number | undefined;
     cb_handlerOnChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    cb_handlerOnFocus: (e: MouseEvent<HTMLInputElement>) => void;
-    cb_handlerOnBlur: (e: MouseEvent<HTMLInputElement>) => void;
-    cb_handlerSetSearchValue: (searchValue: string) => void;
+    cb_handlerOnFocus: (e: FocusEvent<HTMLInputElement>) => void;
+    cb_handlerOnBlur: (e: FocusEvent<HTMLInputElement>) => void;
+    cb_handlerSetSearchValue?: (searchValue: string) => void | undefined;
 };
 
 const InputSearchTextbox = ({...inputSearchTextboxInputs}: iInputSearchTextbox) => {
@@ -50,16 +50,16 @@ const InputSearchTextbox = ({...inputSearchTextboxInputs}: iInputSearchTextbox) 
     const finalIconWidth = iconWidth ? iconWidth : 0;
     const finalIconHeight = iconHeight ? iconHeight : 0;
 
-    const handlerOnFocus = (e: MouseEvent<HTMLInputElement>) => {
+    const handlerOnFocus = (e: FocusEvent<HTMLInputElement>) => {
         setOpenDropdown(true);
         cb_handlerOnFocus(e);
     };
 
-    const handlerOnBlur = (e: MouseEvent<HTMLInputElement>) => {
-        const clickedElement = e?.relatedTarget as HTMLInputElement;
+    const handlerOnBlur = (e: FocusEvent<HTMLInputElement>) => {
+        const clickedElement = e.relatedTarget;
         if (clickedElement) {
             if (dropdownValues?.filter(value => value.value === clickedElement.textContent).length ?? 0 > 0) {
-                handlerClickDropdown(e, clickedElement.textContent);
+                if (cb_handlerSetSearchValue) cb_handlerSetSearchValue(clickedElement.textContent);
                 return;
             };
         };
@@ -67,8 +67,8 @@ const InputSearchTextbox = ({...inputSearchTextboxInputs}: iInputSearchTextbox) 
         cb_handlerOnBlur(e);
     };
 
-    const handlerClickDropdown = (e: MouseEvent<HTMLButtonElement>, searchValue: string) => {
-        cb_handlerSetSearchValue(searchValue);
+    const handlerClickDropdown = (e: MouseEvent<HTMLButtonElement>) => {
+        if (cb_handlerSetSearchValue) cb_handlerSetSearchValue(searchValue);
         setOpenDropdown(false);
     };
 

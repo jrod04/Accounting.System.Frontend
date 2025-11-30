@@ -6,14 +6,16 @@ import InputSearchTextbox from './../InputSearchTextbox.tsx';
 
 let rerender: any, user: any;
 const cb_handlerOnChange = vi.fn((e: ChangeEvent<HTMLInputElement>) => {});
-const cb_handlerOnFocus = vi.fn((e: MouseEvent<HTMLInputElement>) => {});
-const cb_handlerOnBlur = vi.fn((e: MouseEvent<HTMLInputElement>) => {});
+const cb_handlerOnFocus = vi.fn((e: ChangeEvent<HTMLInputElement>) => {});
+const cb_handlerOnBlur = vi.fn((e: ChangeEvent<HTMLInputElement>) => {});
+const cb_handlerSetSearchValue = vi.fn((searchValue: string) => {});
 
 beforeEach(() => {
     user = createUser();
     cb_handlerOnChange.mockClear();
     cb_handlerOnFocus.mockClear();
     cb_handlerOnBlur.mockClear();
+    cb_handlerSetSearchValue.mockClear();
     const renderResult = render(<InputSearchTextbox ariaLabel='Chart of Accounts Search Button'
                                                     textboxWidth={200}
                                                     textboxHeight={15}
@@ -23,7 +25,8 @@ beforeEach(() => {
                                                     searchValue='Search...'
                                                     cb_handlerOnChange={cb_handlerOnChange}
                                                     cb_handlerOnFocus={cb_handlerOnFocus}
-                                                    cb_handlerOnBlur={cb_handlerOnBlur} />);
+                                                    cb_handlerOnBlur={cb_handlerOnBlur}
+                                                    cb_handlerSetSearchValue={cb_handlerSetSearchValue} />);
     rerender = renderResult.rerender;
 });
 
@@ -68,7 +71,8 @@ describe('Input search textbox component', () => {
                                      showImage={false}
                                      cb_handlerOnChange={cb_handlerOnChange}
                                      cb_handlerOnFocus={cb_handlerOnFocus}
-                                     cb_handlerOnBlur={cb_handlerOnBlur} />);
+                                     cb_handlerOnBlur={cb_handlerOnBlur}
+                                     cb_handlerSetSearchValue={cb_handlerSetSearchValue} />);
         const icon = screen.queryByRole('img', { name: 'Search Button Icon'});
         expect(icon).toBeNull();
     });
@@ -99,7 +103,8 @@ describe('Input search textbox component', () => {
                                      showImage={false}
                                      cb_handlerOnChange={cb_handlerOnChange}
                                      cb_handlerOnFocus={cb_handlerOnFocus}
-                                     cb_handlerOnBlur={cb_handlerOnBlur} />);
+                                     cb_handlerOnBlur={cb_handlerOnBlur}
+                                     cb_handlerSetSearchValue={cb_handlerSetSearchValue} />);
         const searchBox = screen.getByRole('textbox', { name: 'Chart of Accounts Search Button'});
         expect(searchBox).toHaveStyle('color: rgba(0,0,0,1)');
     });
