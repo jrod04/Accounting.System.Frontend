@@ -60,6 +60,7 @@ const InputSearchTextbox = ({...inputSearchTextboxInputs}: iInputSearchTextbox) 
         if (clickedElement) {
             if (dropdownValues?.filter(value => value.value === clickedElement.textContent).length ?? 0 > 0) {
                 if (cb_handlerSetSearchValue) cb_handlerSetSearchValue(clickedElement.textContent);
+                setOpenDropdown(false);
                 return;
             };
         };
@@ -97,7 +98,8 @@ const InputSearchTextbox = ({...inputSearchTextboxInputs}: iInputSearchTextbox) 
                        onFocus={handlerOnFocus}
                        onBlur={handlerOnBlur}
                        value={searchValue}
-                       ref={ref} />
+                       ref={ref}
+                       autoComplete='off' />
                 {openDropdown &&
                     <div className={styles.dropdown}
                          style={{width: dropdownWidth ? `${dropdownWidth}px` : '',

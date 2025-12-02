@@ -5,6 +5,7 @@ import InputSearchTextbox from './../InputSearchTextbox/InputSearchTextbox.tsx';
 import CreateNew from './../../assets/createNew.svg';
 import MagnifyingGlass from './../../assets/magnifyingGlass.svg';
 import accounts from './../../utils/tmpData.tsx';
+import {sumTotal, insertCommas} from './../../utils/helpers.tsx';
 import styles from './JournalEntryCard.module.css';
 
 interface iEntryData {
@@ -17,7 +18,19 @@ interface iResultData {
     credits: iEntryData[] | [];
 };
 
-const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValues: [] | undefined}) => {
+interface iJournalEntryCard {
+    width; number;
+    dropdownValues: [] | undefined;
+    cb_handlerCancel: () => void;
+};
+
+const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
+    const {
+        width,
+        dropdownValues,
+        cb_handlerCancel
+    } = journalCardEntryProps;
+
     const [results, setResults] = useState<iResultData>({debits: [], credits: []});
     const [searchValue, setSearchValue] = useState<string>('Search for account...');
     const [totalDebitAmount, setTotalDebitAmount] = useState<number>(0);
@@ -25,6 +38,7 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
     const [balanced, setBalanced] = useState<boolean>(false);
     const [fileNames, setFileNames] = useState<string[]>([]);
 
+    const refDate = useRef<HTMLInputElement | null>(null);
     const refAccount = useRef<HTMLInputElement | null>(null);
     const refAmount = useRef<HTMLInputElement | null>(null);
 
@@ -39,25 +53,7 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
         finalDropdownValues :
         finalDropdownValues.filter(value => value.value.trim().toLowerCase().includes(searchValue.trim().toLowerCase()));
 
-    const sumTotal = (values: number[]) => {
-        const initValue = 0;
-        const finalValue = values.reduce(
-            (accumulator, currentValue) => Number(accumulator) + Number(currentValue),
-            initValue
-        );
-        return finalValue;
-    };
-
-    const insertCommas = (num: number) => {
-        const value = num.toString();
-        const data = output.split('.');
-        //TODO: Start here
-
-        return output;
-    };
-
     const cb_handlerSetSearchValue = (searchValue: string) => {
-        console.log(searchValue);
         setSearchValue(searchValue);
     };
 
@@ -121,18 +117,23 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
         setFileNames(fileList.map(file => file.name));
     };
 
-    const handlerChangeAmount = (e: ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
+    const handlerOnChangeAmount = (e: ChangeEvent<HTMLInputElement>) => {
         if (refAmount.current) {
-            const newValue = refAmount.current.value.replace(/[a-zA-Z ]/, '');
-            refAmount.current.value = newValue;
+            const newAmount = refAmount.current.value.replace(/[a-zA-Z ]/, '');
+            refAmount.current.value = newAmount;
+        };
+    };
+    const handlerOnBlurAmount = (e: FocusEvent<HTMLInputElement>) => {
+        if (refAmount.current) {
+            const newAmount = insertCommas(Math.round(refAmount.current.value));
+
         };
     };
 
     const debitElements = results.debits.map((debit, index) => (
         <tr key={`debit-${index}`}>
             <td className={styles.tblAccount}>{debit.account}</td>
-            <td className={styles.tblAmount}>{debit.amount.toFixed(2)}</td>
+            <td className={styles.tblAmount}>{insertCommas(debit.amount?.toFixed(2))}</td>
             <td></td>
             <td className={styles.tblOperation}></td>
         </tr>
@@ -142,7 +143,7 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
         <tr key={`credit-${index}`}>
             <td className={styles.tblAccount}>{credit.account}</td>
             <td></td>
-            <td className={styles.tblAmount}>{credit.amount.toFixed(2)}</td>
+            <td className={styles.tblAmount}>{insertCommas(credit.amount?.toFixed(2))}</td>
             <td className={styles.tblOperation}></td>
         </tr>
     ));
@@ -166,7 +167,7 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
                 <td className={(results.debits.length > 0 || results.credits.length > 0) ? styles.totalAmount : ''}>
                     {(results.debits.length > 0 || results.credits.length > 0) ?
                         <span style={{color: !balanced ? 'rgba(199,0,57,1)' : 'rgba(0,0,0,1)'}}>
-                            {Number(sumTotal(results.debits.map(debit => debit.amount))).toFixed(2)}
+                            {insertCommas(sumTotal(results.debits.map(debit => debit.amount ? debit.amount : 0)))}
                         </span> :
                          ''
                     }
@@ -174,7 +175,7 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
                 <td className={(results.debits.length > 0 || results.credits.length > 0)  ? styles.totalAmount : ''}>
                     {(results.debits.length > 0 || results.credits.length > 0) ?
                         <span style={{color: !balanced ? 'rgba(199,0,57,1)' : 'rgba(0,0,0,1)'}}>
-                            {Number(sumTotal(results.credits.map(credit => credit.amount))).toFixed(2)}
+                            {insertCommas(sumTotal(results.credits.map(credit => credit.amount ? credit.amount : 0)))}
                         </span> :
                         ''
                     }
@@ -202,7 +203,8 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
             </div>
             <div className={styles.date}>
                 <input aria-label='Date Textbox'
-                       type='date' />
+                       type='date'
+                       ref={refDate} />
             </div>
             <div className={styles.entries}>
                 <div className={styles.accountButton}>
@@ -232,7 +234,9 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
                            name='amountTextbox'
                            className={styles.entryAmount}
                            type='text'
-                           onChange={handlerChangeAmount}
+                           onChange={handlerOnChangeAmount}
+                           onBlur={handlerOnBlurAmount}
+                           autoComplete='off'
                            ref={refAmount} />
                 </div>
                 <div className={styles.entryButtonContainer}>
@@ -283,7 +287,7 @@ const JournalEntryCard = ({width, dropdownValues}: {width: number, dropdownValue
                             ariaLabel='Cancel Button'
                             value='Cancel'
                             width={50}
-                            cb_handlerClick={() => {}} />
+                            cb_handlerClick={(cb_handlerCancel) => {}} />
                     <Button id='submitEntryButton'
                             ariaLabel='Submit Button'
                             value='Submit'
