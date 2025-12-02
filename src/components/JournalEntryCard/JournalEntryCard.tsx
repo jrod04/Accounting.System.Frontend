@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, type FocusEvent, type ChangeEvent, type RefObject } from 'react';
+import React, { useState, useRef, useEffect, type MouseEvent, type FocusEvent, type ChangeEvent, type RefObject } from 'react';
 import Button from './../Button/Button.tsx';
 import ButtonIcon from './../ButtonIcon/ButtonIcon.tsx';
 import InputSearchTextbox from './../InputSearchTextbox/InputSearchTextbox.tsx';
@@ -18,10 +18,20 @@ interface iResultData {
     credits: iEntryData[] | [];
 };
 
+type tDropdownValue = {
+    id: string;
+    value: string;
+};
+
 interface iJournalEntryCard {
-    width; number;
-    dropdownValues: [] | undefined;
+    width: number;
+    dropdownValues: tDropdownValue[] | undefined;
     cb_handlerCancel: () => void;
+};
+
+type tErrors = {
+    account: string;
+    amount: string;
 };
 
 const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
@@ -37,12 +47,13 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
     const [totalCreditAmount, setTotalCreditAmount] = useState<number>(0);
     const [balanced, setBalanced] = useState<boolean>(false);
     const [fileNames, setFileNames] = useState<string[]>([]);
+    const [errors, setErrors] = useState<tErrors>({account: '', amount: ''});
 
     const refDate = useRef<HTMLInputElement | null>(null);
     const refAccount = useRef<HTMLInputElement | null>(null);
     const refAmount = useRef<HTMLInputElement | null>(null);
 
-    let finalDropdownValues = dropdownValues && dropdownValues?.length > 0 ?
+    let finalDropdownValues: tDropdownValue[] = dropdownValues && dropdownValues?.length > 0 ?
        dropdownValues :
        accounts.map(account => ({
            id: account.id,
@@ -52,6 +63,10 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
     finalDropdownValues = ['','search for account...'].includes(searchValue.trim().toLowerCase()) ?
         finalDropdownValues :
         finalDropdownValues.filter(value => value.value.trim().toLowerCase().includes(searchValue.trim().toLowerCase()));
+
+    const handlerSubmit = (e: MouseEvent<HTMLButtonElement>) => {
+        //TODO
+    };
 
     const cb_handlerSetSearchValue = (searchValue: string) => {
         setSearchValue(searchValue);
@@ -74,6 +89,13 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
         //TODO: Check if selected searchValue exists, if not: error
         //TODO: Check if entry textbox contains only numerical and . figures, etc., if not: error
         //TODO: Check if entry already exists
+        if (dropdownValues && (dropdownValues.filter(value => value.value === refAccount.current?.value).length === 0)) {
+            setErrors({...errors, account: 'Account does not exist'});
+            return;
+        } else {
+            setErrors({...errors, account: ''});
+        };
+
         const entry = {
             account: refAccount ? refAccount.current?.value : undefined,
             amount:  refAmount ? Number(refAmount.current?.value.replace(',','')) : undefined
@@ -92,6 +114,13 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
    const handlerAddCredit = () => {
         //TODO: Check if selected searchValue exists, if not: error
         //TODO: Check if entry textbox contains only numerical and . figures, etc., if not: error
+        if (dropdownValues && (dropdownValues.filter(value => value.value === refAccount.current?.value).length === 0)) {
+            setErrors({...errors, account: 'Account does not exist'});
+            return;
+        } else {
+            setErrors({...errors, account: ''});
+        };
+
         const entry = {
             account: refAccount ? refAccount.current?.value : undefined,
             amount:  refAmount ? Number(refAmount.current?.value.replace(',','')) : undefined
@@ -123,17 +152,11 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
             refAmount.current.value = newAmount;
         };
     };
-    const handlerOnBlurAmount = (e: FocusEvent<HTMLInputElement>) => {
-        if (refAmount.current) {
-            const newAmount = insertCommas(Math.round(refAmount.current.value));
-
-        };
-    };
 
     const debitElements = results.debits.map((debit, index) => (
         <tr key={`debit-${index}`}>
             <td className={styles.tblAccount}>{debit.account}</td>
-            <td className={styles.tblAmount}>{insertCommas(debit.amount?.toFixed(2))}</td>
+            <td className={styles.tblAmount}>{insertCommas(Number(debit.amount))}</td>
             <td></td>
             <td className={styles.tblOperation}></td>
         </tr>
@@ -143,7 +166,7 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
         <tr key={`credit-${index}`}>
             <td className={styles.tblAccount}>{credit.account}</td>
             <td></td>
-            <td className={styles.tblAmount}>{insertCommas(credit.amount?.toFixed(2))}</td>
+            <td className={styles.tblAmount}>{insertCommas(Number(credit.amount))}</td>
             <td className={styles.tblOperation}></td>
         </tr>
     ));
@@ -218,6 +241,7 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
                 <div className={styles.accountContainer}>
                     <InputSearchTextbox ariaLabel='Account Search Textbox'
                                         searchValue={searchValue}
+                                        errors={errors.account}
                                         dropdownValues={finalDropdownValues}
                                         dropdownWidth={218}
                                         dropdownHeight={190}
@@ -235,7 +259,6 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
                            className={styles.entryAmount}
                            type='text'
                            onChange={handlerOnChangeAmount}
-                           onBlur={handlerOnBlurAmount}
                            autoComplete='off'
                            ref={refAmount} />
                 </div>
@@ -287,12 +310,12 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
                             ariaLabel='Cancel Button'
                             value='Cancel'
                             width={50}
-                            cb_handlerClick={(cb_handlerCancel) => {}} />
+                            cb_handlerClick={cb_handlerCancel} />
                     <Button id='submitEntryButton'
                             ariaLabel='Submit Button'
                             value='Submit'
                             width={50}
-                            cb_handlerClick={() => {}} />
+                            cb_handlerClick={handlerSubmit} />
                 </div>
             </div>
         </section>

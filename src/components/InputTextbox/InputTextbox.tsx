@@ -41,7 +41,7 @@ const FormInputTextBox = ({...formInputTextBoxProps}: iFormInputTextBox) => {
             </div>
             <div data-testid='errorContainer'
                  className={styles.errors}
-                 style={{color: `${constants.RED}`}}>
+                 style={{color: 'rgba(199,0,57,1)'}}>
                  {errors}
             </div>
         </section>

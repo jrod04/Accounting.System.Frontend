@@ -17,6 +17,7 @@ beforeEach(() => {
     cb_handlerOnBlur.mockClear();
     cb_handlerSetSearchValue.mockClear();
     const renderResult = render(<InputSearchTextbox ariaLabel='Chart of Accounts Search Button'
+                                                    errors=''
                                                     textboxWidth={200}
                                                     textboxHeight={15}
                                                     iconWidth={25}
@@ -63,6 +64,7 @@ describe('Input search textbox component', () => {
 
     test('No image shown if showImage=false', () => {
         rerender(<InputSearchTextbox ariaLabel='Chart of Accounts Search Button'
+                                     errors=''
                                      textboxWidth={200}
                                      textboxHeight={15}
                                      iconWidth={25}
@@ -95,6 +97,7 @@ describe('Input search textbox component', () => {
 
     test('Input textbox color black when searchValue !== Search...', () => {
         rerender(<InputSearchTextbox ariaLabel='Chart of Accounts Search Button'
+                                     errors=''
                                      textboxWidth={200}
                                      textboxHeight={15}
                                      iconWidth={25}

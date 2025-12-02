@@ -10,20 +10,15 @@ export const sumTotal = (values: number[]) => {
 
 export const insertCommas = (num: number) => {
     let result;
-    let value = (Math.round(num,2)).toString();
+    let value = (Math.round(Number(num))).toFixed(2).toString();
     const front = value.includes('.') ? value.split('.')[0] : value;
     let back = value.includes('.') ? value.split('.')[1] : '00';
 
-    switch (back) {
-        case (back.length === 1):
-            back = `${back}0`;
-            break;
-        default:
-            break;
-    };
+    if (back?.length === 1) back = `${back}0`;
 
-    if (front.length > 3) {
-        const multiplesOfThree = Math.round(front.length / 3, 0);
+
+    if (front && front.length > 3) {
+        const multiplesOfThree = Math.round(front.length / 3);
         const head = value.slice(0, front.length % 3);
         value = value.slice(front.length % 3, value.length);
 

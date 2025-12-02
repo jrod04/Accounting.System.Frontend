@@ -58,6 +58,7 @@ const ChartOfAccounts = () => {
     const inputContainers = [
         <div className={styles.inputContainers}>
             <InputSearchTextbox ariaLabel='Chart of Accounts Search'
+                                errors=''
                                 textboxWidth={200}
                                 textboxHeight={15}
                                 iconWidth={25}

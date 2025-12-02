@@ -47,6 +47,7 @@ const TestWrapper = ({zeroChildContainers}: {zeroChildContainers: boolean}) => {
     const inputContainers = [
         <div>
             <InputSearchTextbox ariaLabel='Chart of Accounts Search'
+                                errors=''
                                 textboxWidth={200}
                                 textboxHeight={15}
                                 iconWidth={25}

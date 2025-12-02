@@ -1,11 +1,17 @@
-.container {
+.innerContainer {
     display: flex;
     flex-direction: row;
+    position: relative;
     align-items: center;
     width: 100%;
 }
 
-.inputContainer {
+.outerInputContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.innerInputContainer {
     display: flex;
     flex-direction: column;
     position: relative;
@@ -52,4 +58,10 @@
 .btn {
     margin-left: -10px;
     z-index: 0;
+}
+
+.errors {
+    position: absolute;
+    width: 100%;
+    top: 18px;
 }

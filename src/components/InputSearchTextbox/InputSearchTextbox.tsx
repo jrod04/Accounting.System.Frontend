@@ -12,6 +12,7 @@ interface iInputSearchTextbox {
     ariaLabel: string;
     showImage: boolean;
     searchValue: string;
+    errors: string;
     ref?: RefObject<HTMLInputElement | null> | undefined;
     dropdownValues?: tDropdownValues[] | undefined;
     dropdownHeight?: number | undefined;
@@ -29,6 +30,7 @@ interface iInputSearchTextbox {
 const InputSearchTextbox = ({...inputSearchTextboxInputs}: iInputSearchTextbox) => {
     const {
         ariaLabel,
+        errors,
         textboxWidth,
         textboxHeight,
         showImage,
@@ -84,43 +86,53 @@ const InputSearchTextbox = ({...inputSearchTextboxInputs}: iInputSearchTextbox) 
     ));
 
     return(
-        <div data-testid='Input search textbox container' className={styles.container}>
-            <div className={styles.inputContainer}>
-                <input name='inputSearchTextbox'
-                       className={styles.input}
-                       style={{width: textboxWidth ? `${textboxWidth}px` : '',
-                               height: textboxHeight ? `${textboxHeight}px` : '',
-                               zIndex: '2',
-                               color: ['Search...', 'Search for account...'].includes(searchValue) ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,1)'}}
-                       aria-label={ariaLabel}
-                       type='textbox'
-                       onChange={cb_handlerOnChange}
-                       onFocus={handlerOnFocus}
-                       onBlur={handlerOnBlur}
-                       value={searchValue}
-                       ref={ref}
-                       autoComplete='off' />
-                {openDropdown &&
-                    <div className={styles.dropdown}
-                         style={{width: dropdownWidth ? `${dropdownWidth}px` : '',
-                                 height: dropdownHeight ? `${dropdownHeight}px` : ''}}>
-                        {dropdownPopulation}
+        <section data-testid='Input search textbox container' className={styles.outerContainer}>
+            <div className={styles.innerContainer}>
+                <div className={styles.outerInputContainer}>
+                    <div className={styles.innerInputContainer}>
+                        <input name='inputSearchTextbox'
+                               className={styles.input}
+                               style={{width: textboxWidth ? `${textboxWidth}px` : '',
+                                       height: textboxHeight ? `${textboxHeight}px` : '',
+                                       zIndex: '2',
+                                       color: ['Search...', 'Search for account...'].includes(searchValue) ? 'rgba(0,0,0,0.2)' :
+                                                                                                             'rgba(0,0,0,1)'}}
+                               aria-label={ariaLabel}
+                               type='textbox'
+                               onChange={cb_handlerOnChange}
+                               onFocus={handlerOnFocus}
+                               onBlur={handlerOnBlur}
+                               value={searchValue}
+                               ref={ref}
+                               autoComplete='off' />
+                        {openDropdown &&
+                            <div className={styles.dropdown}
+                                 style={{width: dropdownWidth ? `${dropdownWidth}px` : '',
+                                         height: dropdownHeight ? `${dropdownHeight}px` : ''}}>
+                                {dropdownPopulation}
+                        </div>
+                        }
+                    </div>
+                    {showImage &&
+                        <div className={styles.btn}>
+                            <ButtonIcon ariaLabel='Input Search Textbox'
+                                        alt='Search Button Icon'
+                                        title='Search Button Icon'
+                                        icon={MagnifyingGlass}
+                                        width={finalIconWidth}
+                                        height={finalIconHeight}
+                                        value=''
+                                        bgColor='rgba(0,0,0,0)'/>
+                        </div>
+                    }
                 </div>
-                }
+                <div data-testid='errorContainer'
+                     className={styles.errors}
+                     style={{color: 'rgba(199,0,57,1)'}}>
+                     {errors}
+                </div>
             </div>
-            {showImage &&
-                <div className={styles.btn}>
-                    <ButtonIcon ariaLabel='Input Search Textbox'
-                                alt='Search Button Icon'
-                                title='Search Button Icon'
-                                icon={MagnifyingGlass}
-                                width={finalIconWidth}
-                                height={finalIconHeight}
-                                value=''
-                                bgColor='rgba(0,0,0,0)'/>
-                </div>
-            }
-        </div>
+        </section>
     );
 };
 
