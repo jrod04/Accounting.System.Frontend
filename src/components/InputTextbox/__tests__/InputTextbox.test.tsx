@@ -25,17 +25,17 @@ describe('Input textbox component without errors', () => {
     });
 
     test('Input container displays with correct width', () => {
-        const inputOuterContainer = screen.getByTestId('inputOuterContainer');
+        const inputOuterContainer = screen.getByTestId('Input outer container');
         expect(inputOuterContainer).toHaveStyle({width: '100px'});
     });
 
     test('Input textbox has column direction attribute', () => {
-        const inputInnerContainer = screen.getByTestId('inputInnerContainer');
+        const inputInnerContainer = screen.getByTestId('Input inner container');
         expect(inputInnerContainer).toHaveStyle({flexDirection: 'column'});
     });
 
     test('Input textbox does not display errors when errors are not present', () => {
-        const errorContainer = screen.getByTestId('errorContainer');
+        const errorContainer = screen.getByTestId('Error container');
         expect(errorContainer.textContent).toBe('');
     });
 
@@ -62,7 +62,7 @@ describe('Input textbox component with errors', () => {
     });
 
     test('Input textbox has row direction attribute', () => {
-        const inputInnerContainer = screen.getByTestId('inputInnerContainer');
+        const inputInnerContainer = screen.getByTestId('Input inner container');
         expect(inputInnerContainer).toHaveStyle({flexDirection: 'row'});
     });
 

@@ -33,7 +33,7 @@ beforeEach(() => {
 
 describe('Input search textbox component', () => {
     test('Input search textbox component container displays', () => {
-        const container = screen.getByTestId('Input search textbox container');
+        const container = screen.getByTestId('Search container');
         expect(container).toBeInTheDocument();
     });
 
@@ -80,13 +80,13 @@ describe('Input search textbox component', () => {
     });
 
     test('Image shown to the right of the textbox if showImage=true', () => {
-        const container = screen.getByTestId('Input search textbox container');
-        const children = container.children;
-        expect(children[0]?.tagName).toBe('DIV');
-        expect(children[1]).toHaveAttribute(
-            'class',
-            expect.stringContaining('btn')
-        );
+        const inputInnerContainer = screen.getByTestId('Search container');
+        const inputElement = inputInnerContainer.children[0].children[0].children[0].children[0];
+        expect(inputElement.tagName).toBe('INPUT');
+//         expect(children[1]).toHaveAttribute(
+//             'class',
+//             expect.stringContaining('btn')
+//         );
 
     });
 

@@ -22,9 +22,9 @@ const FormInputTextBox = ({...formInputTextBoxProps}: iFormInputTextBox) => {
     } = formInputTextBoxProps;
 
     return (
-        <section data-testid='inputOuterContainer'
+        <section data-testid='Input outer container'
                  style={{width: `${width}px`}}>
-            <div data-testid='inputInnerContainer'
+            <div data-testid='Input inner container'
                  className={styles.inputTextbox}
                  style={{flexDirection: direction}}>
                 <label htmlFor={ariaLabel}>{ariaLabel}</label>{direction === 'row' ? '\u00A0\u00A0' : ''}
@@ -39,7 +39,7 @@ const FormInputTextBox = ({...formInputTextBoxProps}: iFormInputTextBox) => {
                      <div className={styles.placeholder}>{ariaLabel}</div>
                  }
             </div>
-            <div data-testid='errorContainer'
+            <div data-testid='Error container'
                  className={styles.errors}
                  style={{color: 'rgba(199,0,57,1)'}}>
                  {errors}

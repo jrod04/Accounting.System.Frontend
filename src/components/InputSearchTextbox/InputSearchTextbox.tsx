@@ -86,7 +86,7 @@ const InputSearchTextbox = ({...inputSearchTextboxInputs}: iInputSearchTextbox) 
     ));
 
     return(
-        <section data-testid='Input search textbox container' className={styles.outerContainer}>
+        <section data-testid='Search container' className={styles.outerContainer}>
             <div className={styles.innerContainer}>
                 <div className={styles.outerInputContainer}>
                     <div className={styles.innerInputContainer}>
