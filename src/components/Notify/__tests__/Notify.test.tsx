@@ -9,7 +9,9 @@ let rerender: any, notify: HTMLElement | undefined;
 describe('Notify component', () => {
     beforeEach(() => {
         handlerClick.mockClear();
-        const renderResult = render(<Notify stat='success' message='Success' cb_handlerCloseNotify={handlerClick} />)
+        const renderResult = render(<Notify stat='success'
+                                            message='Success'
+                                            cb_handlerCloseNotify={handlerClick} />)
         rerender = renderResult.rerender;
         notify = screen.getByTestId('notify');
     });
@@ -60,5 +62,16 @@ describe('Notify component', () => {
         const close: HTMLButtonElement = screen.getByRole('button');
         await user.click(close);
         expect(handlerClick).toHaveBeenCalledTimes(1);
+    });
+
+    test('Hide Notify', () => {
+        rerender(<Notify stat=''
+                         message=''
+                         cb_handlerCloseNotify={handlerClick} />)
+        const notify = screen.queryByTestId('notify');
+        expect(notify).toHaveAttribute(
+            'class',
+            expect.stringContaining('hide')
+        );
     });
 });

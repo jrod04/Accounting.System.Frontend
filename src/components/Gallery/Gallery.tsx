@@ -4,15 +4,15 @@ import styles from './Gallery.module.css';
 
 export interface iGalleryItem {
     id: string;
-    title: string;
-    subtitle: string;
+    title?: string | undefined;
+    subtitle?: string | undefined;
     color?: string | undefined;
+    data?: React.JSX.Element | undefined;
     itemClicked?: 'Right' | 'Left' | null | undefined
     showRightOperation?:boolean | undefined;
     showLeftOperation?: boolean | undefined;
     activateRightOperation?: boolean | undefined;
     activateLeftOperation?: boolean | undefined;
-    data?: React.FC | undefined;
     imgRightOperation?: string | undefined;
     imgLeftOperation?: string | undefined;
 };
@@ -59,7 +59,7 @@ function Gallery(galleryInputs: iGallery) {
     } = galleryInputs;
 
     const [selected, setSelected] = useState<string | undefined>(select);
-    const items = galleryItems ? galleryItems as iGalleryItem[] : [] as iGalleryItem[];
+    const items = galleryItems ? galleryItems as iGalleryItem[] : [];
 
     const columnStyle = bodyStyle === 'columns' ? styles.bodyColumns : styles.card;
     const rowStyle = bodyStyle === 'rows' ? styles.bodyRows : styles.card;
@@ -119,22 +119,22 @@ function Gallery(galleryInputs: iGallery) {
                                              handlerLeftOperation :
                                              (e) => {e.preventDefault()}}
                                     id={item.id}
-                                    data-name={item.title}>
+                                    data-name={item.title ?? ''}>
                                 <img src={item.imgLeftOperation}
                                      alt='Button'
                                      className={styles.imgLeftOperation} />
                             </button>
                     }
                     {
-                        (title || subtitle) &&
+                        title &&
                             <button className={`${bodyStyle === 'columns' ? columnStyle : ''} ${bodyStyle === 'rows' ? styles.events : ''} ${_static ? styles.static : ''} ${verticalGallery ? styles.card : ''}`.trim()}
                                     aria-label={`gallery-${item.id}`}
                                     id={item.id}
-                                    data-name={item.title}
+                                    data-name={item.title ?? ''}
                                     onClick={handlerSetSelected}
                                     style={{backgroundColor: item.color}}>
-                                    {item.title}<br />
-                                    {item.subtitle}
+                                    {item.title ?? ''}<br/>
+                                    {item.subtitle ?? ''}
                             </button>
                     }
                     {
@@ -144,7 +144,7 @@ function Gallery(galleryInputs: iGallery) {
                                              handlerRightOperation :
                                              (e) => {e.preventDefault()}}
                                     id={item.id}
-                                    data-name={item.title}>
+                                    data-name={item.title ?? ''}>
                                 <img src={item.imgRightOperation}
                                      alt='Right Operation'
                                      className={styles.imgRightOperation} />
@@ -154,8 +154,8 @@ function Gallery(galleryInputs: iGallery) {
 
                 {
                     item.data &&
-                        <div className={styles.data}>
-                            <item.data />
+                        <div data-testid='Item data' className={styles.data}>
+                            {item.data}
                         </div>
                 }
             </div>

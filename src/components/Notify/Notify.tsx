@@ -2,7 +2,7 @@ import constants from './../../utils/constants.js';
 import styles from './Notify.module.css';
 
 interface iNotify {
-    stat: string;
+    stat: string | null;
     message: string;
     cb_handlerCloseNotify: () => void;
 };
@@ -25,7 +25,7 @@ function Notify({ stat, message, cb_handlerCloseNotify }: iNotify) {
     };
 
     return(
-        <div data-testid='notify' className={stat ? styles.notify : styles.hide} style={{backgroundColor: color}}>
+        <div data-testid='notify' className={stat && stat.length > 0 ? styles.notify : styles.hide} style={{backgroundColor: color}}>
             <div className={styles.message}>
                 {message}
             </div>

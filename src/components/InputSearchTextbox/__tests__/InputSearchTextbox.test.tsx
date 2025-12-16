@@ -81,13 +81,8 @@ describe('Input search textbox component', () => {
 
     test('Image shown to the right of the textbox if showImage=true', () => {
         const inputInnerContainer = screen.getByTestId('Search container');
-        const inputElement = inputInnerContainer.children[0].children[0].children[0].children[0];
-        expect(inputElement.tagName).toBe('INPUT');
-//         expect(children[1]).toHaveAttribute(
-//             'class',
-//             expect.stringContaining('btn')
-//         );
-
+        const inputElement = inputInnerContainer.children[0]?.children[0]?.children[0]?.children[0];
+        expect(inputElement?.tagName).toBe('INPUT');
     });
 
     test('Input textbox color gray when searchValue === Search...', () => {

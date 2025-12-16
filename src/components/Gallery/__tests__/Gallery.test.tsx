@@ -124,10 +124,10 @@ describe('Gallery component', () => {
 
         const buttons = screen.getAllByRole('button');
 
-            const leftButton = buttons[0];
+        const leftButton = buttons[0];
 
-            const result = await user.click(leftButton);
-            expect(cb_handlerLeftOperation).toHaveBeenCalledTimes(0);
+        const result = await user.click(leftButton);
+        expect(cb_handlerLeftOperation).toHaveBeenCalledTimes(0);
     });
 
     test('Right operation does not click when not activated', async () => {
@@ -148,4 +148,18 @@ describe('Gallery component', () => {
         expect(cb_handlerRightOperation).toHaveBeenCalledTimes(0);
     });
 
+    test('Include data that would be placed in an empty card within a vertical gallery', () => {
+        items = [{id: '1', data: <>Data is present</>}];
+
+        rerender(<Gallery galleryItems={items}
+                          title={false}
+                          subtitle={false}
+                          select='1'
+                          enableSelect={false}
+                          bodyStyle='columns'
+                          events={false}
+                          verticalGallery={true} />);
+        const renderedData = screen.getByTestId('Item data');
+        expect(renderedData.textContent).toBe('Data is present');
+    });
 });

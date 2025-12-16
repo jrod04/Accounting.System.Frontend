@@ -35,8 +35,8 @@ function SearchGallery({...searchGalleryInputs}: iSearchGallery) {
         if (searchValue.trim().toLowerCase() !== 'search...') {
             const searchTerm = searchValue.trim().toLowerCase();
             const filteredItems = initialItems.filter(item =>
-                item.title.toLowerCase().includes(searchTerm) ||
-                item.subtitle.toLowerCase().includes(searchTerm) ||
+                item.title?.toLowerCase().includes(searchTerm) ||
+                item.subtitle?.toLowerCase().includes(searchTerm) ||
                 item.id.toString().toLowerCase().includes(searchTerm)
             );
             setGalleryItems(filteredItems);
