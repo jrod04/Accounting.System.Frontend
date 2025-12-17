@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, type MouseEvent, type FocusEvent, type ChangeEvent, type RefObject } from 'react';
+import React, { useState, useRef, useEffect, type MouseEvent, type FocusEvent, type ChangeEvent } from 'react';
 import Button from './../Button/Button.tsx';
 import ButtonIcon from './../ButtonIcon/ButtonIcon.tsx';
 import InputSearchTextbox from './../InputSearchTextbox/InputSearchTextbox.tsx';
@@ -27,6 +27,7 @@ interface iJournalEntryCard {
     width: number;
     dropdownValues: tDropdownValue[] | undefined;
     cb_handlerCancel: () => void;
+    cb_handlerSubmit: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
 type tErrors = {
@@ -38,6 +39,7 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
     const {
         width,
         dropdownValues,
+        cb_handlerSubmit,
         cb_handlerCancel
     } = journalCardEntryProps;
 
@@ -65,7 +67,7 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
         finalDropdownValues.filter(value => value.value.trim().toLowerCase().includes(searchValue.trim().toLowerCase()));
 
     const handlerSubmit = (e: MouseEvent<HTMLButtonElement>) => {
-        //TODO
+        cb_handlerSubmit(e);
     };
 
     const cb_handlerSetSearchValue = (searchValue: string) => {
@@ -84,20 +86,23 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
         if (e.target.value.trim() === '') setSearchValue('Search for account...');
     };
 
-    const handlerAddDebit = () => {
-        //TODO: One fcn and call in addDebit/Credit => utility fcn
-        //TODO: Check if selected searchValue exists, if not: error
+    const checkEntries = () => {
         //TODO: Check if entry textbox contains only numerical and . figures, etc., if not: error
         //TODO: Check if entry already exists
-        if (dropdownValues && (dropdownValues.filter(value => value.value === refAccount.current?.value).length === 0)) {
+        if (finalDropdownValues && (finalDropdownValues.filter(value => value.value === refAccount.current?.value).length === 0)) {
             setErrors({...errors, account: 'Account does not exist.'});
-            return;
+            return true;
         } else {
             setErrors({...errors, account: ''});
         };
+    };
+
+    const handlerAddDebit = () => {
+        const error = checkEntries();
+        if (error) return;
 
         const entry = {
-            account: refAccount ? refAccount.current?.value : undefined,
+            account: searchValue,
             amount:  refAmount ? Number(refAmount.current?.value.replace(',','')) : undefined
         };
 
@@ -112,14 +117,8 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
     };
 
    const handlerAddCredit = () => {
-        //TODO: Check if selected searchValue exists, if not: error
-        //TODO: Check if entry textbox contains only numerical and . figures, etc., if not: error
-        if (dropdownValues && (dropdownValues.filter(value => value.value === refAccount.current?.value).length === 0)) {
-            setErrors({...errors, account: 'Account does not exist'});
-            return;
-        } else {
-            setErrors({...errors, account: ''});
-        };
+        const error = checkEntries();
+        if (error) return;
 
         const entry = {
             account: refAccount ? refAccount.current?.value : undefined,
@@ -216,6 +215,10 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
     useEffect(() => {
         setBalanced(totalDebitAmount === totalCreditAmount);
     },[totalDebitAmount, totalCreditAmount]);
+
+    useEffect(() => {
+        if (refAccount.current) refAccount.current.value = searchValue;
+    },[searchValue]);
 
     return(
         <section aria-label='Accounting Double Entry Card'

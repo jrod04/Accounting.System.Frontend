@@ -12,7 +12,10 @@ const LedgerView = () => {
 
     return(
         <article className={styles.ledger}>
-            <JournalEntryCard width={500} dropdownValues={[]} cb_handlerCancel={() => {}}/>
+            <JournalEntryCard width={500}
+                              dropdownValues={[]}
+                              cb_handlerSubmit={() => {}}
+                              cb_handlerCancel={() => {}}/>
         </article>
     );
 };

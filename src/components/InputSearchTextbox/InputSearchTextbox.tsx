@@ -91,6 +91,10 @@ const InputSearchTextbox = ({...inputSearchTextboxInputs}: iInputSearchTextbox) 
         </button>
     ));
 
+    useEffect(() => {
+        if (ref.current) ref.current.value = searchValue;
+    },[searchValue]);
+
     return(
         <section data-testid='Search container' className={styles.outerContainer}>
             <div className={styles.outerInputContainer}>
