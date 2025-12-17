@@ -13,12 +13,13 @@ interface iInputSearchTextbox {
     showImage: boolean;
     searchValue: string;
     errors: string;
-    ref?: RefObject<HTMLInputElement | null> | undefined;
-    dropdownValues?: tDropdownValues[] | undefined;
     dropdownHeight?: number | undefined;
     dropdownWidth?: number | undefined;
     textboxWidth?: number | undefined;
     textboxHeight?: number | undefined;
+
+    ref?: RefObject<HTMLInputElement | null> | undefined;
+    dropdownValues?: tDropdownValues[] | undefined;
     iconWidth? : number | undefined;
     iconHeight? : number | undefined;
     cb_handlerOnChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -51,6 +52,11 @@ const InputSearchTextbox = ({...inputSearchTextboxInputs}: iInputSearchTextbox) 
 
     const finalIconWidth = iconWidth ? iconWidth : 0;
     const finalIconHeight = iconHeight ? iconHeight : 0;
+
+    const handlerOnChange = (e: FocusEvent<HTMLInputElement>) => {
+        setOpenDropdown(true);
+        cb_handlerOnChange(e);
+    };
 
     const handlerOnFocus = (e: FocusEvent<HTMLInputElement>) => {
         setOpenDropdown(true);
@@ -87,50 +93,48 @@ const InputSearchTextbox = ({...inputSearchTextboxInputs}: iInputSearchTextbox) 
 
     return(
         <section data-testid='Search container' className={styles.outerContainer}>
-            <div className={styles.innerContainer}>
-                <div className={styles.outerInputContainer}>
-                    <div className={styles.innerInputContainer}>
-                        <input name='inputSearchTextbox'
-                               className={styles.input}
-                               style={{width: textboxWidth ? `${textboxWidth}px` : '',
-                                       height: textboxHeight ? `${textboxHeight}px` : '',
-                                       zIndex: '2',
-                                       color: ['Search...', 'Search for account...'].includes(searchValue) ? 'rgba(0,0,0,0.2)' :
-                                                                                                             'rgba(0,0,0,1)'}}
-                               aria-label={ariaLabel}
-                               type='textbox'
-                               onChange={cb_handlerOnChange}
-                               onFocus={handlerOnFocus}
-                               onBlur={handlerOnBlur}
-                               value={searchValue}
-                               ref={ref}
-                               autoComplete='off' />
-                        {openDropdown &&
-                            <div className={styles.dropdown}
-                                 style={{width: dropdownWidth ? `${dropdownWidth}px` : '',
-                                         height: dropdownHeight ? `${dropdownHeight}px` : ''}}>
-                                {dropdownPopulation}
-                        </div>
-                        }
+            <div className={styles.outerInputContainer}>
+                <div className={styles.innerInputContainer}>
+                    <input name='inputSearchTextbox'
+                           className={styles.input}
+                           style={{width: textboxWidth ? textboxWidth : '',
+                                   height: textboxHeight ? textboxHeight : '',
+                                   zIndex: '2',
+                                   color: ['Search...', 'Search for account...'].includes(searchValue) ? 'rgba(0,0,0,0.2)' :
+                                                                                                         'rgba(0,0,0,1)'}}
+                           aria-label={ariaLabel}
+                           type='textbox'
+                           onChange={handlerOnChange}
+                           onFocus={handlerOnFocus}
+                           onBlur={handlerOnBlur}
+                           value={searchValue}
+                           ref={ref}
+                           autoComplete='off' />
+                    {openDropdown &&
+                        <div data-testid='dropdown' className={styles.dropdown}
+                             style={{width: dropdownWidth ? dropdownWidth : '',
+                                     height: dropdownHeight ? dropdownHeight : ''}}>
+                            {dropdownPopulation}
                     </div>
-                    {showImage &&
-                        <div className={styles.btn}>
-                            <ButtonIcon ariaLabel='Input Search Textbox'
-                                        alt='Search Button Icon'
-                                        title='Search Button Icon'
-                                        icon={MagnifyingGlass}
-                                        width={finalIconWidth}
-                                        height={finalIconHeight}
-                                        value=''
-                                        bgColor='rgba(0,0,0,0)'/>
-                        </div>
                     }
                 </div>
-                <div data-testid='errorContainer'
-                     className={styles.errors}
-                     style={{color: 'rgba(199,0,57,1)'}}>
-                     {errors}
-                </div>
+                {showImage &&
+                    <div className={styles.btn}>
+                        <ButtonIcon ariaLabel='Input Search Button'
+                                    alt='Search Button Icon'
+                                    title='Search Button Icon'
+                                    icon={MagnifyingGlass}
+                                    width={finalIconWidth}
+                                    height={finalIconHeight}
+                                    value=''
+                                    bgColor='rgba(0,0,0,0)'/>
+                    </div>
+                }
+            </div>
+            <div data-testid='Error container'
+                 className={styles.errors}
+                 style={{color: 'rgba(199,0,57,1)'}}>
+                 {errors}
             </div>
         </section>
     );

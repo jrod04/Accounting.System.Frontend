@@ -61,6 +61,8 @@ const ChartOfAccounts = () => {
                                 errors=''
                                 textboxWidth={200}
                                 textboxHeight={15}
+                                dropdownWidth={218}
+                                dropdownHeight={190}
                                 iconWidth={25}
                                 iconHeight={25}
                                 showImage={true}

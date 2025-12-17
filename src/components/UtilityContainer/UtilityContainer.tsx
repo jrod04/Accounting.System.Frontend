@@ -40,7 +40,7 @@ const UtilityContainer = ({...utilityContainerInputs}: iUtilityContainer) => {
     });
 
     return(
-        <section data-testid='utilityContainer'
+        <section data-testid='Utility container'
                  className={styles.container}
                  style={{width: width === 0 ? '100%' : `${width}px`,
                          height: height === 0 ? '100%' : `${height}px`,

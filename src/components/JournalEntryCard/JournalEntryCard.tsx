@@ -90,7 +90,7 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
         //TODO: Check if entry textbox contains only numerical and . figures, etc., if not: error
         //TODO: Check if entry already exists
         if (dropdownValues && (dropdownValues.filter(value => value.value === refAccount.current?.value).length === 0)) {
-            setErrors({...errors, account: 'Account does not exist'});
+            setErrors({...errors, account: 'Account does not exist.'});
             return;
         } else {
             setErrors({...errors, account: ''});
@@ -243,8 +243,6 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
                                         searchValue={searchValue}
                                         errors={errors.account}
                                         dropdownValues={finalDropdownValues}
-                                        dropdownWidth={218}
-                                        dropdownHeight={190}
                                         showImage={false}
                                         ref={refAccount}
                                         cb_handlerOnChange={cb_handlerOnChange}

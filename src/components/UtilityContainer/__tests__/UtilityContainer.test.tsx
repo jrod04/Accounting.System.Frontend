@@ -9,7 +9,7 @@ import { type iListViewGalleryItem } from './../../ListViewGallery/ListViewGalle
 
 let container: HTMLElement, user: any, rerender: any;
 
-const TestWrapper = ({zeroChildContainers}: {zeroChildContainers: boolean}) => {
+const TestWrapper = ({zeroChildContainers, width, height}: {zeroChildContainers: boolean, width: number, height: number}) => {
     const [openAside, setOpenAside] = useState<boolean>(false);
     const [operation, setOperation] = useState<string>('');
     const [searchValue, setSearchValue] = useState<string>('Search...');
@@ -50,6 +50,8 @@ const TestWrapper = ({zeroChildContainers}: {zeroChildContainers: boolean}) => {
                                 errors=''
                                 textboxWidth={200}
                                 textboxHeight={15}
+                                dropdownWidth={218}
+                                dropdownHeight={190}
                                 iconWidth={25}
                                 iconHeight={25}
                                 showImage={true}
@@ -70,8 +72,8 @@ const TestWrapper = ({zeroChildContainers}: {zeroChildContainers: boolean}) => {
 
     return(<UtilityContainer backdrop={openAside}
                              ariaLabel='Chart of Accounts'
-                             height={40}
-                             width={0}
+                             height={height}
+                             width={width}
                              justifyContent='flex-end'
                              bgColor='rgba(250,250,250,1)'
                              inputContainers={!zeroChildContainers ? inputContainers : []}
@@ -82,9 +84,11 @@ const TestWrapper = ({zeroChildContainers}: {zeroChildContainers: boolean}) => {
 
 describe('Utility Container component', () => {
     beforeEach(() => {
-        const renderResult = render(<TestWrapper zeroChildContainers={false} />);
-        let rerender = renderResult.rerender;
-        container = screen.getByTestId('utilityContainer');
+        const renderResult = render(<TestWrapper zeroChildContainers={false}
+                                                 width={40}
+                                                 height={40} />);
+        rerender = renderResult.rerender;
+        container = screen.getByTestId('Utility container');
     });
 
     test('Utility container component displays', () => {
@@ -93,7 +97,7 @@ describe('Utility Container component', () => {
 
     test('Utility container has correct styling', () => {
         expect(container).toHaveStyle({
-            width: '100%',
+            width: '40px',
             height: '40px',
             backgroundColor: 'rgb(250,250,250)',
             border: '1px solid rgb(0,0,0);',
@@ -118,8 +122,16 @@ describe('Utility Container component', () => {
     });
 
     test('Error thrown if inputContainers === 0', () => {
-        cleanup();
-        expect(() => render(<TestWrapper zeroChildContainers={true} />)).toThrowError();
+        expect(() => render(<TestWrapper zeroChildContainers={true}
+                                         width={0}
+                                         height={0}/>)).toThrowError();
     });
 
+    test('Width and height of the container', () => {
+        rerender(<TestWrapper zeroChildContainers={false}
+                              width={0}
+                              height={0}/>);
+        const container = screen.getByTestId('Utility container')
+        expect(container).toHaveStyle({width: '100%', height: '100%'});
+    });
 });
