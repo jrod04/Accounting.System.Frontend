@@ -221,7 +221,7 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
     },[searchValue]);
 
     return(
-        <section aria-label='Accounting Double Entry Card'
+        <section aria-label='Journal Entry Card'
                  className={styles.card}
                  style={{width: `${width}px`}}>
             <div className={styles.title}>

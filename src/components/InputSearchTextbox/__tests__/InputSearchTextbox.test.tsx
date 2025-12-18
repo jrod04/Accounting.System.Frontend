@@ -43,7 +43,6 @@ describe('Input search textbox component', () => {
     });
 
     test('Input search textbox displays', () => {
-        screen.debug(searchBox);
         expect(searchBox).toBeInTheDocument();
     });
 
