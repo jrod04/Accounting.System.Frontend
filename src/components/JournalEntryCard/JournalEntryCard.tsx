@@ -254,8 +254,8 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
                                         cb_handlerSetSearchValue={cb_handlerSetSearchValue} />
                 </div>
                 <div className={styles.entryContainer}>
-                    $&nbsp;
-                    <input aria-label='Entry Textbox'
+                    &nbsp;
+                    <input aria-label='Amount Entry Textbox'
                            name='amountTextbox'
                            className={styles.entryAmount}
                            type='text'
@@ -265,12 +265,12 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
                 </div>
                 <div className={styles.entryButtonContainer}>
                     <Button id='debitEntryButton'
-                            ariaLabel='Debit Entry'
+                            ariaLabel='Debit Entry Button'
                             value='Debit'
                             width={50}
                             cb_handlerClick={handlerAddDebit} />
                     <Button id='creditEntryButton'
-                            ariaLabel='Credit Entry'
+                            ariaLabel='Credit Entry Button'
                             value='Credit'
                             width={50}
                             cb_handlerClick={handlerAddCredit} />
@@ -308,12 +308,12 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
             <div>
                 <div className={styles.submissionButtonContainer}>
                     <Button id='cancelEntryButton'
-                            ariaLabel='Cancel Button'
+                            ariaLabel='Journal Entry Cancel Button'
                             value='Cancel'
                             width={50}
                             cb_handlerClick={cb_handlerCancel} />
                     <Button id='submitEntryButton'
-                            ariaLabel='Submit Button'
+                            ariaLabel='Journal Entry Submit Button'
                             value='Submit'
                             width={50}
                             cb_handlerClick={handlerSubmit} />

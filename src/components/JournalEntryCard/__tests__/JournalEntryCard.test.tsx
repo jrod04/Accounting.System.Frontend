@@ -30,30 +30,79 @@ describe('JournalEntryCard component', () => {
         expect(title).toBe('Journal Entry');
     });
 
-    test('Date to be present and blank', () => {
+    test('Date displays and blank', () => {
         const date = (component.children[1]?.children[0] as HTMLInputElement)?.value;
         expect(date).toBe('');
     });
 
-    test('', () => {
+    test('Search button icon displays', () => {
+        const icon = screen.getByRole('button', { name: 'Search Accounts Icon' });
+        expect(icon).toBeInTheDocument();
+    });
+
+    test('Account search textbox displays with Search for account...', () => {
+        const accountSearch: HTMLInputElement = screen.getByRole('textbox', { name: 'Account Search Textbox' });
+        expect(accountSearch.value).toBe('Search for account...');
+    });
+
+    test('Amount entry textbox displays and blank', () => {
+        const amountEntry: HTMLInputElement = screen.getByRole('textbox', { name: 'Amount Entry Textbox' });
+        expect(amountEntry.value).toBe('');
+    });
+
+    test('Debit button clicks and displays the correct account and amount', async () => {
+        const accountSearchBox = screen.getByRole('textbox', { name: 'Account Search Textbox' });
+        await user.type(accountSearchBox, '1000 - Business Checking');
+        const amountEntryBox = screen.getByRole('textbox', { name: 'Amount Entry Textbox' });
+        await user.type(amountEntryBox, '5');
+        const button = screen.getByRole('button', { name: 'Debit Entry Button' });
+        await user.click(button);
+
+        const text = screen.getByText('1000 - Business Checking');
+        expect(text).toBeInTheDocument();
+    });
+
+    test('Debit button clicks with missing/non-existent account and displays error', async () => {
+        const accountSearchBox = screen.getByRole('textbox', { name: 'Account Search Textbox' });
+        await user.type(accountSearchBox, 'a');
+        const amountEntryBox = screen.getByRole('textbox', { name: 'Amount Entry Textbox' });
+        await user.type(amountEntryBox, '5');
+        const button = screen.getByRole('button', { name: 'Debit Entry Button' });
+        await user.click(button);
+
+        const text = screen.getByText('Account does not exist.');
+        expect(text).toBeInTheDocument();
+    });
+
+    test('Debit button clicks with missing/invalid entry amount and displays error', () => {
 
     });
 
-    test('', () => {
+    test('Debit total shows red if debit/credit imbalance exists', () => {
 
     });
 
-    test('', () => {
+    test('Credit button clicks and displays the correct account and amount', () => {
 
     });
 
-    test('', () => {
+    test('Credit button clicks with missing/non-existent account and displays error', () => {
 
     });
 
-    test('', () => {
+    test('Credit total shows red if debit/credit imbalance exists', () => {
 
     });
 
+    test('Attachment displays file selected', () => {
 
+    });
+
+    test('Cancel button calls', () => {
+
+    });
+
+    test('Submit button calls', () => {
+
+    });
 });
