@@ -158,17 +158,30 @@
     display: flex;
     padding: 5px;
     min-width: 0;
-    justify-content: space-between;
+    justify-content: space-around;
     flex: 1;
+}
+
+.entryContainer {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    position: relative;
 }
 
 .entryAmount {
     height: 15px;
+    width: 100%;
     border-radius: 5px;
     text-align: center;
     border: 1px solid rgba(0,0,0,1);
     outline: 1px solid rgba(0,0,0,1);
-    min-width: 0;
+}
+
+.errors {
+    display: flex;
+    position: absolute;
+    top: 27px;
     flex: 1;
 }
 

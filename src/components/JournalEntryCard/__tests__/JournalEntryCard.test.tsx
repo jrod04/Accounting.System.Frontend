@@ -21,11 +21,11 @@ describe('JournalEntryCard component', () => {
         rerender = renderResult.rerender;
     });
 
-    test('Cmp displays displays', () => {
+    test('Cmp displays', () => {
         expect(component).toBeInTheDocument();
     });
 
-    test('Title present', () => {
+    test('Title displays', () => {
         const title = component.children[0]?.textContent;
         expect(title).toBe('Journal Entry');
     });

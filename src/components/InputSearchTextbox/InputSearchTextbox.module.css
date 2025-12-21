@@ -38,6 +38,7 @@
     background-color: rgba(253,253,253,1);
     overflow-y: auto;
     overflow-x: hidden;
+    z-index: 999;
 }
 
 .dropdown button,
@@ -67,6 +68,8 @@
     display: flex;
     position: absolute;
     top: 20px;
+    width: 97.5%;
     padding: 2px;
     flex: 1;
+    justify-content: center;
 }

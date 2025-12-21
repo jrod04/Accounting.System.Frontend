@@ -1,7 +1,7 @@
 export const sumTotal = (values: number[]) => {
     const initValue = 0;
     const result = values.reduce(
-        (accumulator, currentValue) => Number(accumulator) + Number(currentValue),
+        (accumulator, currentValue) => parseFloat(accumulator) + parseFloat(currentValue),
         initValue
     );
 
@@ -9,8 +9,9 @@ export const sumTotal = (values: number[]) => {
 };
 
 export const insertCommas = (num: number) => {
-    let result;
-    let value = (Math.round(Number(num))).toFixed(2).toString();
+    let result, value;
+    value = Number(num).toFixed(2);
+
     const front = value.includes('.') ? value.split('.')[0] : value;
     let back = value.includes('.') ? value.split('.')[1] : '00';
 
