@@ -8,6 +8,7 @@ interface iButtonIcon {
     ariaLabel: string;
     width: number;
     height: number;
+    id?: string | number | undefined;
     value?: string | undefined;
     textSide?: string | undefined;
     addTextSpace?: string | undefined;
@@ -23,6 +24,7 @@ const ButtonIcon = ({...buttonIconProps}: iButtonIcon) => {
         ariaLabel,
         width,
         height,
+        id,
         value,
         textSide,
         addTextSpace,
@@ -32,6 +34,7 @@ const ButtonIcon = ({...buttonIconProps}: iButtonIcon) => {
 
     const buttonIcon = <button aria-label={ariaLabel}
                                className={styles.btn}
+                               data-id={id ? id : undefined}
                                style={{width: `${width}px`,
                                        height: `${height}px`,
                                        backgroundColor: bgColor ? bgColor : '',
@@ -40,6 +43,7 @@ const ButtonIcon = ({...buttonIconProps}: iButtonIcon) => {
         <img src={icon}
              alt={alt}
              title={title}
+             data-id={id ? id : undefined}
              style={{width: `${width}px`,
                      height: `${height}px`}} />
     </button>;

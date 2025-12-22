@@ -4,6 +4,7 @@ import ButtonIcon from './../ButtonIcon/ButtonIcon.tsx';
 import InputSearchTextbox from './../InputSearchTextbox/InputSearchTextbox.tsx';
 import CreateNew from './../../assets/createNew.svg';
 import MagnifyingGlass from './../../assets/magnifyingGlass.svg';
+import Trashcan from './../../assets/trashcan.svg';
 import accounts from './../../utils/tmpData.tsx';
 import {sumTotal, insertCommas} from './../../utils/helpers.tsx';
 import styles from './JournalEntryCard.module.css';
@@ -14,8 +15,8 @@ interface iEntryData {
 };
 
 interface iResultData {
-    debits: iEntryData[] | [];
-    credits: iEntryData[] | [];
+    debits: iEntryData[];
+    credits: iEntryData[];
 };
 
 type tDropdownValue = {
@@ -33,6 +34,7 @@ interface iJournalEntryCard {
 type tErrors = {
     account: string;
     amount: string;
+    entryExists: string;
 };
 
 const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
@@ -49,7 +51,7 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
     const [totalCreditAmount, setTotalCreditAmount] = useState<number>(0);
     const [balanced, setBalanced] = useState<boolean>(false);
     const [fileNames, setFileNames] = useState<string[]>([]);
-    const [errors, setErrors] = useState<tErrors>({account: '', amount: ''});
+    const [errors, setErrors] = useState<tErrors>({account: '', amount: '', entryExists: ''});
 
     const refDate = useRef<HTMLInputElement | null>(null);
     const refAccount = useRef<HTMLInputElement | null>(null);
@@ -65,10 +67,6 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
     finalDropdownValues = ['','search for account...'].includes(searchValue.trim().toLowerCase()) ?
         finalDropdownValues :
         finalDropdownValues.filter(value => value.value.trim().toLowerCase().includes(searchValue.trim().toLowerCase()));
-
-    const handlerSubmit = (e: MouseEvent<HTMLButtonElement>) => {
-        cb_handlerSubmit(e);
-    };
 
     const cb_handlerSetSearchValue = (searchValue: string) => {
         setSearchValue(searchValue);
@@ -86,77 +84,20 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
         if (e.target.value.trim() === '') setSearchValue('Search for account...');
     };
 
-    const checkEntries = (type) => {
-       const localErrors = {amount: '', account: ''};
-
-        // Check if valid account exists
-        if (finalDropdownValues && (finalDropdownValues.filter(value => value.value === refAccount.current?.value).length === 0)) {
-            localErrors.account = 'Account does not exist.';
-        };
-
-        // Check if entry textbox contains only numerical and . figures, etc., if not: error
-        const amountPattern = /^\d{1,3}(,\d{3})*(\.\d{1,2})?$/;
-        if (!amountPattern.test(refAmount.current?.value)) {
-            localErrors.amount = 'Must be: 123,456.78.';
-        };
-
-        // Check if journal entry already exists in the current context
-        if (type === 'debit') {
-            if (results.debits.filter(datum => datum.account === refAccount.current?.value).length > 0) {
-
-            };
-        } else {
-
-        };
-
-        if (localErrors.amount.length > 0 || localErrors.account.length > 0) {
-            setErrors(localErrors);
-            return true;
-        }
+    const cb_handlerDeleteEntry = (e: MouseEvent<HTMLButtonElement>) => {
+        const values = e.target.dataset.id.split(':');
+        const type = values[0];
+        const otherType = type === 'debits' ? 'credits' : 'debits';
+        const account = values[1];
+        setResults(prevResults => ({
+                [otherType]: [...prevResults[otherType]],
+                [type]: [...prevResults[type].filter(result => result.account !== account)]
+            })
+        );
     };
 
-    const handlerAddDebit = () => {
-        const error = checkEntries('debit');
-        if (error) return;
-
-        const entry = {
-            account: searchValue,
-            amount:  refAmount ? Number(refAmount.current?.value.replace(/,/g, '')).toFixed(2) : undefined
-        };
-
-        if (entry.account && entry.amount) {
-            setResults(prevResults => ({
-                ...prevResults,
-                debits: prevResults.debits ? [...prevResults.debits, entry] : []
-            }));
-            setSearchValue('');
-
-            if (refAmount.current) refAmount.current.value = '';
-
-            setErrors({amount: '', account: ''});
-        };
-    };
-
-   const handlerAddCredit = () => {
-        const error = checkEntries('credit');
-        if (error) return;
-
-        const entry = {
-            account: refAccount ? refAccount.current?.value : undefined,
-            amount:  refAmount ? Number(refAmount.current?.value.replace(/,/g, '')).toFixed(2) : undefined
-        };
-
-        if (entry.account && entry.amount) {
-            setResults(prevResults => ({
-                ...prevResults,
-                credits: prevResults.credits ? [...prevResults.credits, entry] : [entry]
-            }));
-            setSearchValue('');
-
-            if (refAmount.current) refAmount.current.value = '';
-
-            setErrors({amount: '', account: ''});
-        };
+    const handlerSubmit = (e: MouseEvent<HTMLButtonElement>) => {
+        cb_handlerSubmit(e);
     };
 
     const handlerClickAttachment = () => {
@@ -174,24 +115,120 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
         if (refAmount.current) {
             const newAmount = refAmount.current.value.replace(/[a-zA-Z ]/, '');
             refAmount.current.value = newAmount;
+            setErrors({amount: '', account: '', entryExists: ''});
+        };
+    };
+
+    const checkEntries = () => {
+        const localErrors = {amount: '', account: '', entryExists: ''};
+        let errorCheck = false;
+
+        // Check if valid account exists
+        if (finalDropdownValues && (finalDropdownValues.filter(value => value.value === refAccount.current?.value).length === 0)) {
+            localErrors.account = 'Account does not exist.';
+            errorCheck = true;
+        };
+
+        // Check if entry textbox contains only numerical and . figures, etc., if not: error
+        const amountPattern = /^\d{1,3}(,\d{3})*(\.\d{1,2})?$/;
+        if (refAmount.current?.value) {
+            if (!amountPattern.test(refAmount.current.value)) {
+                localErrors.amount = 'Must be: 123,456.78.';
+                errorCheck = true;
+            };
+        };
+
+        // Check if journal entry already exists in the current context
+        const existingDebitAccount = results.debits.filter(result => result.account === refAccount.current?.value).length > 0;
+        const existingCreditAccount = results.credits.filter(result => result.account === refAccount.current?.value).length > 0;
+        if (existingDebitAccount || existingCreditAccount) {
+            localErrors.entryExists = 'That account already exists in the journal entries.';
+            errorCheck = true;
+        };
+
+        if (errorCheck) {
+            setErrors(localErrors);
+            return true;
+        };
+    };
+
+    const handlerAddDebit = () => {
+        const error = checkEntries();
+        if (error) return;
+
+        const entry = {
+            account: refAccount ? refAccount.current?.value : '',
+            amount:  refAmount ? Number(Number(refAmount.current?.value.replace(/,/g, '')).toFixed(2)) : 0
+        };
+
+        if (entry.account && entry.amount) {
+            setResults(prevResults => ({
+                ...prevResults,
+                debits: [...prevResults.debits, entry]
+            }));
+            setSearchValue('');
+
+            if (refAmount.current) refAmount.current.value = '';
+
+            setErrors({amount: '', account: '', entryExists: ''});
+        };
+    };
+
+   const handlerAddCredit = () => {
+        const error = checkEntries();
+        if (error) return;
+
+        const entry = {
+            account: refAccount ? refAccount.current?.value : '',
+            amount:  refAmount ? Number(Number(refAmount.current?.value.replace(/,/g, '')).toFixed(2)) : 0
+        };
+
+        if (entry.account && entry.amount) {
+            setResults(prevResults => ({
+                ...prevResults,
+                credits: [...prevResults.credits, entry]
+            }));
+            setSearchValue('');
+
+            if (refAmount.current) refAmount.current.value = '';
+
+            setErrors({amount: '', account: '', entryExists: ''});
         };
     };
 
     const debitElements = results.debits.map((debit, index) => (
-        <tr key={`debit-${index}`}>
+        <tr key={`debits:${index}`}>
             <td className={styles.tblAccount}>{debit.account}</td>
             <td className={styles.tblAmount}>{insertCommas(Number(debit.amount))}</td>
             <td></td>
-            <td className={styles.tblOperation}></td>
+            <td className={styles.tblOperation}>
+                <ButtonIcon icon={Trashcan}
+                            ariaLabel='Delete debit entry'
+                            alt='Trashcan Icon'
+                            title='Delete Journal Entry'
+                            height={20}
+                            width={20}
+                            id={`debits:${debit.account}`}
+                            cb_handlerClick={cb_handlerDeleteEntry} />
+            </td>
         </tr>
     ));
 
     const creditElements = results.credits.map((credit, index) => (
-        <tr key={`credit-${index}`}>
+        <tr key={`credits:${index}`}>
             <td className={styles.tblAccount}>{credit.account}</td>
             <td></td>
             <td className={styles.tblAmount}>{insertCommas(Number(credit.amount))}</td>
-            <td className={styles.tblOperation}></td>
+            <td className={styles.tblOperation}>
+                <ButtonIcon icon={Trashcan}
+                            ariaLabel='Delete credit entry'
+                            alt='Trashcan Icon'
+                            title='Delete Journal Entry'
+                            height={20}
+                            width={20}
+                            id={`credits:${credit.account}`}
+                            cb_handlerClick={cb_handlerDeleteEntry} />
+            </td>
         </tr>
     ));
 
@@ -309,6 +346,12 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
             </div>
             <div className={styles.results}>
                 {entries}
+                {errors.entryExists &&
+                    <div aria-label='Entry exists error container'
+                         className={styles.entryExistsContainer}>
+                         {errors.entryExists}
+                    </div>
+                }
             </div>
             <div className={styles.notes}>
                 Notes:&nbsp;&nbsp;

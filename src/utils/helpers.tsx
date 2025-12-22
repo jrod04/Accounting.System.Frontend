@@ -1,7 +1,7 @@
 export const sumTotal = (values: number[]) => {
     const initValue = 0;
     const result = values.reduce(
-        (accumulator, currentValue) => parseFloat(accumulator) + parseFloat(currentValue),
+        (accumulator, currentValue) => Number(accumulator) + Number(currentValue),
         initValue
     );
 
