@@ -15,9 +15,11 @@ interface iEntryData {
 };
 
 interface iResultData {
-    debits: iEntryData[];
-    credits: iEntryData[];
+    debits: iEntryData[] | [];
+    credits: iEntryData[] | [];
 };
+
+type tResultKey = keyof iResultData;
 
 type tDropdownValue = {
     id: string;
@@ -85,13 +87,18 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
     };
 
     const cb_handlerDeleteEntry = (e: MouseEvent<HTMLButtonElement>) => {
-        const values = e.target.dataset.id.split(':');
-        const type = values[0];
-        const otherType = type === 'debits' ? 'credits' : 'debits';
-        const account = values[1];
+        const id = ((e.target as HTMLButtonElement).dataset.id);
+        if (!id) return;
+
+        const [rawType, account] = id.split(':');
+        if (!account) return;
+
+        const type: tResultKey = rawType === 'debits' ? 'debits' : 'credits';
+        const otherType: tResultKey = rawType === 'debits' ? 'credits' : 'debits';
+
         setResults(prevResults => ({
-                [otherType]: [...prevResults[otherType]],
-                [type]: [...prevResults[type].filter(result => result.account !== account)]
+                debits: type === 'debits' ? prevResults.debits.filter(result => result.account !== account) : prevResults.debits,
+                credits: type === 'credits' ? prevResults.credits.filter(result => result.account !== account) : prevResults.credits
             })
         );
     };
