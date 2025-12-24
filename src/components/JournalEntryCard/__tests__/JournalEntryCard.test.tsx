@@ -53,8 +53,10 @@ describe('JournalEntryCard component', () => {
     test('Debit button clicks and displays the correct account and amount', async () => {
         const accountSearchBox = screen.getByRole('textbox', { name: 'Account Search Textbox' });
         await user.type(accountSearchBox, '1000 - Business Checking');
+
         const amountEntryBox = screen.getByRole('textbox', { name: 'Amount Entry Textbox' });
-        await user.type(amountEntryBox, '5');
+        await user.type(amountEntryBox, '5.12');
+
         const button = screen.getByRole('button', { name: 'Debit Entry Button' });
         await user.click(button);
 
@@ -74,12 +76,24 @@ describe('JournalEntryCard component', () => {
         expect(text).toBeInTheDocument();
     });
 
-    test('Debit button clicks with missing/invalid entry amount and displays error', () => {
+    test('Debit total shows red if debit/credit imbalance exists', async () => {
+        const accountSearchBox = screen.getByRole('textbox', { name: 'Account Search Textbox' });
+        await user.type(accountSearchBox, '1000 - Business Checking');
+        const amountEntryBox = screen.getByRole('textbox', { name: 'Amount Entry Textbox' });
+        await user.type(amountEntryBox, '5.12');
+        const button = screen.getByRole('button', { name: 'Debit Entry Button' });
+        await user.click(button);
 
+        const errorContainer = screen.getByRole('Total', { name: 'Debit Total' });
+        expect(errorContainer).toHaveStyle({color: 'rgba(199,0,57,1)'});
     });
 
-    test('Debit total shows red if debit/credit imbalance exists', () => {
-
+    test('Debit button clicks with missing/invalid entry amount and displays error', async () => {
+        const amountEntryBox = screen.getByRole('textbox', { name: 'Amount Entry Textbox' });
+        const debitButton = screen.getByRole('button', { name: 'Debit Entry Button' });
+        await user.click(debitButton);
+        const text = screen.getByText('Must be: 123,456.78.');
+        expect(text).toBeInTheDocument();
     });
 
     test('Credit button clicks and displays the correct account and amount', () => {
@@ -90,19 +104,19 @@ describe('JournalEntryCard component', () => {
 
     });
 
-    test('Credit total shows red if debit/credit imbalance exists', () => {
-
-    });
-
     test('Attachment displays file selected', () => {
 
     });
 
-    test('Cancel button calls', () => {
-
+    test('Cancel button calls', async () => {
+        const button = screen.getByRole('button', { name: 'Journal Entry Cancel Button' });
+        await user.click(button);
+        expect(handlerCancel).toHaveBeenCalledTimes(1);
     });
 
-    test('Submit button calls', () => {
-
+    test('Submit button calls', async () => {
+        const button = screen.getByRole('button', { name: 'Journal Entry Submit Button' });
+        await user.click(button);
+        expect(handlerSubmit).toHaveBeenCalledTimes(1);
     });
 });

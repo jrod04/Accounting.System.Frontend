@@ -137,12 +137,12 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
         };
 
         // Check if entry textbox contains only numerical and . figures, etc., if not: error
-        const amountPattern = /^\d{1,3}(,\d{3})*(\.\d{1,2})?$/;
-        if (refAmount.current?.value) {
-            if (!amountPattern.test(refAmount.current.value)) {
-                localErrors.amount = 'Must be: 123,456.78.';
-                errorCheck = true;
-            };
+        const amountPattern = /^\d{1,3}(,\d{3})*\.\d{2}$/;
+        const amount = refAmount.current?.value ? refAmount.current.value : '';
+
+        if (!amountPattern.test(amount)) {
+            localErrors.amount = 'Must be: 123,456.78.';
+            errorCheck = true;
         };
 
         // Check if journal entry already exists in the current context
@@ -257,17 +257,17 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
                 </td>
                 <td className={(results.debits.length > 0 || results.credits.length > 0) ? styles.totalAmount : ''}>
                     {(results.debits.length > 0 || results.credits.length > 0) ?
-                        <span style={{color: !balanced ? 'rgba(199,0,57,1)' : 'rgba(0,0,0,1)'}}>
+                        <div role='Total' aria-label='Debit Total' style={{color: !balanced ? 'rgba(199,0,57,1)' : 'rgba(0,0,0,1)'}}>
                             {insertCommas(sumTotal(results.debits.map(debit => debit.amount ? debit.amount : 0)))}
-                        </span> :
+                        </div> :
                          ''
                     }
                 </td>
                 <td className={(results.debits.length > 0 || results.credits.length > 0)  ? styles.totalAmount : ''}>
                     {(results.debits.length > 0 || results.credits.length > 0) ?
-                        <span style={{color: !balanced ? 'rgba(199,0,57,1)' : 'rgba(0,0,0,1)'}}>
+                        <div role='Total' aria-label='Credit Total' style={{color: !balanced ? 'rgba(199,0,57,1)' : 'rgba(0,0,0,1)'}}>
                             {insertCommas(sumTotal(results.credits.map(credit => credit.amount ? credit.amount : 0)))}
-                        </span> :
+                        </div> :
                         ''
                     }
                 </td>
@@ -331,7 +331,7 @@ const JournalEntryCard = ({...journalCardEntryProps}: iJournalEntryCard) => {
                            autoComplete='off'
                            ref={refAmount} />
                     {errors.amount &&
-                        <div data-testid='Amount error container'
+                        <div aria-label='Amount error container'
                              className={styles.errors}
                              style={{color: 'rgba(199,0,57,1)'}}>
                              {errors.amount}
