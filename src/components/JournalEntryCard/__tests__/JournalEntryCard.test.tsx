@@ -96,16 +96,8 @@ describe('JournalEntryCard component', () => {
         expect(text).toBeInTheDocument();
     });
 
-    test('Credit button clicks and displays the correct account and amount', () => {
-
-    });
-
-    test('Credit button clicks with missing/non-existent account and displays error', () => {
-
-    });
-
     test('Attachment displays file selected', () => {
-
+        
     });
 
     test('Cancel button calls', async () => {
